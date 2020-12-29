@@ -45,7 +45,7 @@ public class ProgressDialog
         mode=m;
         if(mode==MODE_INDETERMINATE)
         {
-            textViewDeterminate.setVisibility(View.INVISIBLE);
+            textViewDeterminate.setVisibility(View.GONE);
             progressBarDeterminate.setVisibility(View.GONE);
             textViewIndeterminate.setVisibility(View.VISIBLE);
             progressBarIndeterminate.setVisibility(View.VISIBLE);
@@ -53,7 +53,7 @@ public class ProgressDialog
         if(mode==MODE_DETERMINATE)
         {
             textViewIndeterminate.setVisibility(View.GONE);
-            progressBarIndeterminate.setVisibility(View.INVISIBLE);
+            progressBarIndeterminate.setVisibility(View.GONE);
             textViewDeterminate.setVisibility(View.VISIBLE);
             progressBarDeterminate.setVisibility(View.VISIBLE);
         }
