@@ -85,7 +85,7 @@ public class ProgressDialog
     {
         if(mode==MODE_DETERMINATE)
         {
-            progressBarDeterminate.setProgress(progress);
+            progressBarDeterminate.setProgress(progress,true);
             return true;
         }
         else
