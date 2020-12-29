@@ -11,34 +11,67 @@ public class ProgressDialog
 {
     public static final int MODE_INDETERMINATE=0;
     public static final int MODE_DETERMINATE=1;
+    public static final int THEME_LIGHT=2;
+    public static final int THEME_DARK=3;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
-    private int mode;
+    private int mode,theme;
     private int incrementAmt,decrementAmt;
     public ProgressDialog(Context context)
     {
+        this.context=context;
+        this.theme=THEME_LIGHT;
+    }
+    public ProgressDialog(Context context,int theme)
+    {
         this.context = context;
+        this.theme = theme;
         initialiseDialog();
     }
-    private void initialiseDialog()
+    private boolean initialiseDialog()
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
-        titleView=view.findViewById(R.id.title_progressDialog);
-        textViewDeterminate=view.findViewById(R.id.textView_determinate);
-        textViewIndeterminate=view.findViewById(R.id.textView_indeterminate);
-        progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
-        progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
-        builder.setView(view);
-        progressDialog=builder.create();
-        if(progressDialog.getWindow()!= null)
+        View view;
+        switch(theme)
         {
-            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            case THEME_LIGHT:
+                view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
+                titleView=view.findViewById(R.id.title_progressDialog);
+                textViewDeterminate=view.findViewById(R.id.textView_determinate);
+                textViewIndeterminate=view.findViewById(R.id.textView_indeterminate);
+                progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
+                progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
+                builder.setView(view);
+                break;
+            case THEME_DARK:
+                view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog_dark,null);
+                titleView=view.findViewById(R.id.title_progressDialog_dark);
+                textViewDeterminate=view.findViewById(R.id.textView_determinate_dark);
+                textViewIndeterminate=view.findViewById(R.id.textView_indeterminate_dark);
+                progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate_dark);
+                progressBarDeterminate=view.findViewById(R.id.progressbar_determinate_dark);
+                builder.setView(view);
+                break;
+            default:
+                view=null;
+                break;
         }
-        setMode(MODE_INDETERMINATE);
-        setCancelable(false);
+        if(view!=null)
+        {
+            progressDialog = builder.create();
+            if (progressDialog.getWindow() != null) {
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            setMode(MODE_INDETERMINATE);
+            setCancelable(false);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     public void setMode(int m)
     {
@@ -200,7 +233,12 @@ public class ProgressDialog
     }
     public void show()
     {
-        progressDialog.show();
+        if(progressDialog==null)
+            throw new NullPointerException();
+        else
+            {
+            progressDialog.show();
+        }
     }
     public void dismiss()
     {
