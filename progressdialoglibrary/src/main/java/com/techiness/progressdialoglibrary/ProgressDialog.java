@@ -16,6 +16,7 @@ public class ProgressDialog
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private int mode;
+    private int incrementAmt,decrementAmt;
     public ProgressDialog(Context context)
     {
         this.context = context;
@@ -49,7 +50,7 @@ public class ProgressDialog
             textViewIndeterminate.setVisibility(View.VISIBLE);
             progressBarIndeterminate.setVisibility(View.VISIBLE);
         }
-        else
+        if(mode==MODE_DETERMINATE)
         {
             textViewIndeterminate.setVisibility(View.GONE);
             progressBarIndeterminate.setVisibility(View.INVISIBLE);
@@ -90,6 +91,76 @@ public class ProgressDialog
         }
         else
             {
+            return false;
+        }
+    }
+    public boolean setIncrementValue(int increment)
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            incrementAmt=increment;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean setDecrementValue(int decrement)
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            decrementAmt=decrement;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public int getIncrementValue()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return incrementAmt;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    public int getDecrementValue()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return decrementAmt;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public boolean incrementProgress()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            setProgress(progressBarDeterminate.getProgress()+incrementAmt);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean decrementProgress()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            setProgress(progressBarDeterminate.getProgress()-decrementAmt);
+            return true;
+        }
+        else
+        {
             return false;
         }
     }
