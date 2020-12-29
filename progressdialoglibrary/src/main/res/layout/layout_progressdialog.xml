@@ -25,12 +25,13 @@
             android:layout_height="wrap_content"
             android:text="@string/progressDialog_title"
             android:layout_gravity="center"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/layoutContent"
             android:visibility="gone"
+            android:layout_marginBottom="15dp"
             />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutContent"

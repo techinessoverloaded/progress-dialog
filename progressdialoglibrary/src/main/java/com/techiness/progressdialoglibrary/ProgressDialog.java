@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 public class ProgressDialog
 {
-    private static final int MODE_INDETERMINATE=0;
-    private static final int MODE_DETERMINATE=1;
+    public static final int MODE_INDETERMINATE=0;
+    public static final int MODE_DETERMINATE=1;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
