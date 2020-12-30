@@ -158,7 +158,7 @@ public class ProgressDialog
      */
     public void setMode(int MODE)
     {
-        this.mode=MODE;
+        mode=MODE;
         if(mode==MODE_INDETERMINATE)
         {
             textViewDeterminate.setVisibility(View.GONE);
@@ -181,7 +181,6 @@ public class ProgressDialog
             }
         }
     }
-
     /**
      * Returns the Current Mode of ProgressDialog.
      * @return The current Mode of ProgressDialog ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
