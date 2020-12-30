@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@string/progressDialog_title"
             android:layout_gravity="center"
-            android:textSize="19sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +105,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_determinate"
             />
+            <TextView
+                android:id="@+id/ProgressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/progressbar_determinate"
+                app:layout_constraintTop_toBottomOf="@id/progressbar_determinate"
+                android:textColor="@color/black_light"
+                android:layout_marginTop="6dp"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
