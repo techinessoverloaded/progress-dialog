@@ -430,6 +430,10 @@ public class ProgressDialog
         if(mode==MODE_DETERMINATE)
         {
             progressViewMode=HIDE_PROGRESS_TEXT;
+            if(progressTextView.getVisibility()==View.VISIBLE)
+            {
+                progressTextView.setVisibility(View.GONE);
+            }
             return true;
         }
         else

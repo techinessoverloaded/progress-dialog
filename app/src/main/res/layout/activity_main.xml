@@ -1,19 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginTop="50dp">
     <Button
-        android:id="@+id/showProgressBut"
+        android:id="@+id/showLightDeterBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SHOW PROGRESSDIALOG"
+        android:text="Show Light Deter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/showLightInDeterBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Light InDeter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showLightDeterTitleBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Light Deter with Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showLightInDeterTitleBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Light InDeter with Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showLightDeterwithoutProgressBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Light Deter without Progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showDarkDeterBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Dark Deter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showDarkInDeterBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Dark InDeter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showDarkDeterTitleBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Dark Deter with Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showDarkInDeterTitleBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Dark InDeter with Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/showDarkDeterwithoutProgressBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Dark Deter without Progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>
+</LinearLayout>
