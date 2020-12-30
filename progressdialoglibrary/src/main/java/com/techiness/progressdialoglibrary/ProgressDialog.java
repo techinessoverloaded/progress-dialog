@@ -154,11 +154,11 @@ public class ProgressDialog
     }
     /**
      * Sets/Changes the mode of ProgressDialog.
-     * @param MODE The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @param modeCode The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
      */
-    public void setMode(int MODE)
+    public void setMode(int modeCode)
     {
-        mode=MODE;
+        mode=modeCode;
         if(mode==MODE_INDETERMINATE)
         {
             textViewDeterminate.setVisibility(View.GONE);
