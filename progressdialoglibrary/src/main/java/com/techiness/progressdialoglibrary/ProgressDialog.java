@@ -107,7 +107,7 @@ public class ProgressDialog
         this.theme=THEME_LIGHT;
         initialiseDialog();
     }
-    private boolean initialiseDialog() throws NullPointerException
+    private boolean initialiseDialog()
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         View view;
@@ -149,14 +149,6 @@ public class ProgressDialog
         }
         else
         {
-            try
-            {
-                throw new NullPointerException("Unable to Instantiate ProgressDialog Object ! Pass Proper Arguments to the Constructor !");
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
             return false;
         }
     }
@@ -445,9 +437,8 @@ public class ProgressDialog
     /**
      * Starts the ProgressDialog and shows it on Screen if proper Instantiation was done.
      * Else NullPointerException is thrown.
-     * @throws NullPointerException if proper instantiation is not done.
      */
-    public void show() throws NullPointerException
+    public void show()
     {
         if(progressDialog==null)
         {

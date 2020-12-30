@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.techiness.progressdialogexample"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -35,5 +35,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.github.techinessoverloaded:progress-dialog:1.0.5a'
+    implementation 'com.github.techinessoverloaded:progress-dialog:1.0.6a'
 }
