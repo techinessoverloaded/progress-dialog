@@ -64,8 +64,8 @@ public class ProgressDialog
     {
         this.context=context;
         this.theme=THEME_LIGHT;
-        setMode(MODE_INDETERMINATE);
         initialiseDialog();
+        setMode(MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Activity Level Context and Theme Constant as Arguments.
@@ -77,8 +77,8 @@ public class ProgressDialog
     {
         this.context = context;
         this.theme = theme;
-        setMode(MODE_INDETERMINATE);
         initialiseDialog();
+        setMode(MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Mode Constant, Activity Level Context and Theme Constant as Arguments.
@@ -90,9 +90,9 @@ public class ProgressDialog
     public ProgressDialog(int mode,Context context,int theme)
     {
         this.context=context;
-        setMode(mode);
         this.theme=theme;
         initialiseDialog();
+        setMode(mode);
     }
     /**
      * A Constructor accepting the Mode Constant and Activity Level Context as Arguments.
@@ -103,11 +103,11 @@ public class ProgressDialog
     public ProgressDialog(int mode,Context context)
     {
         this.context=context;
-        setMode(mode);
         this.theme=THEME_LIGHT;
         initialiseDialog();
+        setMode(mode);
     }
-    private boolean initialiseDialog()
+    private boolean initialiseDialog() throws NullPointerException
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         View view;
@@ -149,7 +149,7 @@ public class ProgressDialog
         }
         else
         {
-            return false;
+            throw new NullPointerException("Couldn't initialise ProgressDialog ! Make sure to call the Constructor properly !");
         }
     }
     /**
@@ -437,18 +437,11 @@ public class ProgressDialog
      * Starts the ProgressDialog and shows it on Screen if proper Instantiation was done.
      * Else NullPointerException is thrown.
      */
-    public void show()
+    public void show() throws NullPointerException
     {
         if(progressDialog==null)
         {
-            try
-            {
-                throw new NullPointerException("ProgressDialog not initiated properly ! Make sure to give proper parameters while calling Constructor !");
-            }
-            catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
+            throw new NullPointerException("ProgressDialog not initiated properly ! Make sure to give proper parameters while calling Constructor !");
         }
         else
             {
