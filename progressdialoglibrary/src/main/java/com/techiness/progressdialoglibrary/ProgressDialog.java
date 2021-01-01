@@ -244,11 +244,12 @@ public class ProgressDialog
             switch(progressViewMode)
             {
                 case SHOW_AS_FRACTION:
-                    String temp = progress+"//"+getMaxValue();
+                    String temp = progress+"/"+getMaxValue();
                     progressTextView.setText(temp);
                     break;
                 case SHOW_AS_PERCENT:
-                    int val=(progress/getMaxValue())*100;
+                    int quo=progress/getMaxValue();
+                    int val=quo*100;
                     String txt = val+"%";
                     progressTextView.setText(txt);
                     break;
@@ -315,11 +316,12 @@ public class ProgressDialog
             switch(progressViewMode)
             {
                 case SHOW_AS_FRACTION:
-                    String temp = getProgress()+"//"+getMaxValue();
+                    String temp = getProgress()+"/"+getMaxValue();
                     progressTextView.setText(temp);
                     break;
                 case SHOW_AS_PERCENT:
-                    int val=(getProgress()/getMaxValue())*100;
+                    int quo=getProgress()/getMaxValue();
+                    int val=quo*100;
                     String txt = val+"%";
                     progressTextView.setText(txt);
                     break;
@@ -389,6 +391,7 @@ public class ProgressDialog
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
      * Progress TextView's Default format is Percentage format.
      * Can be used only in {@link #MODE_DETERMINATE}
+     * If {@link #hideProgressText()} was used before, this method will again make Progress TextView visible.
      * @param progressTextAsFraction The boolean value to change Progress TextView's format.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
      */
@@ -398,11 +401,33 @@ public class ProgressDialog
         {
             if(progressTextAsFraction)
             {
-                progressViewMode=SHOW_AS_FRACTION;
+                switch(progressViewMode)
+                {
+                    case SHOW_AS_FRACTION:
+                        break;
+                    case SHOW_AS_PERCENT:
+                    case HIDE_PROGRESS_TEXT:
+                        progressViewMode=SHOW_AS_FRACTION;
+                        String txt = getProgress()+"/"+getMaxValue();
+                        progressTextView.setText(txt);
+                        break;
+                }
             }
             else
             {
-                progressViewMode=SHOW_AS_PERCENT;
+                switch(progressViewMode)
+                {
+                    case SHOW_AS_PERCENT:
+                        break;
+                    case SHOW_AS_FRACTION:
+                    case HIDE_PROGRESS_TEXT:
+                        progressViewMode=SHOW_AS_PERCENT;
+                        int quo=getProgress()/getMaxValue();
+                        int val=quo*100;
+                        String txt = val+"%";
+                        progressTextView.setText(txt);
+                        break;
+                }
             }
             return true;
         }

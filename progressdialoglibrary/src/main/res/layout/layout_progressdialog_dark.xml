@@ -110,6 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@id/progressbar_determinate_dark"
                 android:textColor="@color/white_dark"
                 android:layout_marginTop="6dp"
+                android:layout_marginStart="12dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
