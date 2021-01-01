@@ -248,8 +248,7 @@ public class ProgressDialog
                     progressTextView.setText(temp);
                     break;
                 case SHOW_AS_PERCENT:
-                    int quo=progress/getMaxValue();
-                    int val=quo*100;
+                    double val=((double)getProgress()/(double)getMaxValue())*100;
                     String txt = val+"%";
                     progressTextView.setText(txt);
                     break;
@@ -320,8 +319,7 @@ public class ProgressDialog
                     progressTextView.setText(temp);
                     break;
                 case SHOW_AS_PERCENT:
-                    int quo=getProgress()/getMaxValue();
-                    int val=quo*100;
+                    double val=((double)getProgress()/(double)getMaxValue())*100;
                     String txt = val+"%";
                     progressTextView.setText(txt);
                     break;
@@ -422,8 +420,7 @@ public class ProgressDialog
                     case SHOW_AS_FRACTION:
                     case HIDE_PROGRESS_TEXT:
                         progressViewMode=SHOW_AS_PERCENT;
-                        int quo=getProgress()/getMaxValue();
-                        int val=quo*100;
+                        double val=((double)getProgress()/(double)getMaxValue())*100;
                         String txt = val+"%";
                         progressTextView.setText(txt);
                         break;
