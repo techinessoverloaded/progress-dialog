@@ -3,7 +3,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.techiness.progressdialoglibrary.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialogLight.setTitle("Determinate");
                 progressDialogLight.showProgressTextAsFraction(true);
                 progressDialogLight.setProgress(65);
+                progressDialogLight.setSecondaryProgress(80);
                 progressDialogLight.show();
                 break;
             case 4:
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialogDark.setMaxValue(200);
                 progressDialogDark.setProgress(65);
                 progressDialogDark.showProgressTextAsFraction(true);
+                progressDialogDark.setSecondaryProgress(80);
                 progressDialogDark.show();
                 break;
             case 7:
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity
             case 8:
                 progressDialogDark.setMode(ProgressDialog.MODE_DETERMINATE);
                 progressDialogDark.setTitle("Determinate");
-                progressDialogLight.showProgressTextAsFraction(true);
                 progressDialogDark.setProgress(65);
                 progressDialogDark.show();
                 break;

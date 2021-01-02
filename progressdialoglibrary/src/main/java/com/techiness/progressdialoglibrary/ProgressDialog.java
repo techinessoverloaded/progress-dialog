@@ -15,13 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.math.MathUtils;
-
 import java.util.Locale;
-import java.util.Scanner;
 
 /**
  * A highly customisable ProgressDialog Class for Android API Level 24 and above.
