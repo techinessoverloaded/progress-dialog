@@ -8,12 +8,21 @@
 package com.techiness.progressdialoglibrary;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.math.MathUtils;
+
+import java.util.Locale;
+import java.util.Scanner;
+
 /**
  * A highly customisable ProgressDialog Class for Android API Level 24 and above.
  * Built upon Android's AlertDialog. So no Compatibility and Reliability issues.
@@ -154,11 +163,11 @@ public class ProgressDialog
     }
     /**
      * Sets/Changes the mode of ProgressDialog.
-     * @param modeCode The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @param MODE The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
      */
-    public void setMode(int modeCode)
+    public void setMode(int MODE)
     {
-        mode=modeCode;
+        mode=MODE;
         if(mode==MODE_INDETERMINATE)
         {
             textViewDeterminate.setVisibility(View.GONE);
@@ -233,28 +242,17 @@ public class ProgressDialog
     /**
      * Sets the Progress Value of Determinate ProgressBar.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * If the parameter progress is greater than MaxValue, MaxValue will be set as Progress.
      * @param progress The Integral Progress Value to be set in Determinate ProgressBar.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @see #incrementProgress()
      */
     public boolean setProgress(int progress)
     {
         if(mode==MODE_DETERMINATE)
         {
             progressBarDeterminate.setProgress(progress,true);
-            switch(progressViewMode)
-            {
-                case SHOW_AS_FRACTION:
-                    String temp = progress+"/"+getMaxValue();
-                    progressTextView.setText(temp);
-                    break;
-                case SHOW_AS_PERCENT:
-                    double val=((double)getProgress()/(double)getMaxValue())*100;
-                    String txt = val+"%";
-                    progressTextView.setText(txt);
-                    break;
-                case HIDE_PROGRESS_TEXT:
-                    break;
-            }
+            setProgressText();
             return true;
         }
         else
@@ -270,6 +268,7 @@ public class ProgressDialog
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
      * @param increment The Integral Offset Value for Incrementing Progress in Determinate ProgressBar.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @see #incrementProgress()
      */
     public boolean setIncrementValue(int increment)
     {
@@ -300,32 +299,21 @@ public class ProgressDialog
             return -1;
         }
     }
-
     /**
      * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using {@link #setIncrementValue(int increment)}.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
-     * This method is preferred over {@link #setProgress(int progress)} for using Determinate ProgressDialog inside a Handler.
+     * If the progress is greater than MaxValue after incrementing, MaxValue will be set as Progress.
+     * This method is preferred over {@link #setProgress(int progress)} for continuous and uniform Progress Increments.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @see #setIncrementValue(int increment)
+     * @see #setProgress(int progress)
      */
     public boolean incrementProgress()
     {
         if(mode==MODE_DETERMINATE)
         {
-            setProgress(progressBarDeterminate.getProgress()+incrementAmt);
-            switch(progressViewMode)
-            {
-                case SHOW_AS_FRACTION:
-                    String temp = getProgress()+"/"+getMaxValue();
-                    progressTextView.setText(temp);
-                    break;
-                case SHOW_AS_PERCENT:
-                    double val=((double)getProgress()/(double)getMaxValue())*100;
-                    String txt = val+"%";
-                    progressTextView.setText(txt);
-                    break;
-                case HIDE_PROGRESS_TEXT:
-                    break;
-            }
+            progressBarDeterminate.incrementProgressBy(incrementAmt);
+            setProgressText();
             return true;
         }
         else
@@ -333,10 +321,11 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
-     * Sets the Maximum value of Determinate ProgressBar
+     * Sets the Maximum value of Determinate ProgressBar.
+     * The Default MaxValue of Determinate ProgressBar is 100.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * It is advised to use this method before calling {@link #setProgress(int progress)} or {@link #incrementProgress()} if you want to change the Default MaxValue.
      * @param maxValue The Integral Value to be set as MaxValue for Determinate ProgressBar.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
      */
@@ -345,6 +334,7 @@ public class ProgressDialog
         if(mode==MODE_DETERMINATE)
         {
             progressBarDeterminate.setMax(maxValue);
+            setProgress(getProgress());
             return true;
         }
         else
@@ -388,10 +378,10 @@ public class ProgressDialog
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
      * Progress TextView's Default format is Percentage format.
-     * Can be used only in {@link #MODE_DETERMINATE}
+     * Can be used only in {@link #MODE_DETERMINATE}.
      * If {@link #hideProgressText()} was used before, this method will again make Progress TextView visible.
      * @param progressTextAsFraction The boolean value to change Progress TextView's format.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise and also on Redundant Calls.
      */
     public boolean showProgressTextAsFraction(boolean progressTextAsFraction)
     {
@@ -402,12 +392,11 @@ public class ProgressDialog
                 switch(progressViewMode)
                 {
                     case SHOW_AS_FRACTION:
-                        break;
+                        return false;
                     case SHOW_AS_PERCENT:
                     case HIDE_PROGRESS_TEXT:
                         progressViewMode=SHOW_AS_FRACTION;
-                        String txt = getProgress()+"/"+getMaxValue();
-                        progressTextView.setText(txt);
+                        progressTextView.setText(getProgressAsFraction());
                         break;
                 }
             }
@@ -416,13 +405,11 @@ public class ProgressDialog
                 switch(progressViewMode)
                 {
                     case SHOW_AS_PERCENT:
-                        break;
+                        return false;
                     case SHOW_AS_FRACTION:
                     case HIDE_PROGRESS_TEXT:
                         progressViewMode=SHOW_AS_PERCENT;
-                        double val=((double)getProgress()/(double)getMaxValue())*100;
-                        String txt = val+"%";
-                        progressTextView.setText(txt);
+                        progressTextView.setText(getProgressAsPercent());
                         break;
                 }
             }
@@ -435,7 +422,7 @@ public class ProgressDialog
     }
     /**
      * Hides the Progress TextView.
-     * Can be used only in {@link #MODE_DETERMINATE}
+     * Can be used only in {@link #MODE_DETERMINATE}.
      * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
      */
     public boolean hideProgressText()
@@ -454,7 +441,6 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
      * Starts the ProgressDialog and shows it on Screen if proper Instantiation was done.
      * Else NullPointerException is thrown.
@@ -529,6 +515,249 @@ public class ProgressDialog
     {
         progressDialog.setCancelable(cancelable);
         this.cancelable=cancelable;
+    }
+
+    /**
+     * Checks if ProgressValue is equal to MaxValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link #MODE_DETERMINATE}.
+     */
+    public boolean getHasProgressReachedMaxValue()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return getProgress() == getMaxValue();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Gets the Integral Value required to reach MaxValue from the current ProgressValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return The Integral Amount required to reach MaxValue. -1 if mode is not {@link #MODE_DETERMINATE}.
+     */
+    public int getRemainingProgress()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return getMaxValue()-getProgress();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    /**
+     * Sets the Secondary ProgressValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @param secondaryProgress The integral value to be set as Secondary ProgressValue.
+     * @return true if mode is {@link #MODE_DETERMINATE} and Secondary ProgressValue is set. false otherwise.
+     */
+    public boolean setSecondaryProgress(int secondaryProgress)
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            progressBarDeterminate.setSecondaryProgress(secondaryProgress);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Gets the Secondary ProgressValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return Integral Secondary ProgressValue if mode is {@link #MODE_DETERMINATE}. -1 otherwise.
+     */
+    public int getSecondaryProgress()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return progressBarDeterminate.getSecondaryProgress();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    /**
+     * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not {@link #MODE_DETERMINATE}.
+     */
+    public int getSecondaryRemainingProgress()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return getMaxValue()-getSecondaryProgress();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    /**
+     * Checks if Secondary ProgressValue is equal to MaxValue.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link #MODE_DETERMINATE}.
+     */
+    public boolean getHasSecondaryProgressReachedMaxValue()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return getSecondaryProgress()==getMaxValue();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    /**
+     * Sets a Custom Drawable to the Indeterminate ProgressBar.
+     * Can be used only in {@link #MODE_INDETERMINATE}.
+     * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
+     * @param progressDrawable The Drawable object used to draw the Indeterminate ProgressBar.
+     * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
+     * @see #getIndeterminateDrawable()
+     * @see #setProgressTintList(ColorStateList tintList)
+     */
+    public boolean setIndeterminateDrawable(Drawable progressDrawable)
+    {
+        if(mode==MODE_INDETERMINATE)
+        {
+            progressBarIndeterminate.setIndeterminateDrawable(progressDrawable);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Gets the Drawable object used to draw the Indeterminate ProgressBar.
+     * Can be used only in {@link #MODE_INDETERMINATE}.
+     * @return Drawable Object if mode is {@link #MODE_INDETERMINATE}. null otherwise.
+     * @see #setIndeterminateDrawable(Drawable progressDrawable)
+     * @see #getProgressTintList()
+     */
+    @Nullable
+    public Drawable getIndeterminateDrawable()
+    {
+        if(mode==MODE_INDETERMINATE)
+        {
+            return progressBarIndeterminate.getIndeterminateDrawable();
+        }
+        else
+        {
+            return null;
+        }
+    }
+    /**
+     * Sets a Custom Drawable to the Determinate ProgressBar.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
+     * @param progressDrawable The Drawable object used to draw the Determinate ProgressBar.
+     * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
+     * @see #getDeterminateDrawable()
+     * @see #setProgressTintList(ColorStateList tintList)
+     */
+    public boolean setDeterminateDrawable(Drawable progressDrawable)
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            progressBarDeterminate.setProgressDrawable(progressDrawable);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    /**
+     * Gets the Drawable object used to draw the Determinate ProgressBar.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * @return Drawable Object if mode is {@link #MODE_DETERMINATE}. null otherwise.
+     * @see #setDeterminateDrawable(Drawable progressDrawable)
+     * @see #getProgressTintList()
+     */
+    @Nullable
+    public Drawable getDeterminateDrawable()
+    {
+        if(mode==MODE_DETERMINATE)
+        {
+            return progressBarDeterminate.getProgressDrawable();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Applies a tint to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
+     * Applies a tint to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
+     * @param tintList The ColorStateList object used to apply tint to ProgressBar's Drawable.
+     * @see #getProgressTintList()
+     */
+    public void setProgressTintList(ColorStateList tintList)
+    {
+        switch(mode)
+        {
+            case MODE_INDETERMINATE:
+                progressBarIndeterminate.setIndeterminateTintList(tintList);
+                break;
+            case MODE_DETERMINATE:
+                progressBarDeterminate.setProgressTintList(tintList);
+                break;
+        }
+    }
+
+    /**
+     * Returns the tint applied to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
+     * Returns the tint applied to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
+     * @return ColorStateList object specifying the tint applied to ProgressBar's Drawable.
+     * @see #setProgressTintList(ColorStateList tintList)
+     */
+    public ColorStateList getProgressTintList()
+    {
+        if(mode==MODE_INDETERMINATE)
+        {
+            return progressBarIndeterminate.getIndeterminateTintList();
+        }
+        else
+            {
+            return progressBarDeterminate.getProgressTintList();
+        }
+    }
+    private String getProgressAsFraction()
+    {
+        return getProgress()+"/"+getMaxValue();
+    }
+    private String getProgressAsPercent()
+    {
+        double val=((double)getProgress()/(double)getMaxValue())*100;
+        return String.format(Locale.getDefault(),"%.2f",val)+"%";
+    }
+    private void setProgressText()
+    {
+        switch(progressViewMode)
+        {
+            case SHOW_AS_FRACTION:
+                progressTextView.setText(getProgressAsFraction());
+                break;
+            case SHOW_AS_PERCENT:
+                progressTextView.setText(getProgressAsPercent());
+                break;
+            case HIDE_PROGRESS_TEXT:
+                break;
+        }
     }
 }
 

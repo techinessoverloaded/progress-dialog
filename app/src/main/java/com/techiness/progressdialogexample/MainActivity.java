@@ -83,7 +83,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 6:
                 progressDialogDark.setMode(ProgressDialog.MODE_DETERMINATE);
+                progressDialogDark.setMaxValue(200);
                 progressDialogDark.setProgress(65);
+                progressDialogDark.showProgressTextAsFraction(true);
                 progressDialogDark.show();
                 break;
             case 7:
