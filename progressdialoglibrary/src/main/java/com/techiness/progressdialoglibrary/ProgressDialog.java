@@ -452,19 +452,11 @@ public class ProgressDialog
         }
     }
     /**
-     * Starts the ProgressDialog and shows it on Screen if proper Instantiation was done.
-     * Else NullPointerException is thrown.
+     * Starts the ProgressDialog and shows it on the Screen.
      */
-    public void show() throws NullPointerException
+    public void show()
     {
-        if(progressDialog==null)
-        {
-            throw new NullPointerException("ProgressDialog not initiated properly ! Make sure to give proper parameters while calling Constructor !");
-        }
-        else
-            {
-            progressDialog.show();
-        }
+        progressDialog.show();
     }
 
     /**
