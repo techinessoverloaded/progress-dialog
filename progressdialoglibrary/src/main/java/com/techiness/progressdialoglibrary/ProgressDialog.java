@@ -6,6 +6,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 package com.techiness.progressdialoglibrary;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -17,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import java.util.Locale;
 
 /**
@@ -42,13 +45,13 @@ public class ProgressDialog
     /**
      * The default Theme for ProgressDialog (even if it is not passed in Constructor).
      * Suitable for apps having a Light Theme.
-     * Theme cannot be changed after Instantiation of ProgressDialog Object.
+     * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
     public static final int THEME_LIGHT=2;
     /**
      * This theme is suitable for apps having a Dark Theme.
      * This Constant SHOULD be passed explicitly in the Constructor for setting Dark Theme for ProgressDialog.
-     * Theme cannot be changed after Instantiation of ProgressDialog Object.
+     * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
     public static final int THEME_DARK=3;
     private static final int SHOW_AS_FRACTION=4;
@@ -58,112 +61,86 @@ public class ProgressDialog
     private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
+    private ConstraintLayout dialogLayout;
     private int mode,theme,incrementAmt,progressViewMode;
     private boolean cancelable;
     /**
      * Simple Constructor accepting only the Activity Level Context as Argument.
-     * Theme is set as Light Theme by Default (which cannot be changed later).
+     * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int MODE)}).
      */
     public ProgressDialog(Context context)
     {
         this.context=context;
-        this.theme=THEME_LIGHT;
-        initialiseDialog();
+        initialiseDialog(THEME_LIGHT);
         setMode(MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Activity Level Context and Theme Constant as Arguments.
-     * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This cannot be changed later).
-     * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This cannot be changed later).
+     * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int MODE)}).
      */
     public ProgressDialog(Context context,int theme)
     {
         this.context = context;
-        this.theme = theme;
-        initialiseDialog();
+        initialiseDialog(theme);
         setMode(MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Mode Constant, Activity Level Context and Theme Constant as Arguments.
      * Mode is set as Determinate if {@link #MODE_DETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
      * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
-     * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This cannot be changed later).
-     * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This cannot be changed later).
+     * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      */
     public ProgressDialog(int mode,Context context,int theme)
     {
         this.context=context;
-        this.theme=theme;
-        initialiseDialog();
+        initialiseDialog(theme);
         setMode(mode);
     }
     /**
      * A Constructor accepting the Mode Constant and Activity Level Context as Arguments.
      * Mode is set as Determinate if {@link #MODE_DETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
      * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
-     * Theme is set as Light Theme by Default (which cannot be changed later).
+     * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      */
     public ProgressDialog(int mode,Context context)
     {
         this.context=context;
-        this.theme=THEME_LIGHT;
-        initialiseDialog();
+        initialiseDialog(THEME_LIGHT);
         setMode(mode);
     }
-    private boolean initialiseDialog() throws NullPointerException
+    private void initialiseDialog(int themeValue)
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
-        View view;
-        switch(theme)
+        View view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
+        dialogLayout=view.findViewById(R.id.dialog_layout);
+        titleView=view.findViewById(R.id.title_progressDialog);
+        textViewDeterminate=view.findViewById(R.id.textView_determinate);
+        textViewIndeterminate=view.findViewById(R.id.textView_indeterminate);
+        progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
+        progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
+        progressTextView=view.findViewById(R.id.ProgressTextView);
+        setTheme(themeValue);
+        builder.setView(view);
+        progressDialog = builder.create();
+        if (progressDialog.getWindow() != null)
         {
-            case THEME_LIGHT:
-                view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
-                titleView=view.findViewById(R.id.title_progressDialog);
-                textViewDeterminate=view.findViewById(R.id.textView_determinate);
-                textViewIndeterminate=view.findViewById(R.id.textView_indeterminate);
-                progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
-                progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
-                progressTextView=view.findViewById(R.id.ProgressTextView);
-                builder.setView(view);
-                break;
-            case THEME_DARK:
-                view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog_dark,null);
-                titleView=view.findViewById(R.id.title_progressDialog_dark);
-                textViewDeterminate=view.findViewById(R.id.textView_determinate_dark);
-                textViewIndeterminate=view.findViewById(R.id.textView_indeterminate_dark);
-                progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate_dark);
-                progressBarDeterminate=view.findViewById(R.id.progressbar_determinate_dark);
-                progressTextView=view.findViewById(R.id.ProgressTextViewDark);
-                builder.setView(view);
-                break;
-            default:
-                view=null;
-                break;
+            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
-        if(view!=null)
-        {
-            progressDialog = builder.create();
-            if (progressDialog.getWindow() != null) {
-                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            }
-            cancelable=false;
-            setCancelable(false);
-            return true;
-        }
-        else
-        {
-            throw new NullPointerException("Couldn't initialise ProgressDialog ! Make sure to call the Constructor properly !");
-        }
+        setCancelable(false);
     }
     /**
-     * Sets/Changes the mode of ProgressDialog.
+     * Sets/Changes the mode of ProgressDialog which is {@link #MODE_INDETERMINATE} by Default.
+     * If you're going to use only one Mode constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Mode during Instantiation.
      * @param MODE The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
      */
     public void setMode(int MODE)
     {
-        mode=MODE;
+        if(mode==MODE)
+            return;
         if(mode==MODE_INDETERMINATE)
         {
             textViewDeterminate.setVisibility(View.GONE);
@@ -185,6 +162,7 @@ public class ProgressDialog
                 incrementAmt=1;
             }
         }
+        mode=MODE;
     }
     /**
      * Returns the Current Mode of ProgressDialog.
@@ -195,6 +173,42 @@ public class ProgressDialog
         return mode;
     }
 
+    /**
+     * Sets/Changes the Theme of ProgressDialog which is {@link #THEME_LIGHT} by Default.
+     * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
+     * @param themeConstant The Theme Constant to be passed ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
+     */
+    public void setTheme(int themeConstant)
+    {
+        if(theme==themeConstant)
+            return;
+        if(themeConstant==THEME_LIGHT)
+        {
+            dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog));
+            titleView.setTextColor(ContextCompat.getColor(context,R.color.black));
+            textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
+            textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
+            progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
+        }
+        if(themeConstant==THEME_DARK)
+        {
+            dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog_dark));
+            titleView.setTextColor(ContextCompat.getColor(context,R.color.white));
+            textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
+            textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
+            progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
+        }
+        theme=themeConstant;
+    }
+
+    /**
+     * Returns the Current Theme of ProgressDialog.
+     * @return The current Theme of ProgressDialog ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
+     */
+    public int getTheme()
+    {
+        return theme;
+    }
     /**
      * Sets the Text to be displayed alongside ProgressBar. It is Loading by Default.
      * @param message The Text to be displayed inside ProgressDialog.
