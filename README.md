@@ -1,5 +1,9 @@
-# ProgressDialog Library
+# ProgressDialog Library [![](https://jitpack.io/v/techinessoverloaded/progress-dialog.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog)
+
 An easily customisable ProgressDialog Library for Android API 26 and above provided by Techiness Overloaded. Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
+
+## What's new in version 1.2.0 ?
+Getter and Setter methods for theme have been added in version 1.2.0. So, now you can change the theme dynamically as and when required, even after instantiation, unlike in version 1.1.1.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
@@ -12,7 +16,7 @@ allprojects {
 	    }
 ```
 
-Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is 1.1.1. Replace latest-version with 1.1.1 in the code below):
+Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is 1.2.0. Replace latest-version with 1.2.0 in the code below):
 ```groovy
 dependencies {
 	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version'
