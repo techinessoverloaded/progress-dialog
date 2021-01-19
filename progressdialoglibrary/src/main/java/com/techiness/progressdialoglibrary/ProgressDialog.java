@@ -72,8 +72,7 @@ public class ProgressDialog
     public ProgressDialog(Context context)
     {
         this.context=context;
-        initialiseDialog(THEME_LIGHT);
-        setMode(MODE_INDETERMINATE);
+        initialiseDialog(THEME_LIGHT,MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Activity Level Context and Theme Constant as Arguments.
@@ -84,8 +83,7 @@ public class ProgressDialog
     public ProgressDialog(Context context,int theme)
     {
         this.context = context;
-        initialiseDialog(theme);
-        setMode(MODE_INDETERMINATE);
+        initialiseDialog(theme,MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Mode Constant, Activity Level Context and Theme Constant as Arguments.
@@ -97,7 +95,7 @@ public class ProgressDialog
     public ProgressDialog(int mode,Context context,int theme)
     {
         this.context=context;
-        initialiseDialog(theme);
+        initialiseDialog(theme,mode);
         setMode(mode);
     }
     /**
@@ -109,10 +107,9 @@ public class ProgressDialog
     public ProgressDialog(int mode,Context context)
     {
         this.context=context;
-        initialiseDialog(THEME_LIGHT);
-        setMode(mode);
+        initialiseDialog(THEME_LIGHT,mode);
     }
-    private void initialiseDialog(int themeValue)
+    private void initialiseDialog(int themeValue,int modeValue)
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         View view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
@@ -124,6 +121,7 @@ public class ProgressDialog
         progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
         progressTextView=view.findViewById(R.id.ProgressTextView);
         setTheme(themeValue);
+        setMode(modeValue);
         builder.setView(view);
         progressDialog = builder.create();
         if (progressDialog.getWindow() != null)
