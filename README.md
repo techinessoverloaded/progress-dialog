@@ -16,7 +16,7 @@ allprojects {
 	    }
 ```
 
-Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is 1.2.1. Replace latest-version with 1.2.1 in the code below):
+Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is **1.2.1**. **Replace latest-version with 1.2.1 in the code below**):
 ```groovy
 dependencies {
 	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version'
@@ -58,4 +58,4 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ## Simple Examples
 
 ### Indeterminate ProgressDialog without Title (Light Theme)
-![](/output/indeter.jpg){:height="975px" width="540px"}
+<img src="./output/indeter.jpg" width=35% height=35%>
