@@ -65,3 +65,12 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/indeter.jpg" width=35% height=35%>
+
+### Indeterminate ProgressDialog without Title (Dark Theme) 	
+#### Code:
+```java
+ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter.jpg" width=35% height=35%>
