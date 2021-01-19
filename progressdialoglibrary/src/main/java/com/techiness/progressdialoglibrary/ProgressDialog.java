@@ -35,28 +35,28 @@ public class ProgressDialog
      * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
      * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
      */
-    public static final int MODE_INDETERMINATE=0;
+    public static final int MODE_INDETERMINATE=3;
     /**
      * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
      * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
      * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
      */
-    public static final int MODE_DETERMINATE=1;
+    public static final int MODE_DETERMINATE=4;
     /**
      * The default Theme for ProgressDialog (even if it is not passed in Constructor).
      * Suitable for apps having a Light Theme.
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
-    public static final int THEME_LIGHT=2;
+    public static final int THEME_LIGHT=1;
     /**
      * This theme is suitable for apps having a Dark Theme.
      * This Constant SHOULD be passed explicitly in the Constructor for setting Dark Theme for ProgressDialog.
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
-    public static final int THEME_DARK=3;
-    private static final int SHOW_AS_FRACTION=4;
-    private static final int SHOW_AS_PERCENT=5;
-    private static final int HIDE_PROGRESS_TEXT=6;
+    public static final int THEME_DARK=2;
+    private static final int SHOW_AS_FRACTION=5;
+    private static final int SHOW_AS_PERCENT=6;
+    private static final int HIDE_PROGRESS_TEXT=7;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
@@ -80,10 +80,10 @@ public class ProgressDialog
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int MODE)}).
      */
-    public ProgressDialog(Context context,int theme)
+    public ProgressDialog(Context context,int themeConstant)
     {
         this.context = context;
-        initialiseDialog(theme,MODE_INDETERMINATE);
+        initialiseDialog(themeConstant,MODE_INDETERMINATE);
     }
     /**
      * A Constructor accepting the Mode Constant, Activity Level Context and Theme Constant as Arguments.
@@ -92,10 +92,10 @@ public class ProgressDialog
      * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      */
-    public ProgressDialog(int mode,Context context,int theme)
+    public ProgressDialog(int modeConstant,Context context,int themeConstant)
     {
         this.context=context;
-        initialiseDialog(theme,mode);
+        initialiseDialog(themeConstant,modeConstant);
         setMode(mode);
     }
     /**
@@ -104,10 +104,10 @@ public class ProgressDialog
      * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      */
-    public ProgressDialog(int mode,Context context)
+    public ProgressDialog(int modeConstant,Context context)
     {
         this.context=context;
-        initialiseDialog(THEME_LIGHT,mode);
+        initialiseDialog(THEME_LIGHT,modeConstant);
     }
     private void initialiseDialog(int themeValue,int modeValue)
     {
