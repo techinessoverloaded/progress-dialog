@@ -73,4 +73,4 @@ ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DAR
 progressDialog.show();
 ```
 #### Output:
-<img src="./output/indeter.jpg" width=35% height=35%>
+<img src="./output/indeter_dark.jpg" width=35% height=35%>
