@@ -64,7 +64,7 @@ ProgressDialog progressDialog = new ProgressDialog(this);
 progressDialog.show();
 ```
 #### Output:
-<img src="./output/indeter.jpg" width=35% height=35%>
+<img src="./output/indeter.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog without Title (Dark Theme) 	
 #### Code:
@@ -73,4 +73,4 @@ ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DAR
 progressDialog.show();
 ```
 #### Output:
-<img src="./output/indeter_dark.jpg" width=35% height=35%>
+<img src="./output/indeter_dark.jpg" width=26% height=26%>
