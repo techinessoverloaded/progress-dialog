@@ -176,7 +176,7 @@ public class ProgressDialog
     /**
      * Sets/Changes the Theme of ProgressDialog which is {@link #THEME_LIGHT} by Default.
      * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
-     * @param themeConstant The Theme Constant to be passed ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
+     * @param themeConstant The Theme Constant to be passed.Use {@link #THEME_LIGHT} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_NO} for Light Mode. Use {@link #THEME_DARK} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_YES} for Dark Mode.
      * @return true if the passed themeConstant is valid and is set. false if the passed Theme is the current Theme or if themeConstant is invalid.
      */
     public boolean setTheme(int themeConstant)
