@@ -57,5 +57,11 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ```
 ## Simple Examples
 
-### Indeterminate ProgressDialog without Title (Light Theme)
+### Indeterminate ProgressDialog without Title (Light Theme) 	
+#### Code:
+```java
+ProgressDialog progressDialog = new ProgressDialog(this);
+progressDialog.show();
+```
+#### Output:
 <img src="./output/indeter.jpg" width=35% height=35%>
