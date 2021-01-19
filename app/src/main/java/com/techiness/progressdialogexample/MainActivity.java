@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity
         {
             case 1:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
-                progressDialog.setProgress(65);
                 progressDialog.hideTitle();
+                progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
                 progressDialog.show();
                 break;
