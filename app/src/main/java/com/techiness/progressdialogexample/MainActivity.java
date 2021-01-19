@@ -1,11 +1,9 @@
 package com.techiness.progressdialogexample;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
-
 import com.techiness.progressdialoglibrary.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity

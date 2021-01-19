@@ -135,34 +135,36 @@ public class ProgressDialog
     /**
      * Sets/Changes the mode of ProgressDialog which is {@link #MODE_INDETERMINATE} by Default.
      * If you're going to use only one Mode constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Mode during Instantiation.
-     * @param MODE The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @param modeConstant The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @return true if the passed modeConstant is valid and is set. false if the passed Mode is the current Mode or if modeConstant is invalid.
      */
-    public void setMode(int MODE)
+    public boolean setMode(int modeConstant)
     {
-        if(mode==MODE)
-            return;
-        if(MODE==MODE_INDETERMINATE)
+        if(modeConstant==mode)
+            return false;
+        switch (modeConstant)
         {
-            textViewDeterminate.setVisibility(View.GONE);
-            progressBarDeterminate.setVisibility(View.GONE);
-            progressTextView.setVisibility(View.GONE);
-            textViewIndeterminate.setVisibility(View.VISIBLE);
-            progressBarIndeterminate.setVisibility(View.VISIBLE);
+            case MODE_DETERMINATE:
+                textViewIndeterminate.setVisibility(View.GONE);
+                progressBarIndeterminate.setVisibility(View.GONE);
+                textViewDeterminate.setVisibility(View.VISIBLE);
+                progressBarDeterminate.setVisibility(View.VISIBLE);
+                progressViewMode=SHOW_AS_PERCENT;
+                progressTextView.setVisibility(View.VISIBLE);
+                incrementAmt = incrementAmt==0 ? 1 : incrementAmt;
+                mode=modeConstant;
+                return true;
+            case MODE_INDETERMINATE:
+                textViewDeterminate.setVisibility(View.GONE);
+                progressBarDeterminate.setVisibility(View.GONE);
+                progressTextView.setVisibility(View.GONE);
+                textViewIndeterminate.setVisibility(View.VISIBLE);
+                progressBarIndeterminate.setVisibility(View.VISIBLE);
+                mode=modeConstant;
+                return true;
+            default:
+                return false;
         }
-        if(MODE==MODE_DETERMINATE)
-        {
-            textViewIndeterminate.setVisibility(View.GONE);
-            progressBarIndeterminate.setVisibility(View.GONE);
-            textViewDeterminate.setVisibility(View.VISIBLE);
-            progressBarDeterminate.setVisibility(View.VISIBLE);
-            progressViewMode=SHOW_AS_PERCENT;
-            progressTextView.setVisibility(View.VISIBLE);
-            if(incrementAmt==0)
-            {
-                incrementAmt=1;
-            }
-        }
-        mode=MODE;
     }
     /**
      * Returns the Current Mode of ProgressDialog.
@@ -177,28 +179,33 @@ public class ProgressDialog
      * Sets/Changes the Theme of ProgressDialog which is {@link #THEME_LIGHT} by Default.
      * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
      * @param themeConstant The Theme Constant to be passed ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
+     * @return true if the passed themeConstant is valid and is set. false if the passed Theme is the current Theme or if themeConstant is invalid.
      */
-    public void setTheme(int themeConstant)
+    public boolean setTheme(int themeConstant)
     {
-        if(theme==themeConstant)
-            return;
-        if(themeConstant==THEME_LIGHT)
+        if(themeConstant==theme)
+            return false;
+        switch(themeConstant)
         {
-            dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog));
-            titleView.setTextColor(ContextCompat.getColor(context,R.color.black));
-            textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
-            textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
-            progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
+            case THEME_DARK:
+                dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog_dark));
+                titleView.setTextColor(ContextCompat.getColor(context,R.color.white));
+                textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
+                textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
+                progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
+                theme=themeConstant;
+                return true;
+            case THEME_LIGHT:
+                dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog));
+                titleView.setTextColor(ContextCompat.getColor(context,R.color.black));
+                textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
+                textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
+                progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
+                theme=themeConstant;
+                return true;
+            default:
+                return false;
         }
-        if(themeConstant==THEME_DARK)
-        {
-            dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog_dark));
-            titleView.setTextColor(ContextCompat.getColor(context,R.color.white));
-            textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
-            textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
-            progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
-        }
-        theme=themeConstant;
     }
 
     /**
