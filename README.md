@@ -2,8 +2,8 @@
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
-## What's new in version 1.2.1 ?
-Getter and Setter methods for theme have been added in version 1.2.1. So, now you can change the theme dynamically as and when required, even after instantiation, unlike in version 1.1.1.
+## What's New in Version 1.2.1 ?
+Getter and Setter methods for theme have been added in Version 1.2.1. So, now you can change the theme dynamically as and when required, even after instantiation, unlike in Version 1.1.1.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
@@ -58,4 +58,4 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ## Simple Examples
 
 ### Indeterminate ProgressDialog without Title (Light Theme)
-![](/output/indeter.jpg)
+![](/output/indeter.jpg){:height="975px" width="540px"}
