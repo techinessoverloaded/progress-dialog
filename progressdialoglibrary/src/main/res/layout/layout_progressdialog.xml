@@ -113,8 +113,27 @@
                 app:layout_constraintStart_toStartOf="@id/progressbar_determinate"
                 app:layout_constraintTop_toBottomOf="@id/progressbar_determinate"
                 android:textColor="@color/black_light"
+                android:textSize="13sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
+                />
+            <Button
+                android:id="@+id/negativeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="13dp"
+                app:layout_constraintTop_toBottomOf="@id/ProgressTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/bg_light"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:elevation="0dp"
+                android:text="@string/cancel"
+                android:visibility="gone"
+                android:textAllCaps="true"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

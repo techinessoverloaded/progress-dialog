@@ -14,9 +14,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -27,6 +30,7 @@ import java.util.Locale;
  * Built upon Android's AlertDialog. So no Compatibility and Reliability issues.
  * It provides a neat Material Design UI for ProgressDialog and supports both Determinate and Indeterminate ProgressBars.
  * It also has support for Dark Theme.
+ * It can also have a NegativeButton.
  * It can be customized according to User's needs using the provided Methods.
  */
 public class ProgressDialog
@@ -62,6 +66,7 @@ public class ProgressDialog
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private ConstraintLayout dialogLayout;
+    private Button negativeButton;
     private int mode,theme,incrementAmt,progressViewMode;
     private boolean cancelable;
     /**
@@ -120,6 +125,7 @@ public class ProgressDialog
         progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
         progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
         progressTextView=view.findViewById(R.id.ProgressTextView);
+        negativeButton=view.findViewById(R.id.negativeBtn);
         setTheme(themeValue);
         setMode(modeValue);
         builder.setView(view);
@@ -172,7 +178,6 @@ public class ProgressDialog
     {
         return mode;
     }
-
     /**
      * Sets/Changes the Theme of ProgressDialog which is {@link #THEME_LIGHT} by Default.
      * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
@@ -191,6 +196,8 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
+                negativeButton.setBackgroundColor(ContextCompat.getColor(context,R.color.bg_dark));
+                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.white));
                 theme=themeConstant;
                 return true;
             case THEME_LIGHT:
@@ -199,13 +206,14 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
+                negativeButton.setBackgroundColor(ContextCompat.getColor(context,R.color.bg_light));
+                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.black));
                 theme=themeConstant;
                 return true;
             default:
                 return false;
         }
     }
-
     /**
      * Returns the Current Theme of ProgressDialog.
      * @return The current Theme of ProgressDialog ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
@@ -215,35 +223,60 @@ public class ProgressDialog
         return theme;
     }
     /**
-     * Sets the Text to be displayed alongside ProgressBar. It is Loading by Default.
-     * @param message The Text to be displayed inside ProgressDialog.
+     * Sets the Text to be displayed alongside ProgressBar.
+     * Message is "Loading" by Default. This can be used if null is passed as parameter.
+     * Alternative to {@link #setMessage(int resID)}.
+     * @param message The Text to be displayed inside ProgressDialog. If null is passed, "Loading" will be set.
      */
-    public void setMessage(CharSequence message)
+    public void setMessage(@Nullable CharSequence message)
     {
-        if(mode==MODE_INDETERMINATE)
+        if(message!=null) 
         {
-            textViewIndeterminate.setText(message);
-        }
-        else
-        {
-            textViewDeterminate.setText(message);
+            if (!isDeterminate())
+            {
+                textViewIndeterminate.setText(message);
+            } 
+            else 
+                {
+                textViewDeterminate.setText(message);
+            }
         }
     }
-
     /**
-     * Sets the Title of ProgressDialog. It is ProgressDialog by Default.
-     * Title is Hidden by Default. This Method makes the Title Visible even if "null" is passed as argument.
-     * @param title The text to be set as the Title of ProgressDialog.
+     * Sets the Text from the resID provided, to be displayed alongside ProgressBar.
+     * Message is "Loading" by Default.
+     * Alternative to {@link #setMessage(CharSequence message)}.
+     * @param resID The resource id for the string resource.
      */
-    public void setTitle(CharSequence title)
+    public void setMessage(@StringRes int resID)
     {
-        titleView.setVisibility(View.VISIBLE);
-        if(title!=null)
-        {
-            titleView.setText(title);
-        }
+        setMessage(context.getText(resID).toString());
     }
-
+    /**
+     * Sets the Title of ProgressDialog.
+     * This is "ProgressDialog" by Default. This can be used by passing null as parameter.
+     * Title is Hidden by Default. This Method makes the Title Visible even if null is passed as parameter.
+     * Alternative to {@link #setTitle(int resID)}
+     * @param title The text to be set as the Title of ProgressDialog. If null is passed, "ProgressDialog" will be set.
+     */
+    public void setTitle(@Nullable CharSequence title)
+    {
+        if(title!=null)
+            titleView.setText(title);
+        if(isGone(titleView))
+            titleView.setVisibility(View.VISIBLE);
+    }
+    /**
+     * Sets the Title of ProgressDialog using the String resource given.
+     * Title is "ProgressDialog" by Default.
+     * Title is Hidden by Default. This Method makes the Title Visible even if "null" is passed as argument.
+     * Alternative to {@link #setTitle(CharSequence title)}.
+     * @param resID The resource id of the string resource.
+     */
+    public void setTitle(@StringRes int resID)
+    {
+        setTitle(context.getText(resID).toString());
+    }
     /**
      * Hides the Title of ProgressDialog.
      * Title is Hidden by Default.
@@ -251,9 +284,9 @@ public class ProgressDialog
      */
     public void hideTitle()
     {
-        titleView.setVisibility(View.GONE);
+        if(isVisible(titleView))
+            titleView.setVisibility(View.GONE);
     }
-
     /**
      * Sets the Progress Value of Determinate ProgressBar.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
@@ -264,7 +297,7 @@ public class ProgressDialog
      */
     public boolean setProgress(int progress)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressBarDeterminate.setProgress(progress,true);
             setProgressText();
@@ -275,7 +308,6 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
      * Sets the Increment Offset Value for Determinate ProgressBar.
      * The value is 1 by Default.
@@ -287,7 +319,7 @@ public class ProgressDialog
      */
     public boolean setIncrementValue(int increment)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             incrementAmt=increment;
             return true;
@@ -305,14 +337,7 @@ public class ProgressDialog
      */
     public int getIncrementValue()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return incrementAmt;
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? incrementAmt : -1;
     }
     /**
      * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using {@link #setIncrementValue(int increment)}.
@@ -325,7 +350,7 @@ public class ProgressDialog
      */
     public boolean incrementProgress()
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressBarDeterminate.incrementProgressBy(incrementAmt);
             setProgressText();
@@ -346,7 +371,7 @@ public class ProgressDialog
      */
     public boolean setMaxValue(int maxValue)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressBarDeterminate.setMax(maxValue);
             setProgress(getProgress());
@@ -365,14 +390,7 @@ public class ProgressDialog
      */
     public int getMaxValue()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return progressBarDeterminate.getMax();
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? progressBarDeterminate.getMax() : -1;
     }
     /**
      * Returns the Progress Value of Determinate ProgressBar.
@@ -381,14 +399,7 @@ public class ProgressDialog
      */
     public int getProgress()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return progressBarDeterminate.getProgress();
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? progressBarDeterminate.getProgress() : -1;
     }
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
@@ -400,7 +411,7 @@ public class ProgressDialog
      */
     public boolean showProgressTextAsFraction(boolean progressTextAsFraction)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             if(progressTextAsFraction)
             {
@@ -438,14 +449,14 @@ public class ProgressDialog
     /**
      * Hides the Progress TextView.
      * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress TextView is hidden. false otherwise.
      */
     public boolean hideProgressText()
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressViewMode=HIDE_PROGRESS_TEXT;
-            if(progressTextView.getVisibility()==View.VISIBLE)
+            if(!isGone(progressTextView))
             {
                 progressTextView.setVisibility(View.GONE);
             }
@@ -475,7 +486,6 @@ public class ProgressDialog
     {
         progressDialog.dismiss();
     }
-
     /**
      * Sets the {@link DialogInterface.OnCancelListener} for ProgressDialog.
      * Should be used only if {@link #setCancelable(boolean cancelable)} was passed with true earlier since cancel() cannot be called explicitly
@@ -483,7 +493,7 @@ public class ProgressDialog
      * @param onCancelListener {@link DialogInterface.OnCancelListener} listener object.
      * @return true if ProgressDialog is Cancelable. false otherwise.
      */
-    public boolean setOnCancelListener(DialogInterface.OnCancelListener onCancelListener)
+    public boolean setOnCancelListener(final DialogInterface.OnCancelListener onCancelListener)
     {
         if(cancelable)
         {
@@ -499,7 +509,7 @@ public class ProgressDialog
      * Sets the {@link DialogInterface.OnDismissListener} for ProgressDialog.
      * @param onDismissListener {@link DialogInterface.OnDismissListener} listener object.
      */
-    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener)
+    public void setOnDismissListener(final DialogInterface.OnDismissListener onDismissListener)
     {
         progressDialog.setOnDismissListener(onDismissListener);
     }
@@ -507,11 +517,10 @@ public class ProgressDialog
      * Sets the {@link DialogInterface.OnShowListener} for ProgressDialog.
      * @param onShowListener {@link DialogInterface.OnShowListener} listener object.
      */
-    public void setOnShowListener(DialogInterface.OnShowListener onShowListener)
+    public void setOnShowListener(final DialogInterface.OnShowListener onShowListener)
     {
         progressDialog.setOnShowListener(onShowListener);
     }
-
     /**
      * Toggles the Cancelable property of ProgressDialog which is false by Default.
      * If it is set to true, the User can cancel the ProgressDialog by pressing Back Button or by touching any other part of the screen.
@@ -523,7 +532,6 @@ public class ProgressDialog
         progressDialog.setCancelable(cancelable);
         this.cancelable=cancelable;
     }
-
     /**
      * Checks if ProgressValue is equal to MaxValue.
      * Can be used only in {@link #MODE_DETERMINATE}.
@@ -531,16 +539,8 @@ public class ProgressDialog
      */
     public boolean getHasProgressReachedMaxValue()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return getProgress() == getMaxValue();
-        }
-        else
-        {
-            return false;
-        }
+        return isDeterminate() ? getProgress() == getMaxValue() : false;
     }
-
     /**
      * Gets the Integral Value required to reach MaxValue from the current ProgressValue.
      * Can be used only in {@link #MODE_DETERMINATE}.
@@ -548,16 +548,8 @@ public class ProgressDialog
      */
     public int getRemainingProgress()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return getMaxValue()-getProgress();
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? getMaxValue()-getProgress() : -1;
     }
-
     /**
      * Sets the Secondary ProgressValue.
      * Can be used only in {@link #MODE_DETERMINATE}.
@@ -566,7 +558,7 @@ public class ProgressDialog
      */
     public boolean setSecondaryProgress(int secondaryProgress)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressBarDeterminate.setSecondaryProgress(secondaryProgress);
             return true;
@@ -576,7 +568,6 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
      * Gets the Secondary ProgressValue.
      * Can be used only in {@link #MODE_DETERMINATE}.
@@ -584,14 +575,7 @@ public class ProgressDialog
      */
     public int getSecondaryProgress()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return progressBarDeterminate.getSecondaryProgress();
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? progressBarDeterminate.getSecondaryProgress() : -1;
     }
     /**
      * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
@@ -600,14 +584,7 @@ public class ProgressDialog
      */
     public int getSecondaryRemainingProgress()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return getMaxValue()-getSecondaryProgress();
-        }
-        else
-        {
-            return -1;
-        }
+        return isDeterminate() ? getMaxValue()-getSecondaryProgress() : -1;
     }
     /**
      * Checks if Secondary ProgressValue is equal to MaxValue.
@@ -616,19 +593,13 @@ public class ProgressDialog
      */
     public boolean getHasSecondaryProgressReachedMaxValue()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return getSecondaryProgress()==getMaxValue();
-        }
-        else
-        {
-            return false;
-        }
+        return isDeterminate() ? getSecondaryProgress()==getMaxValue() : false;
     }
     /**
      * Sets a Custom Drawable to the Indeterminate ProgressBar.
      * Can be used only in {@link #MODE_INDETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
+     * Alternative to {@link #setIndeterminateDrawable(int resID)}.
      * @param progressDrawable The Drawable object used to draw the Indeterminate ProgressBar.
      * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
      * @see #getIndeterminateDrawable()
@@ -636,7 +607,7 @@ public class ProgressDialog
      */
     public boolean setIndeterminateDrawable(Drawable progressDrawable)
     {
-        if(mode==MODE_INDETERMINATE)
+        if(!isDeterminate())
         {
             progressBarIndeterminate.setIndeterminateDrawable(progressDrawable);
             return true;
@@ -646,7 +617,20 @@ public class ProgressDialog
             return false;
         }
     }
-
+    /**
+     * Sets a Custom Drawable from the passed Drawable resource to the Indeterminate ProgressBar.
+     * Can be used only in {@link #MODE_INDETERMINATE}.
+     * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
+     * Alternative to {@link #setIndeterminateDrawable(Drawable progressDrawable)}.
+     * @param resID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
+     * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
+     * @see #getIndeterminateDrawable()
+     * @see #setProgressTintList(ColorStateList tintList)
+     */
+    public boolean setIndeterminateDrawable(@DrawableRes int resID)
+    {
+        return setIndeterminateDrawable(ContextCompat.getDrawable(context,resID));
+    }
     /**
      * Gets the Drawable object used to draw the Indeterminate ProgressBar.
      * Can be used only in {@link #MODE_INDETERMINATE}.
@@ -657,19 +641,13 @@ public class ProgressDialog
     @Nullable
     public Drawable getIndeterminateDrawable()
     {
-        if(mode==MODE_INDETERMINATE)
-        {
-            return progressBarIndeterminate.getIndeterminateDrawable();
-        }
-        else
-        {
-            return null;
-        }
+        return !isDeterminate() ? progressBarIndeterminate.getIndeterminateDrawable() : null;
     }
     /**
      * Sets a Custom Drawable to the Determinate ProgressBar.
      * Can be used only in {@link #MODE_DETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
+     * Alternative to {@link #setDeterminateDrawable(int resID)}.
      * @param progressDrawable The Drawable object used to draw the Determinate ProgressBar.
      * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
      * @see #getDeterminateDrawable()
@@ -677,7 +655,7 @@ public class ProgressDialog
      */
     public boolean setDeterminateDrawable(Drawable progressDrawable)
     {
-        if(mode==MODE_DETERMINATE)
+        if(isDeterminate())
         {
             progressBarDeterminate.setProgressDrawable(progressDrawable);
             return true;
@@ -686,6 +664,20 @@ public class ProgressDialog
         {
             return false;
         }
+    }
+    /**
+     * Sets a Custom Drawable from the passed Drawable resource to the Determinate ProgressBar.
+     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
+     * Alternative to {@link #setDeterminateDrawable(Drawable progressDrawable)}.
+     * @param resID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
+     * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
+     * @see #getDeterminateDrawable()
+     * @see #setProgressTintList(ColorStateList tintList)
+     */
+    public boolean setDeterminateDrawable(@DrawableRes int resID)
+    {
+        return setDeterminateDrawable(ContextCompat.getDrawable(context,resID));
     }
     /**
      * Gets the Drawable object used to draw the Determinate ProgressBar.
@@ -697,16 +689,8 @@ public class ProgressDialog
     @Nullable
     public Drawable getDeterminateDrawable()
     {
-        if(mode==MODE_DETERMINATE)
-        {
-            return progressBarDeterminate.getProgressDrawable();
-        }
-        else
-        {
-            return null;
-        }
+        return isDeterminate() ? progressBarDeterminate.getProgressDrawable() : null;
     }
-
     /**
      * Applies a tint to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
      * Applies a tint to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
@@ -715,17 +699,11 @@ public class ProgressDialog
      */
     public void setProgressTintList(ColorStateList tintList)
     {
-        switch(mode)
-        {
-            case MODE_INDETERMINATE:
-                progressBarIndeterminate.setIndeterminateTintList(tintList);
-                break;
-            case MODE_DETERMINATE:
-                progressBarDeterminate.setProgressTintList(tintList);
-                break;
-        }
+        if(!isDeterminate())
+            progressBarIndeterminate.setIndeterminateTintList(tintList);
+        else
+            progressBarDeterminate.setProgressTintList(tintList);
     }
-
     /**
      * Returns the tint applied to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
      * Returns the tint applied to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
@@ -734,13 +712,76 @@ public class ProgressDialog
      */
     public ColorStateList getProgressTintList()
     {
-        if(mode==MODE_INDETERMINATE)
+        return isDeterminate() ? progressBarDeterminate.getProgressTintList() : progressBarIndeterminate.getIndeterminateTintList();
+    }
+    /**
+     * Sets the NegativeButton with the passed text for the ProgressDialog and also sets the OnClickListener for the Button.
+     * NegativeButton is hidden by default. This method makes it visible.
+     * Default Text for NegativeButton is "CANCEL". This can be used by passing null for text parameter.
+     * Alternative to {@link #setNegativeButton(int resID,View.OnClickListener listener)}
+     * @param text The text to be set in the NegativeButton. If null, "CANCEL" will be set.
+     * @param listener The {@link View.OnClickListener} listener to be set to NegativeButton.
+     * @see #setNegativeButton(CharSequence text)
+     */
+    public void setNegativeButton(@Nullable CharSequence text,final View.OnClickListener listener)
+    {
+        if(text!=null) 
+            negativeButton.setText(text);
+        negativeButton.setOnClickListener(listener);
+        if(isGone(negativeButton))
         {
-            return progressBarIndeterminate.getIndeterminateTintList();
+            negativeButton.setVisibility(View.VISIBLE);
         }
-        else
-            {
-            return progressBarDeterminate.getProgressTintList();
+    }
+    /**
+     * Sets the NegativeButton with the text from passed resource id for the ProgressDialog and also sets the OnClickListener for the Button.
+     * NegativeButton is hidden by default. This method makes it visible.
+     * Default Text for NegativeButton is "CANCEL". To use default text, use {@link #setNegativeButton(CharSequence text,View.OnClickListener listener)}
+     * @param resID The resource id of the text to be set in the NegativeButton.
+     * @param listener The {@link View.OnClickListener} listener to be set to NegativeButton.
+     * @see #setNegativeButton(int resID)
+     */
+    public void setNegativeButton(@StringRes int resID,final View.OnClickListener listener)
+    {
+        setNegativeButton(context.getText(resID).toString(),listener);
+    }
+    /**
+     * Sets the NegativeButton with passed text and also sets the Default OnClickListener which will close the ProgressDialog when NegativeButton is clicked.
+     * NegativeButton is hidden by default. This method makes it visible.
+     * Default Text for NegativeButton is "CANCEL". This can be used by passing null for text parameter.
+     * Alternative to {@link #setNegativeButton(int resID)}
+     * @param text The text to be set in the NegativeButton. If null, "CANCEL" will be set.
+     * @see #setNegativeButton(CharSequence text, View.OnClickListener listener)
+     */
+    public void setNegativeButton(@Nullable CharSequence text)
+    {
+        if(text!=null) 
+            negativeButton.setText(text);
+        negativeButton.setOnClickListener(v -> progressDialog.dismiss());
+    }
+    /**
+     * Sets the NegativeButton with the text from passed resource id and also sets the Default OnClickListener which will close the ProgressDialog when NegativeButton is clicked.
+     * NegativeButton is hidden by default. This method makes it visible.
+     * Default Text for NegativeButton is "CANCEL".
+     * Alternative to {@link #setNegativeButton(CharSequence text)}
+     * @param resID The resource id of the text to be set in the NegativeButton.
+     * @see #setNegativeButton(int resID, View.OnClickListener listener)
+     */
+    public void setNegativeButton(@StringRes int resID)
+    {
+        setNegativeButton(context.getText(resID).toString());
+    }
+    /**
+     * Hides the NegativeButton. NegativeButton is Hidden by Default.
+     * Use this method only if you have used {@link #setNegativeButton(CharSequence text, View.OnClickListener listener)} or
+     * {@link #setNegativeButton(int resID, View.OnClickListener listener)} or {@link #setNegativeButton(CharSequence text)} or
+     * {@link #setNegativeButton(int resID)} before.
+     */
+    public void hideNegativeButton()
+    {
+        if(!isGone(negativeButton))
+        {
+            negativeButton.setVisibility(View.GONE);
         }
     }
     private String getProgressAsFraction()
@@ -765,6 +806,18 @@ public class ProgressDialog
             case HIDE_PROGRESS_TEXT:
                 break;
         }
+    }
+    private boolean isVisible(View view)
+    {
+        return view.getVisibility()==View.VISIBLE;
+    }
+    private boolean isGone(View view)
+    {
+        return view.getVisibility()==View.GONE;
+    }
+    private boolean isDeterminate()
+    {
+        return mode==MODE_DETERMINATE;
     }
 }
 
