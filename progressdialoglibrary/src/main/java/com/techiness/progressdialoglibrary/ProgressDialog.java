@@ -196,7 +196,7 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
-                negativeButton.setBackgroundColor(ContextCompat.getColor(context,R.color.bg_dark));
+                negativeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.bg_dark)));
                 negativeButton.setTextColor(ContextCompat.getColor(context,R.color.white));
                 theme=themeConstant;
                 return true;
@@ -206,7 +206,7 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
-                negativeButton.setBackgroundColor(ContextCompat.getColor(context,R.color.bg_light));
+                negativeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.bg_light)));
                 negativeButton.setTextColor(ContextCompat.getColor(context,R.color.black));
                 theme=themeConstant;
                 return true;

@@ -3,13 +3,16 @@ package com.techiness.progressdialogexample;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.techiness.progressdialoglibrary.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity
 {
     ProgressDialog progressDialog;
-    Button showDeterBut,showInDeterBut,showDeterTitleBut,showInDeterTitleBut,showDeterWithoutProgressBut;
+    Button showDeterBut,showInDeterBut,showDeterTitleBut,showInDeterTitleBut,showDeterWithoutProgressBut,showDeterWithNegativeButton,showInDeterWithNegativeButton;
     SwitchCompat darkSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity
         showDeterTitleBut=findViewById(R.id.showDeterTitleBut);
         showInDeterTitleBut=findViewById(R.id.showInDeterTitleBut);
         showDeterWithoutProgressBut=findViewById(R.id.showDeterWithoutProgressBut);
+        showDeterWithNegativeButton=findViewById(R.id.showDeterWithNegativeButton);
+        showInDeterWithNegativeButton=findViewById(R.id.showInDeterWithNegativeButton);
     }
     private void setOnClickListeners()
     {
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity
         showDeterTitleBut.setOnClickListener(v->onClick(3));
         showInDeterTitleBut.setOnClickListener(v->onClick(4));
         showDeterWithoutProgressBut.setOnClickListener(v->onClick(5));
+        showDeterWithNegativeButton.setOnClickListener(v->onClick(6));
+        showInDeterWithNegativeButton.setOnClickListener(v->onClick(7));
     }
     private void onClick(int requestCode)
     {
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.hideTitle();
                 progressDialog.show();
+                progressDialog.hideNegativeButton();
                 break;
             case 3:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity
             case 4:
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.setTitle("Indeterminate");
+                progressDialog.hideNegativeButton();
                 progressDialog.show();
                 break;
             case 5:
@@ -87,6 +96,14 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.hideTitle();
                 progressDialog.show();
                 break;
+            case 6:
+                progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+                progressDialog.setNegativeButton("Dismiss", v -> Toast.makeText(MainActivity.this,"Custom OnClickListener for NegativeButton",Toast.LENGTH_LONG).show());
+                progressDialog.show();
+            case 7:
+                progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+                progressDialog.setNegativeButton(null, v -> Toast.makeText(MainActivity.this,"Custom OnClickListener for NegativeButton",Toast.LENGTH_LONG).show());
+                progressDialog.show();
             default:
                 break;
         }
