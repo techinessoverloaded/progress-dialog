@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
-                progressDialog.setNegativeButton(null);
+                progressDialog.setNegativeButton(null,"Determinate");
                 progressDialog.show();
                 break;
             case 2:
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 6:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
-                progressDialog.setNegativeButton("Determinate Dismiss",v -> {
+                progressDialog.setNegativeButton("Determinate Dismiss","Determinate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Determinate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 7:
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
-                progressDialog.setNegativeButton("Indeterminate Dismiss",v -> {
+                progressDialog.setNegativeButton("Indeterminate Dismiss","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });

@@ -114,16 +114,16 @@ public class ProgressDialog
     }
     private void initialiseDialog(int themeValue,int modeValue)
     {
-        AlertDialog.Builder builder=new AlertDialog.Builder(context);
-        View view=LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
-        dialogLayout=view.findViewById(R.id.dialog_layout);
-        titleView=view.findViewById(R.id.title_progressDialog);
-        textViewDeterminate=view.findViewById(R.id.textView_determinate);
-        textViewIndeterminate=view.findViewById(R.id.textView_indeterminate);
-        progressBarIndeterminate=view.findViewById(R.id.progressbar_indeterminate);
-        progressBarDeterminate=view.findViewById(R.id.progressbar_determinate);
-        progressTextView=view.findViewById(R.id.ProgressTextView);
-        negativeButton=view.findViewById(R.id.negativeBtn);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
+        dialogLayout = view.findViewById(R.id.dialog_layout);
+        titleView = view.findViewById(R.id.title_progressDialog);
+        textViewDeterminate = view.findViewById(R.id.textView_determinate);
+        textViewIndeterminate = view.findViewById(R.id.textView_indeterminate);
+        progressBarIndeterminate = view.findViewById(R.id.progressbar_indeterminate);
+        progressBarDeterminate = view.findViewById(R.id.progressbar_determinate);
+        progressTextView = view.findViewById(R.id.ProgressTextView);
+        negativeButton = view.findViewById(R.id.negativeBtn);
         setTheme(themeValue);
         setMode(modeValue);
         builder.setView(view);
@@ -154,7 +154,7 @@ public class ProgressDialog
                 progressViewMode=SHOW_AS_PERCENT;
                 progressTextView.setVisibility(View.VISIBLE);
                 incrementAmt = incrementAmt==0 ? 1 : incrementAmt;
-                mode=modeConstant;
+                mode = modeConstant;
                 return true;
             case MODE_INDETERMINATE:
                 textViewDeterminate.setVisibility(View.GONE);
@@ -162,7 +162,7 @@ public class ProgressDialog
                 progressTextView.setVisibility(View.GONE);
                 textViewIndeterminate.setVisibility(View.VISIBLE);
                 progressBarIndeterminate.setVisibility(View.VISIBLE);
-                mode=modeConstant;
+                mode = modeConstant;
                 return true;
             default:
                 return false;
@@ -184,7 +184,7 @@ public class ProgressDialog
      */
     public boolean setTheme(int themeConstant)
     {
-        if(themeConstant==theme)
+        if(themeConstant == theme)
             return false;
         switch(themeConstant)
         {
@@ -234,10 +234,10 @@ public class ProgressDialog
             {
                 textViewIndeterminate.setText(message);
             } 
-            else 
+            else
                 {
                 textViewDeterminate.setText(message);
-            }
+                }
         }
     }
     /**
@@ -316,8 +316,8 @@ public class ProgressDialog
         }
         else
             {
-            return false;
-        }
+                return false;
+            }
     }
     /**
      * Sets the Increment Offset Value for Determinate ProgressBar.
@@ -340,7 +340,6 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
      * Returns the Current Increment Offset Value.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
@@ -393,7 +392,6 @@ public class ProgressDialog
             return false;
         }
     }
-
     /**
      * Returns the MaxValue of Determinate ProgressBar.
      * Can be used only in {@link #MODE_DETERMINATE} Mode.
@@ -485,7 +483,6 @@ public class ProgressDialog
     {
         progressDialog.show();
     }
-
     /**
      * Dismisses the ProgressDialog, removing it from the Screen.
      * Calls {@link DialogInterface.OnDismissListener}, if it is set using {@link #setOnDismissListener(DialogInterface.OnDismissListener OnDismissListener)}.

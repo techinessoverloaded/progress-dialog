@@ -139,7 +139,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:text="@string/cancel"
-            android:visibility="visible"
+            android:visibility="gone"
             android:textAllCaps="true"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
