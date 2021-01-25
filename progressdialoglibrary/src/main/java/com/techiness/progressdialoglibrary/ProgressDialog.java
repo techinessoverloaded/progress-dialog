@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Button;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
@@ -61,7 +63,8 @@ public class ProgressDialog
     private static final int SHOW_AS_PERCENT=6;
     private static final int HIDE_PROGRESS_TEXT=7;
     private final Context context;
-    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView,negativeButton;
+    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
+    private Button negativeButton;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private ConstraintLayout dialogLayout;
@@ -112,7 +115,7 @@ public class ProgressDialog
         this.context=context;
         initialiseDialog(THEME_LIGHT,modeConstant);
     }
-    private void initialiseDialog(int themeValue,int modeValue)
+    private void initialiseDialog(int themeValue, int modeValue)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
@@ -194,7 +197,6 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
-                negativeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.bg_dark)));
                 negativeButton.setTextColor(ContextCompat.getColor(context,R.color.white));
                 theme=themeConstant;
                 return true;
@@ -204,7 +206,6 @@ public class ProgressDialog
                 textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
                 progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
-                negativeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.bg_light)));
                 negativeButton.setTextColor(ContextCompat.getColor(context,R.color.black));
                 theme=themeConstant;
                 return true;
@@ -244,20 +245,19 @@ public class ProgressDialog
      * Sets the Text from the resID provided, to be displayed alongside ProgressBar.
      * Message is "Loading" by Default.
      * Alternative to {@link #setMessage(CharSequence message)}.
-     * @param resID The resource id for the string resource.
+     * @param messageResID The resource id for the string resource.
      */
-    public void setMessage(@StringRes int resID)
+    public void setMessage(@StringRes int messageResID)
     {
-        setMessage(context.getText(resID).toString());
+        setMessage(context.getText(messageResID).toString());
     }
     /**
      * Sets the Title of ProgressDialog.
      * This is "ProgressDialog" by Default. This can be used by passing null as parameter.
      * Title is Hidden by Default. This Method makes the Title Visible even if null is passed as parameter.
      * Title will be made visible automatically if {@link #setNegativeButton(CharSequence text, CharSequence title, View.OnClickListener listener)} or
-     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} or {@link #setNegativeButton(CharSequence text, CharSequence title)} or
-     * {@link #setNegativeButton(int resID, int titleResID)} was used before.
-     * Alternative to {@link #setTitle(int resID)}
+     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} was used before.
+     * Alternative to {@link #setTitle(int resID)}.
      * @param title The text to be set as the Title of ProgressDialog. If null is passed, "ProgressDialog" will be set.
      */
     public void setTitle(@Nullable CharSequence title)
@@ -272,22 +272,20 @@ public class ProgressDialog
      * Title is "ProgressDialog" by Default.
      * Title is Hidden by Default. This Method makes the Title Visible even if "null" is passed as argument.
      * Title will be made visible automatically if {@link #setNegativeButton(CharSequence text,CharSequence title,View.OnClickListener listener)} or
-     * {@link #setNegativeButton(int resID,int titleResID,View.OnClickListener listener)} or {@link #setNegativeButton(CharSequence text,CharSequence title)} or
-     * {@link #setNegativeButton(int resID,int titleResID)} was used before.
+     * {@link #setNegativeButton(int resID,int titleResID,View.OnClickListener listener)} was used before.
      * Alternative to {@link #setTitle(CharSequence title)}.
-     * @param resID The resource id of the string resource.
+     * @param titleResID The resource id of the string resource.
      */
-    public void setTitle(@StringRes int resID)
+    public void setTitle(@StringRes int titleResID)
     {
-        setTitle(context.getText(resID).toString());
+        setTitle(context.getText(titleResID).toString());
     }
     /**
      * Hides the Title of ProgressDialog.
      * Title is Hidden by Default.
      * Use this method only if you have used {@link #setTitle(CharSequence title)} before.
      * This method won't work if {@link #setNegativeButton(CharSequence text, CharSequence title, View.OnClickListener listener)} or
-     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} or {@link #setNegativeButton(CharSequence text, CharSequence title)} or
-     * {@link #setNegativeButton(int resID, int titleResID)} was used before.
+     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} was used before.
      * @return true if Title is Hid. false if the Title is already Hidden or if NegativeButton is used.
      */
     public boolean hideTitle()
@@ -630,14 +628,14 @@ public class ProgressDialog
      * Can be used only in {@link #MODE_INDETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
      * Alternative to {@link #setIndeterminateDrawable(Drawable progressDrawable)}.
-     * @param resID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
+     * @param progressDrawableResID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
      * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
      * @see #getIndeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
-    public boolean setIndeterminateDrawable(@DrawableRes int resID)
+    public boolean setIndeterminateDrawable(@DrawableRes int progressDrawableResID)
     {
-        return setIndeterminateDrawable(ContextCompat.getDrawable(context,resID));
+        return setIndeterminateDrawable(ContextCompat.getDrawable(context,progressDrawableResID));
     }
     /**
      * Gets the Drawable object used to draw the Indeterminate ProgressBar.
@@ -678,14 +676,14 @@ public class ProgressDialog
      * Can be used only in {@link #MODE_DETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
      * Alternative to {@link #setDeterminateDrawable(Drawable progressDrawable)}.
-     * @param resID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
+     * @param progressDrawableResID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
      * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
      * @see #getDeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
-    public boolean setDeterminateDrawable(@DrawableRes int resID)
+    public boolean setDeterminateDrawable(@DrawableRes int progressDrawableResID)
     {
-        return setDeterminateDrawable(ContextCompat.getDrawable(context,resID));
+        return setDeterminateDrawable(ContextCompat.getDrawable(context,progressDrawableResID));
     }
     /**
      * Gets the Drawable object used to draw the Determinate ProgressBar.
@@ -726,16 +724,18 @@ public class ProgressDialog
      * Sets the NegativeButton with the passed text for the ProgressDialog and also sets the OnClickListener for the Button.
      * NegativeButton is hidden by default. This method makes it visible.
      * Default Text for NegativeButton is "CANCEL". This can be used by passing null for text parameter.
-     * Alternative to {@link #setNegativeButton(int resID,int titleResID,View.OnClickListener listener)}
+     * This method also enables the Title to be shown (even if it was hidden till then). If null is passed, default title "ProgressDialog" will be used.
+     * If {@link #setTitle(CharSequence)} or {@link #setTitle(int)} was used before, and new Title is passed, the new Title will Override the previously set Title.
+     * If null is passed for listener, default listener which dismisses the ProgressDialog when clicked, will be used.
+     * Alternative to {@link #setNegativeButton(int resID,int titleResID,View.OnClickListener listener)}.
      * @param text The text to be set in the NegativeButton. If null, "CANCEL" will be set.
      * @param listener The {@link View.OnClickListener} listener to be set to NegativeButton.
-     * @see #setNegativeButton(CharSequence text,CharSequence title)
      */
-    public void setNegativeButton(@Nullable CharSequence text,@Nullable CharSequence title,final View.OnClickListener listener)
+    public void setNegativeButton(@Nullable CharSequence text,@Nullable CharSequence title,@Nullable final View.OnClickListener listener)
     {
         if(text!=null) 
             negativeButton.setText(text);
-        negativeButton.setOnClickListener(listener);
+        negativeButton.setOnClickListener(listener==null ? (View.OnClickListener) v -> dismiss() : listener);
         if(isGone(negativeButton))
         {
             enableNegativeButton(title);
@@ -744,50 +744,22 @@ public class ProgressDialog
     /**
      * Sets the NegativeButton with the text from passed resource id for the ProgressDialog and also sets the OnClickListener for the Button.
      * NegativeButton is hidden by default. This method makes it visible.
-     * Default Text for NegativeButton is "CANCEL". To use default text, use {@link #setNegativeButton(CharSequence text,CharSequence title,View.OnClickListener listener)}
-     * @param resID The resource id of the text to be set in the NegativeButton.
+     * Default Text for NegativeButton is "CANCEL". To use default text, use {@link #setNegativeButton(CharSequence text,CharSequence title,View.OnClickListener listener)}.
+     * This method also enables the Title to be shown (even if it was hidden till then). If invalid titleResID is passed, default title "ProgressDialog" will be used.
+     * If {@link #setTitle(CharSequence)} or {@link #setTitle(int)} was used before, and new titleResID is passed, the new Title will Override the previously set Title.
+     * If null is passed for listener, default listener which dismisses the ProgressDialog when clicked, will be used.
+     * @param textResID The resource id of the text to be set in the NegativeButton.
      * @param listener The {@link View.OnClickListener} listener to be set to NegativeButton.
-     * @see #setNegativeButton(int resID,int titleResID)
      */
-    public void setNegativeButton(@StringRes int resID,@StringRes int titleResID,final View.OnClickListener listener)
+    public void setNegativeButton(@StringRes int textResID,@StringRes int titleResID,@Nullable final View.OnClickListener listener)
     {
-        setNegativeButton(context.getText(resID).toString(),context.getText(titleResID).toString(),listener);
-    }
-    /**
-     * Sets the NegativeButton with passed text and also sets the Default OnClickListener which will close the ProgressDialog when NegativeButton is clicked.
-     * NegativeButton is hidden by default. This method makes it visible.
-     * Default Text for NegativeButton is "CANCEL". This can be used by passing null for text parameter.
-     * Alternative to {@link #setNegativeButton(int resID,int titleResID)}
-     * @param text The text to be set in the NegativeButton. If null, "CANCEL" will be set.
-     * @see #setNegativeButton(CharSequence text,CharSequence title,View.OnClickListener listener)
-     */
-    public void setNegativeButton(@Nullable CharSequence text,@Nullable CharSequence title)
-    {
-        if(text!=null) 
-            negativeButton.setText(text);
-        negativeButton.setOnClickListener(v -> progressDialog.dismiss());
-        if(isGone(negativeButton))
-        {
-            enableNegativeButton(title);
-        }
-    }
-    /**
-     * Sets the NegativeButton with the text from passed resource id and also sets the Default OnClickListener which will close the ProgressDialog when NegativeButton is clicked.
-     * NegativeButton is hidden by default. This method makes it visible.
-     * Default Text for NegativeButton is "CANCEL".
-     * Alternative to {@link #setNegativeButton(CharSequence text,CharSequence title)}
-     * @param resID The resource id of the text to be set in the NegativeButton.
-     * @see #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)
-     */
-    public void setNegativeButton(@StringRes int resID,@StringRes int titleResID)
-    {
-        setNegativeButton(context.getText(resID).toString(),context.getText(titleResID).toString());
+        setNegativeButton(context.getText(textResID).toString(),context.getText(titleResID).toString(),listener);
     }
     /**
      * Hides the NegativeButton. NegativeButton is Hidden by Default.
      * Use this method only if you have used {@link #setNegativeButton(CharSequence text, CharSequence title, View.OnClickListener listener)} or
-     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} or {@link #setNegativeButton(CharSequence text, CharSequence title)} or
-     * {@link #setNegativeButton(int resID, int titleResID)} before.
+     * {@link #setNegativeButton(int resID, int titleResID, View.OnClickListener listener)} before.
+     * Note : This method will not hide the Title. You have to explicitly call {@link #hideTitle()} to do the same.
      */
     public void hideNegativeButton()
     {

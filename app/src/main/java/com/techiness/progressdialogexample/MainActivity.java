@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.techiness.progressdialoglibrary.ProgressDialog;
+
+
 
 public class MainActivity extends AppCompatActivity
 {
-    ProgressDialog progressDialog,progressDialog1,progressDialog2;
+    ProgressDialog progressDialog;
     Button showDeterBut,showInDeterBut,showDeterTitleBut,showInDeterTitleBut,showDeterWithoutProgressBut,showDeterWithNegativeButton,showInDeterWithNegativeButton;
     SwitchCompat darkSwitch;
     @Override
@@ -20,11 +21,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         progressDialog = new ProgressDialog(this);
-        progressDialog1=new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this);
-        progressDialog2=new ProgressDialog(ProgressDialog.MODE_INDETERMINATE,this);
         progressDialog.setCancelable(true);
-        progressDialog1.setCancelable(true);
-        progressDialog2.setCancelable(true);
         bindViews();
         setOnClickListeners();
     }
@@ -45,16 +42,12 @@ public class MainActivity extends AppCompatActivity
             if(isChecked&&progressDialog.getTheme()!=ProgressDialog.THEME_DARK)
             {
                 progressDialog.setTheme(ProgressDialog.THEME_DARK);
-                progressDialog1.setTheme(ProgressDialog.THEME_DARK);
-                progressDialog2.setTheme(ProgressDialog.THEME_DARK);
             }
             else
             {
                 if(progressDialog.getTheme()!=ProgressDialog.THEME_LIGHT)
                 {
                     progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
-                    progressDialog1.setTheme(ProgressDialog.THEME_LIGHT);
-                    progressDialog2.setTheme(ProgressDialog.THEME_LIGHT);
                 }
             }
         });
@@ -88,6 +81,8 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
                 progressDialog.setTitle("Determinate");
                 progressDialog.showProgressTextAsFraction(true);
+                progressDialog.hideNegativeButton();
+                progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(80);
                 progressDialog.show();
@@ -107,7 +102,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 6:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
-                progressDialog.setNegativeButton("Determinate Dismiss","Determinate",v -> {
+                progressDialog.setNegativeButton("Cancel","Determinate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Determinate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });
@@ -115,7 +110,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 7:
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
-                progressDialog.setNegativeButton("Indeterminate Dismiss","Indeterminate",v -> {
+                progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });
