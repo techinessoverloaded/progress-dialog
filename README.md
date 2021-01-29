@@ -6,7 +6,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Highly Customisable.
 - Has support for Dark Theme.
 - Can be set in both Determinate and Indeterminate Mode.
-- Has support for Negative Button.
+- Has support for Negative Button, Title, and ProgressView.
 
 ## What's New in Version 1.2.2 ?
 Negative Button has been added in Version 1.2.2. You can set and hide Negative Button as and when required with default or Custom OnClickListener.
@@ -82,7 +82,7 @@ progressDialog.show();
 ### Indeterminate ProgressDialog without Title (Dark Theme) 	
 #### Code:
 ```java
-ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK);
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.show();
 ```
 #### Output:
