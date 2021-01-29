@@ -2,8 +2,14 @@
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
-## What's New in Version 1.2.1 ?
-Getter and Setter methods for theme have been added in Version 1.2.1. So, now you can change the theme dynamically as and when required, even after instantiation, unlike in Version 1.1.1.
+## Key Features
+- Highly Customisable.
+- Has support for Dark Theme.
+- Can be set in both Determinate and Indeterminate Mode.
+- Has support for Negative Button.
+
+## What's New in Version 1.2.2 ?
+Negative Button has been added in Version 1.2.1. You can set and hide Negative Button as and when required with default or Custom OnClickListener.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
@@ -16,7 +22,7 @@ allprojects {
 	    }
 ```
 
-Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is **1.2.1**. **Replace latest-version with 1.2.1 in the code below**):
+Now, include the following dependency in your App-level **build.gradle** file (Note: Current latest version is **1.2.2**. **Replace latest-version with 1.2.2 in the code below**):
 ```groovy
 dependencies {
 	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version'
