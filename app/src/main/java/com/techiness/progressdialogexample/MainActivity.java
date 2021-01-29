@@ -3,12 +3,9 @@ package com.techiness.progressdialogexample;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.techiness.progressdialoglibrary.ProgressDialog;
-
-
 
 public class MainActivity extends AppCompatActivity
 {
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
-                progressDialog.setNegativeButton(null,"Determinate",null);
+                progressDialog.hideNegativeButton();
                 progressDialog.show();
                 break;
             case 2:
@@ -102,12 +99,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 6:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
-                progressDialog.setProgress(0);
+                progressDialog.setProgress(54);
+                progressDialog.setSecondaryProgress(0);
                 progressDialog.showProgressTextAsFraction(true);
-                progressDialog.setNegativeButton("Cancel","Determinate",v -> {
-                    Toast.makeText(MainActivity.this,"Custom OnClickListener for Determinate",Toast.LENGTH_LONG).show();
-                    progressDialog.dismiss();
-                });
+                progressDialog.setNegativeButton("Cancel","Determinate",null);
                 progressDialog.show();
                 break;
             case 7:
