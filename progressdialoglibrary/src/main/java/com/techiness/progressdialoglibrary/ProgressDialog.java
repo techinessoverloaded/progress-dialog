@@ -62,8 +62,7 @@ public class ProgressDialog
     private static final int SHOW_AS_PERCENT=6;
     private static final int HIDE_PROGRESS_TEXT=7;
     private final Context context;
-    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
-    private Button negativeButton;
+    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView,negativeButton;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private ConstraintLayout dialogLayout;

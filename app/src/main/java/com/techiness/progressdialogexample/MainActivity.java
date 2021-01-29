@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
-                progressDialog.setNegativeButton(null,"Determinate");
+                progressDialog.setNegativeButton(null,"Determinate",null);
                 progressDialog.show();
                 break;
             case 2:

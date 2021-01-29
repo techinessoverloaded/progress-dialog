@@ -121,22 +121,24 @@
                 android:layout_marginStart="8dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <Button
+        <TextView
             android:id="@+id/negativeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="2dp"
+            android:padding="10dp"
             app:layout_constraintTop_toBottomOf="@id/layoutContent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:gravity="center"
             android:text="@string/cancel"
-            android:visibility="visible"
+            android:visibility="gone"
             android:textAllCaps="true"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
