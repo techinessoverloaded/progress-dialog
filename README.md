@@ -88,6 +88,28 @@ progressDialogDk.show();
 #### Output:
 <img src="./output/indeter_dark.jpg" width=26% height=26%>
 
+### Determinate ProgressDialog without Title, without ProgressView (Light Theme)
+#### Code:
+```java
+progressDialogLt.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialogLt.setProgress(65);
+progressDialogLt.hideProgressText();
+progressDialogLt.show();
+```
+#### Output:
+<img src="./output/deter_without_progress.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog without Title, without ProgressView (Dark Theme)
+#### Code:
+```java
+progressDialogDk.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialogDk.setProgress(65);
+progressDialogDk.hideProgressText();
+progressDialogDk.show();
+```
+#### Output:
+<img src="./output/deter_without_progress_dark.jpg" width=26% height=26%>
+
 ### Determinate ProgressDialog without Title, with ProgressView as Percentage (Light Theme)
 #### Code:
 ```java
