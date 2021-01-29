@@ -132,7 +132,7 @@
             app:layout_constraintTop_toBottomOf="@id/layoutContent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackground"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
