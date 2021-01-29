@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 6:
                 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+                progressDialog.setProgress(0);
+                progressDialog.showProgressTextAsFraction(true);
                 progressDialog.setNegativeButton("Cancel","Determinate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Determinate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
