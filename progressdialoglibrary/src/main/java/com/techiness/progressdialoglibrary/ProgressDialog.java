@@ -153,6 +153,7 @@ public class ProgressDialog
                 textViewDeterminate.setVisibility(View.VISIBLE);
                 progressBarDeterminate.setVisibility(View.VISIBLE);
                 progressViewMode=SHOW_AS_PERCENT;
+                setProgress(0);
                 progressTextView.setVisibility(View.VISIBLE);
                 incrementAmt = incrementAmt==0 ? 1 : incrementAmt;
                 mode = modeConstant;
