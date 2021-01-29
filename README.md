@@ -73,8 +73,8 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
 #### Code:
 ```java
-ProgressDialog progressDialogLt = new ProgressDialog(this);
-progressDialogLt.show();
+ProgressDialog progressDialog = new ProgressDialog(this);
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/indeter.jpg" width=26% height=26%>
@@ -82,8 +82,8 @@ progressDialogLt.show();
 ### Indeterminate ProgressDialog without Title (Dark Theme) 	
 #### Code:
 ```java
-ProgressDialog progressDialogDk = new ProgressDialog(this,ProgressDialog.THEME_DARK);
-progressDialogDk.show();
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/indeter_dark.jpg" width=26% height=26%>
@@ -91,11 +91,12 @@ progressDialogDk.show();
 ### Determinate ProgressDialog without Title, without ProgressView, with Secondary Progress (Light Theme)
 #### Code:
 ```java
-progressDialogLt.setMode(ProgressDialog.MODE_DETERMINATE);
-progressDialogLt.setProgress(65);
-progressDialogLt.setSecondaryProgress(80);
-progressDialogLt.hideProgressText();
-progressDialogLt.show();
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.hideProgressText();
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_without_progress.jpg" width=26% height=26%>
@@ -103,11 +104,12 @@ progressDialogLt.show();
 ### Determinate ProgressDialog without Title, without ProgressView, with Secondary Progress (Dark Theme)
 #### Code:
 ```java
-progressDialogDk.setMode(ProgressDialog.MODE_DETERMINATE);
-progressDialogDk.setProgress(65);
-progressDialogDk.setSecondaryProgress(80);
-progressDialogDk.hideProgressText();
-progressDialogDk.show();
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.hideProgressText();
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_without_progress_dark.jpg" width=26% height=26%>
@@ -115,9 +117,10 @@ progressDialogDk.show();
 ### Determinate ProgressDialog without Title, with ProgressView as Percentage (Light Theme)
 #### Code:
 ```java
-progressDialogLt.setMode(ProgressDialog.MODE_DETERMINATE);
-progressDialogLt.setProgress(65);
-progressDialogLt.show();
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_percent.jpg" width=26% height=26%>
@@ -125,10 +128,10 @@ progressDialogLt.show();
 ### Determinate ProgressDialog without Title, with ProgressView as Percentage (Dark Theme)
 #### Code:
 ```java
-progressDialogDk.setMode(ProgressDialog.MODE_DETERMINATE);
-progressDialogDk.setProgress(65);
-progressDialogDk.show();
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_percent_dark.jpg" width=26% height=26%>
-
