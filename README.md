@@ -9,7 +9,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Has support for Negative Button.
 
 ## What's New in Version 1.2.2 ?
-Negative Button has been added in Version 1.2.1. You can set and hide Negative Button as and when required with default or Custom OnClickListener.
+Negative Button has been added in Version 1.2.2. You can set and hide Negative Button as and when required with default or Custom OnClickListener.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
