@@ -157,3 +157,31 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/indeter_with_title_dark.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Light Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setTitle("Determinate");
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_title.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Dark Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setTitle("Determinate");
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_title_dark.jpg" width=26% height=26%>
