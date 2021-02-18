@@ -135,3 +135,25 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_percent_dark.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with Title (Light Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setTitle("Indeterminate");
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_title.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with Title (Dark Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setTitle("Indeterminate");
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_title_dark.jpg" width=26% height=26%>
