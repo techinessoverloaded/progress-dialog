@@ -70,6 +70,8 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ```
 ## Simple Examples
 
+#### Note: These examples are for simple illustration of ProgressDialog Library. For completely knowing about the Library, refer to the javadoc Documentation of the Library through Android Studio.
+
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
 #### Code:
 ```java
@@ -135,6 +137,30 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_percent_dark.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog without ProgressView (Light Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.hideProgressText();
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_without_progress.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog without ProgressView (Dark Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(65);
+progressDialog.hideProgressText();
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_without_progress_dark.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with Title (Light Theme)
 #### Code:
