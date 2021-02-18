@@ -185,3 +185,33 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_title_dark.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with NegativeButton (Light Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
+                    Toast.makeText(this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                });
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_negativebtn.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with NegativeButton (Dark Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
+                    Toast.makeText(this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                });
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_negativebtn_dark.jpg" width=26% height=26%>
