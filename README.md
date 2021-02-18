@@ -186,7 +186,7 @@ progressDialog.show();
 #### Output:
 <img src="./output/deter_title_dark.jpg" width=26% height=26%>
 
-### Indeterminate ProgressDialog with NegativeButton (Light Theme)
+### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Light Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
 #### Code:
 ```java
@@ -201,7 +201,7 @@ progressDialog.show();
 #### Output:
 <img src="./output/indeter_with_negativebtn.jpg" width=26% height=26%>
 
-### Indeterminate ProgressDialog with NegativeButton (Dark Theme)
+### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Dark Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
 #### Code:
 ```java
@@ -215,3 +215,31 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/indeter_with_negativebtn_dark.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Light Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(54);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.setNegativeButton("Cancel","Determinate",null);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_with_negativebtn.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Dark Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(54);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.setNegativeButton("Cancel","Determinate",null);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_with_negativebtn_dark.jpg" width=26% height=26%>
