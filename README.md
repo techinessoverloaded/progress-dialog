@@ -26,7 +26,7 @@ Now, include the following dependency in your App-level **build.gradle** file:
 #### Note: Current latest version is **1.2.2**. **Replace latest-version with 1.2.2 in the code below**
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version'
+	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.2.2
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
