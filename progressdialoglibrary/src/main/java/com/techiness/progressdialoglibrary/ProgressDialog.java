@@ -23,7 +23,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import java.util.Locale;
-
+/**
+ * Provides Mode Constants for setting/getting the Mode of ProgressDialog
+ */
+enum Mode
+{
+    /**
+     * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
+     * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
+     */
+    INDETERMINATE,
+    /**
+     * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
+     * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
+     * Progress Value is shown as Percentage by Default which can be changed using {@link ProgressDialog#showProgressTextAsFraction(boolean showProgressTextAsFraction)};
+     */
+    DETERMINATE
+}
 /**
  * A highly customisable ProgressDialog Class for Android API Level 24 and above.
  * Built upon Android's AlertDialog. So no Compatibility and Reliability issues.
@@ -34,23 +50,6 @@ import java.util.Locale;
  */
 public class ProgressDialog
 {
-    /**
-     * Provides Mode Constants for setting/getting the Mode of ProgressDialog
-     */
-    public enum Mode
-    {
-        /**
-         * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
-         * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
-         */
-        INDETERMINATE,
-        /**
-         * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
-         * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
-         * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
-         */
-        DETERMINATE
-    }
     /**
      * The default Theme for ProgressDialog (even if it is not passed in Constructor).
      * Suitable for apps having a Light Theme.
@@ -606,11 +605,11 @@ public class ProgressDialog
     }
     /**
      * Sets a Custom Drawable to the Indeterminate ProgressBar.
-     * Can be used only in {@link #MODE_INDETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
      * Alternative to {@link #setIndeterminateDrawable(int resID)}.
      * @param progressDrawable The Drawable object used to draw the Indeterminate ProgressBar.
-     * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
+     * @return true if mode is {@link Mode#INDETERMINATE} and the Drawable is set. false otherwise.
      * @see #getIndeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
@@ -628,11 +627,11 @@ public class ProgressDialog
     }
     /**
      * Sets a Custom Drawable from the passed Drawable resource to the Indeterminate ProgressBar.
-     * Can be used only in {@link #MODE_INDETERMINATE}.
+     * Can be used only in {@link Mode#INDETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
      * Alternative to {@link #setIndeterminateDrawable(Drawable progressDrawable)}.
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
-     * @return true if mode is {@link #MODE_INDETERMINATE} and the Drawable is set. false otherwise.
+     * @return true if mode is {@link Mode#INDETERMINATE} and the Drawable is set. false otherwise.
      * @see #getIndeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
@@ -642,8 +641,8 @@ public class ProgressDialog
     }
     /**
      * Gets the Drawable object used to draw the Indeterminate ProgressBar.
-     * Can be used only in {@link #MODE_INDETERMINATE}.
-     * @return Drawable Object if mode is {@link #MODE_INDETERMINATE}. null otherwise.
+     * Can be used only in {@link Mode#INDETERMINATE}.
+     * @return Drawable Object if mode is {@link Mode#INDETERMINATE}. null otherwise.
      * @see #setIndeterminateDrawable(Drawable progressDrawable)
      * @see #getProgressTintList()
      */
@@ -701,7 +700,7 @@ public class ProgressDialog
         return isDeterminate() ? progressBarDeterminate.getProgressDrawable() : null;
     }
     /**
-     * Applies a tint to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
+     * Applies a tint to Indeterminate Drawable if mode is {@link Mode#INDETERMINATE}.
      * Applies a tint to Determinate Drawable if mode is {@link Mode#DETERMINATE}.
      * @param tintList The ColorStateList object used to apply tint to ProgressBar's Drawable.
      * @see #getProgressTintList()
@@ -714,7 +713,7 @@ public class ProgressDialog
             progressBarDeterminate.setProgressTintList(tintList);
     }
     /**
-     * Returns the tint applied to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
+     * Returns the tint applied to Indeterminate Drawable if mode is {@link Mode#INDETERMINATE}.
      * Returns the tint applied to Determinate Drawable if mode is {@link Mode#DETERMINATE}.
      * @return ColorStateList object specifying the tint applied to ProgressBar's Drawable.
      * @see #setProgressTintList(ColorStateList tintList)

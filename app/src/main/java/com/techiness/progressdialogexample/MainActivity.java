@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         switch(requestCode)
         {
             case 1:
-                progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+                progressDialog.setMode(ProgressDialog.Mode.DETERMINATE);
                 progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
