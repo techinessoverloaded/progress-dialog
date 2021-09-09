@@ -26,7 +26,7 @@ Now, include the following dependency in your App-level **build.gradle** file:
 #### Note: Current latest version is **1.2.2**. **Replace latest-version with 1.2.2 in the code below**
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version'
+	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.2.2
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
@@ -69,6 +69,8 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this,ProgressDialog.THEME_DARK); 
 ```
 ## Simple Examples
+
+#### Note: These examples are for simple illustration of ProgressDialog Library. For completely knowing about the Library, refer to the javadoc Documentation of the Library through Android Studio.
 
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
 #### Code:
@@ -135,3 +137,111 @@ progressDialog.show();
 ```
 #### Output:
 <img src="./output/deter_percent_dark.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with Title (Light Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setTitle("Indeterminate");
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_title.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with Title (Dark Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setTitle("Indeterminate");
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_title_dark.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Light Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setTitle("Determinate");
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_title.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Dark Theme)
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setTitle("Determinate");
+progressDialog.setProgress(65);
+progressDialog.setSecondaryProgress(80);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_title_dark.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Light Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
+                    Toast.makeText(this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                });
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_negativebtn.jpg" width=26% height=26%>
+
+### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Dark Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
+                    Toast.makeText(this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                });
+progressDialog.show();
+```
+#### Output:
+<img src="./output/indeter_with_negativebtn_dark.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Light Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(54);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.setNegativeButton("Cancel","Determinate",null);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_with_negativebtn.jpg" width=26% height=26%>
+
+### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Dark Theme)
+##### Note: Enabling NegativeButton will automatically enable TitleView.
+#### Code:
+```java
+progressDialog.setTheme(ProgressDialog.THEME_DARK);
+progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
+progressDialog.setProgress(54);
+progressDialog.showProgressTextAsFraction(true);
+progressDialog.setNegativeButton("Cancel","Determinate",null);
+progressDialog.show();
+```
+#### Output:
+<img src="./output/deter_with_negativebtn_dark.jpg" width=26% height=26%>
