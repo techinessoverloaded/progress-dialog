@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Button;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -36,16 +35,22 @@ import java.util.Locale;
 public class ProgressDialog
 {
     /**
-     * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
-     * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
+     * Provides Mode Constants for setting/getting the Mode of ProgressDialog
      */
-    public static final int MODE_INDETERMINATE=3;
-    /**
-     * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
-     * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
-     * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
-     */
-    public static final int MODE_DETERMINATE=4;
+    public enum Mode
+    {
+        /**
+         * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
+         * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
+         */
+        INDETERMINATE,
+        /**
+         * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
+         * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
+         * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
+         */
+        DETERMINATE
+    }
     /**
      * The default Theme for ProgressDialog (even if it is not passed in Constructor).
      * Suitable for apps having a Light Theme.
@@ -66,54 +71,54 @@ public class ProgressDialog
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private ConstraintLayout dialogLayout;
-    private int mode,theme,incrementAmt,progressViewMode;
+    private int theme,incrementAmt,progressViewMode;
+    private Mode mode=Mode.INDETERMINATE;
     private boolean cancelable;
     /**
      * Simple Constructor accepting only the Activity Level Context as Argument.
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
-     * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int MODE)}).
+     * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(Mode modeConstant)}).
      */
     public ProgressDialog(Context context)
     {
         this.context=context;
-        initialiseDialog(THEME_LIGHT,MODE_INDETERMINATE);
+        initialiseDialog(THEME_LIGHT,Mode.INDETERMINATE);
     }
     /**
      * A Constructor accepting the Activity Level Context and Theme Constant as Arguments.
      * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
-     * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int MODE)}).
+     * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(Mode modeConstant)}).
      */
     public ProgressDialog(Context context,int themeConstant)
     {
         this.context = context;
-        initialiseDialog(themeConstant,MODE_INDETERMINATE);
+        initialiseDialog(themeConstant,Mode.INDETERMINATE);
     }
     /**
      * A Constructor accepting the Mode Constant, Activity Level Context and Theme Constant as Arguments.
-     * Mode is set as Determinate if {@link #MODE_DETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
-     * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
+     * Mode is set as Determinate if {@link } is passed (This can be changed later using {@link #setMode(Mode modeConstant)}).
+     * Mode is set as Indeterminate if {@link Mode#INDETERMINATE} is passed (This can be changed later using {@link #setMode(Mode modeConstant)}).
      * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      */
-    public ProgressDialog(int modeConstant,Context context,int themeConstant)
+    public ProgressDialog(Mode modeConstant,Context context,int themeConstant)
     {
         this.context=context;
         initialiseDialog(themeConstant,modeConstant);
-        setMode(mode);
     }
     /**
      * A Constructor accepting the Mode Constant and Activity Level Context as Arguments.
-     * Mode is set as Determinate if {@link #MODE_DETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
-     * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int MODE)}).
+     * Mode is set as Determinate if {@link Mode#DETERMINATE} is passed (This can be changed later using {@link #setMode(Mode modeConstant)}).
+     * Mode is set as Indeterminate if {@link Mode#INDETERMINATE} is passed (This can be changed later using {@link #setMode(Mode modeConstant)}).
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      */
-    public ProgressDialog(int modeConstant,Context context)
+    public ProgressDialog(Mode modeConstant,Context context)
     {
         this.context=context;
         initialiseDialog(THEME_LIGHT,modeConstant);
     }
-    private void initialiseDialog(int themeValue, int modeValue)
+    private void initialiseDialog(int themeValue, Mode modeValue)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
@@ -136,18 +141,18 @@ public class ProgressDialog
         setCancelable(false);
     }
     /**
-     * Sets/Changes the mode of ProgressDialog which is {@link #MODE_INDETERMINATE} by Default.
+     * Sets/Changes the mode of ProgressDialog which is {@link Mode#INDETERMINATE} by Default.
      * If you're going to use only one Mode constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Mode during Instantiation.
-     * @param modeConstant The Mode Constant to be passed as Argument ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @param modeConstant The Mode Constant to be passed as Argument ({@link Mode#DETERMINATE} or {@link Mode#INDETERMINATE}).
      * @return true if the passed modeConstant is valid and is set. false if the passed Mode is the current Mode or if modeConstant is invalid.
      */
-    public boolean setMode(int modeConstant)
+    public boolean setMode(Mode modeConstant)
     {
         if(modeConstant==mode)
             return false;
         switch (modeConstant)
         {
-            case MODE_DETERMINATE:
+            case DETERMINATE:
                 textViewIndeterminate.setVisibility(View.GONE);
                 progressBarIndeterminate.setVisibility(View.GONE);
                 textViewDeterminate.setVisibility(View.VISIBLE);
@@ -157,7 +162,7 @@ public class ProgressDialog
                 incrementAmt = incrementAmt==0 ? 1 : incrementAmt;
                 mode = modeConstant;
                 return true;
-            case MODE_INDETERMINATE:
+            case INDETERMINATE:
                 textViewDeterminate.setVisibility(View.GONE);
                 progressBarDeterminate.setVisibility(View.GONE);
                 progressTextView.setVisibility(View.GONE);
@@ -171,9 +176,9 @@ public class ProgressDialog
     }
     /**
      * Returns the Current Mode of ProgressDialog.
-     * @return The current Mode of ProgressDialog ({@link #MODE_DETERMINATE} or {@link #MODE_INDETERMINATE}).
+     * @return The current Mode of ProgressDialog ({@link Mode#DETERMINATE} or {@link Mode#INDETERMINATE}).
      */
-    public int getMode()
+    public Mode getMode()
     {
         return mode;
     }
@@ -296,10 +301,10 @@ public class ProgressDialog
     }
     /**
      * Sets the Progress Value of Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
      * If the parameter progress is greater than MaxValue, MaxValue will be set as Progress.
      * @param progress The Integral Progress Value to be set in Determinate ProgressBar.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress is set. false otherwise.
      * @see #incrementProgress()
      */
     public boolean setProgress(int progress)
@@ -319,9 +324,9 @@ public class ProgressDialog
      * Sets the Increment Offset Value for Determinate ProgressBar.
      * The value is 1 by Default.
      * Should be called before calling {@link #incrementProgress()} method.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
      * @param increment The Integral Offset Value for Incrementing Progress in Determinate ProgressBar.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress is set. false otherwise.
      * @see #incrementProgress()
      */
     public boolean setIncrementValue(int increment)
@@ -338,8 +343,8 @@ public class ProgressDialog
     }
     /**
      * Returns the Current Increment Offset Value.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
-     * @return The Current Increment Offset Value of Determinate ProgressBar if Mode is {@link #MODE_DETERMINATE}. Else -1 is returned.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
+     * @return The Current Increment Offset Value of Determinate ProgressBar if Mode is {@link Mode#DETERMINATE}. Else -1 is returned.
      */
     public int getIncrementValue()
     {
@@ -347,10 +352,10 @@ public class ProgressDialog
     }
     /**
      * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using {@link #setIncrementValue(int increment)}.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * Can be used only in {@link Mode#DETERMINATE) Mode.
      * If the progress is greater than MaxValue after incrementing, MaxValue will be set as Progress.
      * This method is preferred over {@link #setProgress(int progress)} for continuous and uniform Progress Increments.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress is set. false otherwise.
      * @see #setIncrementValue(int increment)
      * @see #setProgress(int progress)
      */
@@ -370,10 +375,10 @@ public class ProgressDialog
     /**
      * Sets the Maximum value of Determinate ProgressBar.
      * The Default MaxValue of Determinate ProgressBar is 100.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
      * It is advised to use this method before calling {@link #setProgress(int progress)} or {@link #incrementProgress()} if you want to change the Default MaxValue.
      * @param maxValue The Integral Value to be set as MaxValue for Determinate ProgressBar.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress is set. false otherwise.
      */
     public boolean setMaxValue(int maxValue)
     {
@@ -390,8 +395,8 @@ public class ProgressDialog
     }
     /**
      * Returns the MaxValue of Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
-     * @return The Current MaxValue of Determinate ProgressBar if Mode is {@link #MODE_DETERMINATE}. Else -1 is returned.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
+     * @return The Current MaxValue of Determinate ProgressBar if Mode is {@link Mode#DETERMINATE}. Else -1 is returned.
      */
     public int getMaxValue()
     {
@@ -399,8 +404,8 @@ public class ProgressDialog
     }
     /**
      * Returns the Progress Value of Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE} Mode.
-     * @return The Current Progress Value of Determinate ProgressBar if Mode is {@link #MODE_DETERMINATE}. Else -1 is returned.
+     * Can be used only in {@link Mode#DETERMINATE} Mode.
+     * @return The Current Progress Value of Determinate ProgressBar if Mode is {@link Mode#DETERMINATE}. Else -1 is returned.
      */
     public int getProgress()
     {
@@ -409,10 +414,10 @@ public class ProgressDialog
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
      * Progress TextView's Default format is Percentage format.
-     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
      * If {@link #hideProgressText()} was used before, this method will again make Progress TextView visible.
      * @param progressTextAsFraction The boolean value to change Progress TextView's format.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress is set. false otherwise and also on Redundant Calls.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress is set. false otherwise and also on Redundant Calls.
      */
     public boolean showProgressTextAsFraction(boolean progressTextAsFraction)
     {
@@ -453,8 +458,8 @@ public class ProgressDialog
     }
     /**
      * Hides the Progress TextView.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return true if Mode is {@link #MODE_DETERMINATE} and Progress TextView is hidden. false otherwise.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return true if Mode is {@link Mode#DETERMINATE} and Progress TextView is hidden. false otherwise.
      */
     public boolean hideProgressText()
     {
@@ -538,8 +543,8 @@ public class ProgressDialog
     }
     /**
      * Checks if ProgressValue is equal to MaxValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link Mode#DETERMINATE}.
      */
     public boolean getHasProgressReachedMaxValue()
     {
@@ -547,8 +552,8 @@ public class ProgressDialog
     }
     /**
      * Gets the Integral Value required to reach MaxValue from the current ProgressValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return The Integral Amount required to reach MaxValue. -1 if mode is not {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return The Integral Amount required to reach MaxValue. -1 if mode is not {@link Mode#DETERMINATE}.
      */
     public int getRemainingProgress()
     {
@@ -556,9 +561,9 @@ public class ProgressDialog
     }
     /**
      * Sets the Secondary ProgressValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
      * @param secondaryProgress The integral value to be set as Secondary ProgressValue.
-     * @return true if mode is {@link #MODE_DETERMINATE} and Secondary ProgressValue is set. false otherwise.
+     * @return true if mode is {@link Mode#DETERMINATE} and Secondary ProgressValue is set. false otherwise.
      */
     public boolean setSecondaryProgress(int secondaryProgress)
     {
@@ -574,8 +579,8 @@ public class ProgressDialog
     }
     /**
      * Gets the Secondary ProgressValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return Integral Secondary ProgressValue if mode is {@link #MODE_DETERMINATE}. -1 otherwise.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return Integral Secondary ProgressValue if mode is {@link Mode#DETERMINATE}. -1 otherwise.
      */
     public int getSecondaryProgress()
     {
@@ -583,8 +588,8 @@ public class ProgressDialog
     }
     /**
      * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not {@link Mode#DETERMINATE}.
      */
     public int getSecondaryRemainingProgress()
     {
@@ -592,8 +597,8 @@ public class ProgressDialog
     }
     /**
      * Checks if Secondary ProgressValue is equal to MaxValue.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not {@link Mode#DETERMINATE}.
      */
     public boolean getHasSecondaryProgressReachedMaxValue()
     {
@@ -649,11 +654,11 @@ public class ProgressDialog
     }
     /**
      * Sets a Custom Drawable to the Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
      * Alternative to {@link #setDeterminateDrawable(int resID)}.
      * @param progressDrawable The Drawable object used to draw the Determinate ProgressBar.
-     * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
+     * @return true if mode is {@link Mode#DETERMINATE} and the Drawable is set. false otherwise.
      * @see #getDeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
@@ -671,11 +676,11 @@ public class ProgressDialog
     }
     /**
      * Sets a Custom Drawable from the passed Drawable resource to the Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE}.
+     * Can be used only in {@link Mode#DETERMINATE}.
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
      * Alternative to {@link #setDeterminateDrawable(Drawable progressDrawable)}.
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
-     * @return true if mode is {@link #MODE_DETERMINATE} and the Drawable is set. false otherwise.
+     * @return true if mode is {@link Mode#DETERMINATE} and the Drawable is set. false otherwise.
      * @see #getDeterminateDrawable()
      * @see #setProgressTintList(ColorStateList tintList)
      */
@@ -685,8 +690,8 @@ public class ProgressDialog
     }
     /**
      * Gets the Drawable object used to draw the Determinate ProgressBar.
-     * Can be used only in {@link #MODE_DETERMINATE}.
-     * @return Drawable Object if mode is {@link #MODE_DETERMINATE}. null otherwise.
+     * Can be used only in {@link Mode#DETERMINATE}.
+     * @return Drawable Object if mode is {@link Mode#DETERMINATE}. null otherwise.
      * @see #setDeterminateDrawable(Drawable progressDrawable)
      * @see #getProgressTintList()
      */
@@ -697,7 +702,7 @@ public class ProgressDialog
     }
     /**
      * Applies a tint to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
-     * Applies a tint to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
+     * Applies a tint to Determinate Drawable if mode is {@link Mode#DETERMINATE}.
      * @param tintList The ColorStateList object used to apply tint to ProgressBar's Drawable.
      * @see #getProgressTintList()
      */
@@ -710,7 +715,7 @@ public class ProgressDialog
     }
     /**
      * Returns the tint applied to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
-     * Returns the tint applied to Determinate Drawable if mode is {@link #MODE_DETERMINATE}.
+     * Returns the tint applied to Determinate Drawable if mode is {@link Mode#DETERMINATE}.
      * @return ColorStateList object specifying the tint applied to ProgressBar's Drawable.
      * @see #setProgressTintList(ColorStateList tintList)
      */
@@ -799,7 +804,7 @@ public class ProgressDialog
     }
     private boolean isDeterminate()
     {
-        return mode==MODE_DETERMINATE;
+        return mode==Mode.DETERMINATE;
     }
     private void enableNegativeButton(@Nullable CharSequence title)
     {
