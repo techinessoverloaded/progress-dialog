@@ -1,5 +1,5 @@
 /*
- * An easy-to-use ProgressDialog Library provided by Techiness Overloaded for Android API 26 and above.
+ * An easy-to-use ProgressDialog Library provided by Techiness Overloaded for Android API 24 and above.
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,7 +23,6 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
