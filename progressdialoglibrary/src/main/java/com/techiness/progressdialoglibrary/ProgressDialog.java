@@ -195,7 +195,7 @@ public class ProgressDialog
      * @param themeConstant The Theme Constant to be passed.Use {@link #THEME_LIGHT} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_NO} for Light Mode. Use {@link #THEME_DARK} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_YES} for Dark Mode.
      * @return true if the passed themeConstant is valid and is set. false if the passed Theme is the current Theme or if themeConstant is invalid.
      */
-    public boolean setTheme(@ThemeConstant int themeConstant)
+    public boolean setTheme(@ThemeConstant int themeConstant) throws IllegalArgumentException
     {
         if(themeConstant == theme)
             return false;
@@ -206,6 +206,10 @@ public class ProgressDialog
                 autoThemeEnabled = false;
                 return setThemeInternal(themeConstant);
             case THEME_FOLLOW_SYSTEM:
+                if(!isAboveOrEqualToAnd11())
+                {
+                    throw new IllegalArgumentException("THEME_FOLLOW_SYSTEM can be used only from Android 11");
+                }
                 autoThemeEnabled = true;
                 return true;
             default:
@@ -818,6 +822,10 @@ public class ProgressDialog
     private boolean isSystemInNightMode()
     {
         return context.getResources().getConfiguration().isNightModeActive();
+    }
+    private boolean isAboveOrEqualToAnd11()
+    {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R;
     }
     private void enableNegativeButton(@Nullable CharSequence title)
     {

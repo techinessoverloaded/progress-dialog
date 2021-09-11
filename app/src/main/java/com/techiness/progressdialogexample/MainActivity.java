@@ -2,6 +2,8 @@ package com.techiness.progressdialogexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
             if(isChecked&&progressDialog.getTheme()!=ProgressDialog.THEME_DARK)
             {
                 progressDialog.setTheme(ProgressDialog.THEME_DARK);
+                progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM);
             }
             else
             {
