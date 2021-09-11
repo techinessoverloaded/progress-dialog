@@ -10,8 +10,10 @@ package com.techiness.progressdialoglibrary;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -37,21 +40,22 @@ import java.util.Locale;
 public class ProgressDialog
 {
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({THEME_LIGHT,THEME_DARK})
+    @IntDef({THEME_LIGHT,THEME_DARK,THEME_FOLLOW_SYSTEM})
     public @interface ThemeConstant{}
     /**
      * The default Theme for ProgressDialog (even if it is not passed in Constructor).
      * Suitable for apps having a Light Theme.
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
-    public static final int THEME_LIGHT=1;
+    public static final int THEME_LIGHT = 1;
     /**
      * This theme is suitable for apps having a Dark Theme.
      * This Constant SHOULD be passed explicitly in the Constructor for setting Dark Theme for ProgressDialog.
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
-    public static final int THEME_DARK=2;
-
+    public static final int THEME_DARK = 2;
+    //@RequiresApi(api = Build.VERSION_CODES.R)
+    public static final int THEME_FOLLOW_SYSTEM = 3;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MODE_INDETERMINATE,MODE_DETERMINATE})
     public @interface ModeConstant{}
@@ -59,23 +63,23 @@ public class ProgressDialog
      * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
      * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
      */
-    public static final int MODE_INDETERMINATE = 3;
+    public static final int MODE_INDETERMINATE = 4;
     /**
      * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
      * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
      * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
      */
-    public static final int MODE_DETERMINATE = 4;
-    private static final int SHOW_AS_FRACTION=5;
-    private static final int SHOW_AS_PERCENT=6;
-    private static final int HIDE_PROGRESS_TEXT=7;
+    public static final int MODE_DETERMINATE = 5;
+    private static final int SHOW_AS_FRACTION = 6;
+    private static final int SHOW_AS_PERCENT = 7;
+    private static final int HIDE_PROGRESS_TEXT = 8;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView,negativeButton;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
     private ConstraintLayout dialogLayout;
     private int mode,theme,incrementAmt,progressViewMode;
-    private boolean cancelable;
+    private boolean cancelable,autoThemeEnabled;
     /**
      * Simple Constructor accepting only the Activity Level Context as Argument.
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
@@ -198,22 +202,11 @@ public class ProgressDialog
         switch(themeConstant)
         {
             case THEME_DARK:
-                dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog_dark));
-                titleView.setTextColor(ContextCompat.getColor(context,R.color.white));
-                textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
-                textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.white));
-                progressTextView.setTextColor(ContextCompat.getColor(context,R.color.white_dark));
-                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.white));
-                theme=themeConstant;
-                return true;
             case THEME_LIGHT:
-                dialogLayout.setBackground(ContextCompat.getDrawable(context,R.drawable.bg_dialog));
-                titleView.setTextColor(ContextCompat.getColor(context,R.color.black));
-                textViewIndeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
-                textViewDeterminate.setTextColor(ContextCompat.getColor(context,R.color.black));
-                progressTextView.setTextColor(ContextCompat.getColor(context,R.color.black_light));
-                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.black));
-                theme=themeConstant;
+                autoThemeEnabled = false;
+                return setThemeInternal(themeConstant);
+            case THEME_FOLLOW_SYSTEM:
+                autoThemeEnabled = true;
                 return true;
             default:
                 return false;
@@ -486,6 +479,17 @@ public class ProgressDialog
      */
     public void show()
     {
+        if(autoThemeEnabled)
+        {
+            if(isSystemInNightMode()&&theme==THEME_LIGHT)
+            {
+                setThemeInternal(THEME_DARK);
+            }
+            else if(!isSystemInNightMode()&&theme==THEME_DARK)
+            {
+                setThemeInternal(THEME_LIGHT);
+            }
+        }
         progressDialog.show();
     }
     /**
@@ -810,11 +814,43 @@ public class ProgressDialog
     {
         return mode==MODE_DETERMINATE;
     }
+    private boolean isSystemInNightMode()
+    {
+        int val = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return val == Configuration.UI_MODE_NIGHT_YES;
+        //return context.getResources().getConfiguration().isNightModeActive();
+    }
     private void enableNegativeButton(@Nullable CharSequence title)
     {
         negativeButton.setVisibility(View.VISIBLE);
         if(isGone(titleView))
             setTitle(title);
+    }
+    private boolean setThemeInternal(@ThemeConstant int themeConstant)
+    {
+        switch(themeConstant)
+        {
+            case THEME_DARK:
+                dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog_dark));
+                titleView.setTextColor(ContextCompat.getColor(context, R.color.white));
+                textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
+                textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
+                progressTextView.setTextColor(ContextCompat.getColor(context, R.color.white_dark));
+                negativeButton.setTextColor(ContextCompat.getColor(context, R.color.white));
+                theme = themeConstant;
+                return true;
+            case THEME_LIGHT:
+                dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog));
+                titleView.setTextColor(ContextCompat.getColor(context, R.color.black));
+                textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
+                textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
+                progressTextView.setTextColor(ContextCompat.getColor(context, R.color.black_light));
+                negativeButton.setTextColor(ContextCompat.getColor(context, R.color.black));
+                theme = themeConstant;
+                return true;
+            default:
+                return false;
+        }
     }
 }
 

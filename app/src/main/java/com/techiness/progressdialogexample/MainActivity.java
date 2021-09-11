@@ -5,8 +5,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.techiness.progressdialoglibrary.Mode;
 import com.techiness.progressdialoglibrary.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         switch(requestCode)
         {
             case 1:
-                progressDialog.setMode(Mode.INDETERMINATE);
+                progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
                 progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(0);
