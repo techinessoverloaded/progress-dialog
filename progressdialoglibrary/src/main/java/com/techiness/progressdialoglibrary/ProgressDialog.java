@@ -54,7 +54,7 @@ public class ProgressDialog
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
     public static final int THEME_DARK = 2;
-    //@RequiresApi(api = Build.VERSION_CODES.R)
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public static final int THEME_FOLLOW_SYSTEM = 3;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MODE_INDETERMINATE,MODE_DETERMINATE})
@@ -219,7 +219,7 @@ public class ProgressDialog
     @ThemeConstant
     public int getTheme()
     {
-        return theme;
+        return autoThemeEnabled ? THEME_FOLLOW_SYSTEM : theme;
     }
     /**
      * Sets the Text to be displayed alongside ProgressBar.
@@ -814,11 +814,10 @@ public class ProgressDialog
     {
         return mode==MODE_DETERMINATE;
     }
+    @RequiresApi(api = Build.VERSION_CODES.R)
     private boolean isSystemInNightMode()
     {
-        int val = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        return val == Configuration.UI_MODE_NIGHT_YES;
-        //return context.getResources().getConfiguration().isNightModeActive();
+        return context.getResources().getConfiguration().isNightModeActive();
     }
     private void enableNegativeButton(@Nullable CharSequence title)
     {
