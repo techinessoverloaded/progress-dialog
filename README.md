@@ -10,7 +10,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Has support for Negative Button, Title, and ProgressView.
 
 ## What's New in Version 1.3.0 ?
-- `ProgressDialog.THEME_FOLLOW_SYSTEM` constant can be used in `setTheme(int themeConstant)` method and Constructors starting from Android API Level 30 (Android 11) to enable AutoTheming. The theme of ProgressDialog will be automatically changed to match the System Theme before each `show()` method call. If the
+- `ProgressDialog.THEME_FOLLOW_SYSTEM` constant can be used in `setTheme(int themeConstant)` method and Constructors starting from Android API Level 30 (Android 11) to enable AutoTheming. The theme of ProgressDialog will be automatically changed to match the System Theme before each `show()` method call. If this Constant is used in method calls in Android versions lower than Android 11, `IllegalArgumentException` will be thrown at runtime.
 - Constants and Numbers other than those provided in ProgressDialog class are **NOT** allowed hereafterwards for setting Theme and Mode. Existing Constants were marked with `@IntDef` Annotations to enable CompileTime Checking.
 - TextView was changed to MaterialButton for NegativeButton purpose. Hence, Material Ripple effect will be enabled on NegativeButton from now on.
 
@@ -74,6 +74,34 @@ ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINA
 ## Simple Examples
 
 #### Note: These examples are for simple illustration of ProgressDialog Library. For completely knowing about the Library, refer to the javadoc Documentation of the Library through Android Studio.
+
+### How to use `ProgressDialog.THEME_FOLLOW_SYSTEM` with Constructor ?
+#### Code:
+```java
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
+{
+AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_FOLLOW_SYSTEM); //This is optional. This will enable Android's Autotheming for the entire App
+ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_FOLLOW_SYSTEM); // Enables AutoTheming for the ProgressDialog instance.
+}
+else //Autotheming not compatible
+{
+ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK); // or any other constructors mentioned above
+}
+```
+
+### How to use `ProgressDialog.THEME_FOLLOW_SYSTEM` with `setTheme(int themeConstant)` method ?
+#### Code:
+```java
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
+{
+AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_FOLLOW_SYSTEM); //This is optional. This will enable Android's Autotheming for the entire App
+progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM); // Enables AutoTheming for the ProgressDialog instance.
+}
+else //Autotheming not compatible
+{
+progressDialog.setTheme(ProgressDialog.THEME_DARK); // or ProgressDialog.THEME_LIGHT
+}
+```
 
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
 #### Code:
