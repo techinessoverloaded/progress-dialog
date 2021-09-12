@@ -121,7 +121,7 @@
                 android:layout_marginStart="8dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/negativeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:text="@string/cancel"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
