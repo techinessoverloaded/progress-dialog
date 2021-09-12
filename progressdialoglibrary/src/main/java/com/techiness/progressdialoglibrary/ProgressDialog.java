@@ -54,8 +54,13 @@ public class ProgressDialog
      * Theme can be changed later using {@link #setTheme(int themeConstant)}.
      */
     public static final int THEME_DARK = 2;
+    /**
+     * When this ThemeConstant is used, ProgressDialog's theme is automatically changed to match the System's theme each time before {@link #show()} is called.
+     * This Constant can be used starting from Android API Level 31 (Android 11) ONLY.
+     * {@link #setTheme(int themeConstant)} will throw {@link IllegalArgumentException} if this Constant is passed in method call in Android versions lower than Android 11.
+     */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public static final int THEME_FOLLOW_SYSTEM = 3;
+    public static final int THEME_FOLLOW_SYSTEM = -1;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MODE_INDETERMINATE,MODE_DETERMINATE})
     public @interface ModeConstant{}
@@ -63,16 +68,16 @@ public class ProgressDialog
      * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
      * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
      */
-    public static final int MODE_INDETERMINATE = 4;
+    public static final int MODE_INDETERMINATE = 3;
     /**
      * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
      * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
      * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
      */
-    public static final int MODE_DETERMINATE = 5;
-    private static final int SHOW_AS_FRACTION = 6;
-    private static final int SHOW_AS_PERCENT = 7;
-    private static final int HIDE_PROGRESS_TEXT = 8;
+    public static final int MODE_DETERMINATE = 4;
+    private static final int SHOW_AS_FRACTION = 5;
+    private static final int SHOW_AS_PERCENT = 6;
+    private static final int HIDE_PROGRESS_TEXT = 7;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView,negativeButton;
     private ProgressBar progressBarDeterminate,progressBarIndeterminate;
@@ -94,6 +99,8 @@ public class ProgressDialog
      * A Constructor accepting the Activity Level Context and Theme Constant as Arguments.
      * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * Theme is automatically decided at runtime according to System's Theme if {@link #THEME_FOLLOW_SYSTEM} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * NOTE : {@link #THEME_FOLLOW_SYSTEM} can be used starting from Android API Level 31 only.
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int modeConstant)}).
      */
     public ProgressDialog(Context context,@ThemeConstant int themeConstant)
@@ -107,6 +114,8 @@ public class ProgressDialog
      * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int modeConstant)}).
      * Theme is set as Light Theme if {@link #THEME_LIGHT} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * Theme is set as Dark Theme if {@link #THEME_DARK} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * Theme is automatically decided at runtime according to System's Theme if {@link #THEME_FOLLOW_SYSTEM} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
+     * NOTE : {@link #THEME_FOLLOW_SYSTEM} can be used starting from Android API Level 31 only.
      */
     public ProgressDialog(@ModeConstant int modeConstant,Context context,@ThemeConstant int themeConstant)
     {
@@ -192,8 +201,9 @@ public class ProgressDialog
     /**
      * Sets/Changes the Theme of ProgressDialog which is {@link #THEME_LIGHT} by Default.
      * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
-     * @param themeConstant The Theme Constant to be passed.Use {@link #THEME_LIGHT} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_NO} for Light Mode. Use {@link #THEME_DARK} or {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_YES} for Dark Mode.
+     * @param themeConstant The Theme Constant to be passed.Use {@link #THEME_LIGHT} for Light Mode. Use {@link #THEME_DARK} for Dark Mode. Use {@link #THEME_FOLLOW_SYSTEM} for AutoTheming based on System theme (can be used starting from Android 11 (API Level 31) ONLY).
      * @return true if the passed themeConstant is valid and is set. false if the passed Theme is the current Theme or if themeConstant is invalid.
+     * @throws IllegalArgumentException if {@link #THEME_FOLLOW_SYSTEM} is passed as Argument to this method in Android Versions lower than Android 11 (API Level 30)}.
      */
     public boolean setTheme(@ThemeConstant int themeConstant) throws IllegalArgumentException
     {
@@ -208,7 +218,7 @@ public class ProgressDialog
             case THEME_FOLLOW_SYSTEM:
                 if(!isAboveOrEqualToAnd11())
                 {
-                    throw new IllegalArgumentException("THEME_FOLLOW_SYSTEM can be used only from Android 11");
+                    throw new IllegalArgumentException("THEME_FOLLOW_SYSTEM can be used starting from Android 11 (API Level 30) only !");
                 }
                 autoThemeEnabled = true;
                 return true;
@@ -218,7 +228,7 @@ public class ProgressDialog
     }
     /**
      * Returns the Current Theme of ProgressDialog.
-     * @return The current Theme of ProgressDialog ({@link #THEME_LIGHT} or {@link #THEME_DARK}).
+     * @return The current Theme of ProgressDialog ({@link #THEME_LIGHT} or {@link #THEME_DARK} or {@link #THEME_FOLLOW_SYSTEM}(starting from Android 11)).
      */
     @ThemeConstant
     public int getTheme()
