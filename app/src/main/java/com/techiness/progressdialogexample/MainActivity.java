@@ -116,14 +116,14 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.show();
                 break;
             case 7:
-                /*progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+                progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });
-                progressDialog.show();*/
-                Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
-                startActivity(intent);
+                progressDialog.show();
+                /*Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
+                startActivity(intent);*/
                 break;
             default:
                 break;
