@@ -9,7 +9,10 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Can be set in both Determinate and Indeterminate Mode.
 - Has support for Negative Button, Title, and ProgressView.
 
-## What's New in Version 1.3.0 ?
+## What's New in Version 1.3.1 ?
+- Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
+
+### The following changes were made in the previous version (1.3.0)
 - `ProgressDialog.THEME_FOLLOW_SYSTEM` constant can be used in `setTheme(int themeConstant)` method and Constructors starting from Android API Level 30 (Android 11) to enable AutoTheming. The theme of ProgressDialog will be automatically changed to match the System Theme before each `show()` method call. If this Constant is used in method calls in Android versions lower than Android 11, `IllegalArgumentException` will be thrown at runtime.
 - Constants and Numbers other than those provided in ProgressDialog class are **NOT** allowed hereafterwards for setting Theme and Mode. Existing Constants were marked with `@IntDef` Annotations to enable CompileTime Checking.
 - TextView was changed to MaterialButton for NegativeButton purpose. Hence, Material Ripple effect will be enabled on NegativeButton from now on.
@@ -26,16 +29,16 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level **build.gradle** file:
-#### Note: Current latest version is **1.3.0**. **Replace latest-version with 1.3.0 in the code below**
+#### Note: Current latest version is **1.3.1**. **Replace latest-version with 1.3.1 in the code below**
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.3.0
+	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.3.1
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
 ```groovy
 dependencies {
-                def latest-version = "1.3.0"
+                def latest-version = "1.3.1"
 	        implementation "com.github.techinessoverloaded:progress-dialog:$latest-version"
 	     }
 ```
