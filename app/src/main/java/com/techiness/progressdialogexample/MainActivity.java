@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -115,12 +116,14 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.show();
                 break;
             case 7:
-                progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
+                /*progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 });
-                progressDialog.show();
+                progressDialog.show();*/
+                Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

@@ -137,7 +137,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:text="@string/cancel"
-            android:visibility="visible"
+            android:visibility="gone"
             android:textAllCaps="true"
             android:clickable="true"
             android:focusable="true"
