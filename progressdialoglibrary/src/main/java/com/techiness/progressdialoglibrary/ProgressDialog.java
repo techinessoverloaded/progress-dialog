@@ -153,6 +153,7 @@ public class ProgressDialog
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
         setTheme(themeConstant);
+        setTheme(themeConstant);
         setMode(modeConstant);
         setCancelable(false);
     }
