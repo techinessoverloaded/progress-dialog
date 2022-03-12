@@ -146,14 +146,14 @@ public class ProgressDialog
         progressBarDeterminate = view.findViewById(R.id.progressbar_determinate);
         progressTextView = view.findViewById(R.id.ProgressTextView);
         negativeButton = view.findViewById(R.id.negativeBtn);
-        setTheme(themeValue);
-        setMode(modeValue);
         builder.setView(view);
         progressDialog = builder.create();
         if (progressDialog.getWindow() != null)
         {
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
+        setTheme(themeValue);
+        setMode(modeValue);
         setCancelable(false);
     }
     /**
