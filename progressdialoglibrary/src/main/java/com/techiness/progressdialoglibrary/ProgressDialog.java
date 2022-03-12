@@ -60,7 +60,7 @@ public class ProgressDialog
      * {@link #setTheme(int themeConstant)} will throw {@link IllegalArgumentException} if this Constant is passed in method call in Android versions lower than Android 11.
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public static final int THEME_FOLLOW_SYSTEM = -1;
+    public static final int THEME_FOLLOW_SYSTEM = 3;
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MODE_INDETERMINATE,MODE_DETERMINATE})
     public @interface ModeConstant{}
@@ -68,16 +68,16 @@ public class ProgressDialog
      * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
      * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
      */
-    public static final int MODE_INDETERMINATE = 3;
+    public static final int MODE_INDETERMINATE = 4;
     /**
      * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
      * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
      * Progress Value is shown as Percentage by Default which can be changed using {@link #showProgressTextAsFraction(boolean showProgressTextAsFraction)};
      */
-    public static final int MODE_DETERMINATE = 4;
-    private static final int SHOW_AS_FRACTION = 5;
-    private static final int SHOW_AS_PERCENT = 6;
-    private static final int HIDE_PROGRESS_TEXT = 7;
+    public static final int MODE_DETERMINATE = 5;
+    private static final int SHOW_AS_FRACTION = 6;
+    private static final int SHOW_AS_PERCENT = 7;
+    private static final int HIDE_PROGRESS_TEXT = 8;
     private final Context context;
     private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
     private MaterialButton negativeButton;
@@ -134,7 +134,7 @@ public class ProgressDialog
         this.context=context;
         initialiseDialog(THEME_LIGHT,modeConstant);
     }
-    private void initialiseDialog(@ThemeConstant int themeValue,@ModeConstant int modeValue)
+    private void initialiseDialog(@ThemeConstant int themeConstant,@ModeConstant int modeConstant)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
@@ -152,9 +152,9 @@ public class ProgressDialog
         {
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
-        setMode(modeValue);
+        setTheme(themeConstant);
+        setMode(modeConstant);
         setCancelable(false);
-        setTheme(themeValue);
     }
     /**
      * Sets/Changes the mode of ProgressDialog which is {@link #MODE_INDETERMINATE} by Default.

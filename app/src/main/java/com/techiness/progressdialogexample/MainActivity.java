@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM);
+            progressDialog = new ProgressDialog(this,ProgressDialog.THEME_FOLLOW_SYSTEM);
             darkSwitch.setEnabled(false);
         }
         else
