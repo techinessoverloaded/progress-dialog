@@ -21,16 +21,21 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
         bindViews();
-        setOnClickListeners();
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            progressDialog = new ProgressDialog(this);
             progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM);
             darkSwitch.setEnabled(false);
         }
+        else
+        {
+            progressDialog = new ProgressDialog(this);
+        }
+        progressDialog.setCancelable(true);
+        showDeterBut.setText(String.valueOf(progressDialog.getTheme()));
+        setOnClickListeners();
     }
     private void bindViews()
     {

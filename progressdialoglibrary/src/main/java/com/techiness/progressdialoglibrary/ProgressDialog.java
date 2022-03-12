@@ -152,9 +152,9 @@ public class ProgressDialog
         {
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
-        setTheme(themeValue);
         setMode(modeValue);
         setCancelable(false);
+        setTheme(themeValue);
     }
     /**
      * Sets/Changes the mode of ProgressDialog which is {@link #MODE_INDETERMINATE} by Default.
@@ -164,7 +164,7 @@ public class ProgressDialog
      */
     public boolean setMode(@ModeConstant int modeConstant)
     {
-        if(modeConstant==mode)
+        if(modeConstant == mode)
             return false;
         switch (modeConstant)
         {
