@@ -26,6 +26,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
+import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
@@ -79,13 +81,14 @@ public class ProgressDialog
     private static final int SHOW_AS_PERCENT = 7;
     private static final int HIDE_PROGRESS_TEXT = 8;
     private final Context context;
-    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
-    private MaterialButton negativeButton;
-    private ProgressBar progressBarDeterminate,progressBarIndeterminate;
+//    private TextView titleView,textViewIndeterminate,textViewDeterminate,progressTextView;
+//    private MaterialButton negativeButton;
+//    private ProgressBar progressBarDeterminate,progressBarIndeterminate;
     private AlertDialog progressDialog;
-    private ConstraintLayout dialogLayout;
+//    private ConstraintLayout dialogLayout;
     private int mode,theme,incrementAmt,progressViewMode;
     private boolean cancelable,autoThemeEnabled;
+    private LayoutProgressdialogBinding binding;
     /**
      * Simple Constructor accepting only the Activity Level Context as Argument.
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
@@ -136,17 +139,18 @@ public class ProgressDialog
     }
     private void initialiseDialog(@ThemeConstant int themeConstant,@ModeConstant int modeConstant)
     {
+        binding = LayoutProgressdialogBinding.inflate(LayoutInflater.from(context));
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
-        dialogLayout = view.findViewById(R.id.dialog_layout);
-        titleView = view.findViewById(R.id.title_progressDialog);
-        textViewDeterminate = view.findViewById(R.id.textView_determinate);
-        textViewIndeterminate = view.findViewById(R.id.textView_indeterminate);
-        progressBarIndeterminate = view.findViewById(R.id.progressbar_indeterminate);
-        progressBarDeterminate = view.findViewById(R.id.progressbar_determinate);
-        progressTextView = view.findViewById(R.id.ProgressTextView);
-        negativeButton = view.findViewById(R.id.negativeBtn);
-        builder.setView(view);
+//        View view = LayoutInflater.from(context).inflate(R.layout.layout_progressdialog,null);
+//        dialogLayout = view.findViewById(R.id.dialog_layout);
+//        titleView = view.findViewById(R.id.title_progressDialog);
+//        textViewDeterminate = view.findViewById(R.id.textView_determinate);
+//        textViewIndeterminate = view.findViewById(R.id.textView_indeterminate);
+//        progressBarIndeterminate = view.findViewById(R.id.progressbar_indeterminate);
+//        progressBarDeterminate = view.findViewById(R.id.progressbar_determinate);
+//        progressTextView = view.findViewById(R.id.ProgressTextView);
+//        negativeButton = view.findViewById(R.id.negativeBtn);
+        builder.setView(binding.getRoot());
         progressDialog = builder.create();
         if (progressDialog.getWindow() != null)
         {
@@ -170,21 +174,21 @@ public class ProgressDialog
         switch (modeConstant)
         {
             case MODE_DETERMINATE:
-                textViewIndeterminate.setVisibility(View.GONE);
-                progressBarIndeterminate.setVisibility(View.GONE);
-                textViewDeterminate.setVisibility(View.VISIBLE);
-                progressBarDeterminate.setVisibility(View.VISIBLE);
+                binding.textViewIndeterminate.setVisibility(View.GONE);
+                binding.progressbarIndeterminate.setVisibility(View.GONE);
+                binding.textViewDeterminate.setVisibility(View.VISIBLE);
+                binding.progressbarDeterminate.setVisibility(View.VISIBLE);
                 progressViewMode=SHOW_AS_PERCENT;
-                progressTextView.setVisibility(View.VISIBLE);
+                binding.progressTextView.setVisibility(View.VISIBLE);
                 incrementAmt = incrementAmt==0 ? 1 : incrementAmt;
                 mode = modeConstant;
                 return true;
             case MODE_INDETERMINATE:
-                textViewDeterminate.setVisibility(View.GONE);
-                progressBarDeterminate.setVisibility(View.GONE);
-                progressTextView.setVisibility(View.GONE);
-                textViewIndeterminate.setVisibility(View.VISIBLE);
-                progressBarIndeterminate.setVisibility(View.VISIBLE);
+                binding.textViewDeterminate.setVisibility(View.GONE);
+                binding.progressbarDeterminate.setVisibility(View.GONE);
+                binding.progressTextView.setVisibility(View.GONE);
+                binding.textViewIndeterminate.setVisibility(View.VISIBLE);
+                binding.progressbarIndeterminate.setVisibility(View.VISIBLE);
                 mode = modeConstant;
                 return true;
             default:
@@ -249,12 +253,12 @@ public class ProgressDialog
         {
             if (!isDeterminate())
             {
-                textViewIndeterminate.setText(message);
+                binding.textViewIndeterminate.setText(message);
             } 
             else
-                {
-                textViewDeterminate.setText(message);
-                }
+            {
+                binding.textViewDeterminate.setText(message);
+            }
         }
     }
     /**
@@ -279,9 +283,9 @@ public class ProgressDialog
     public void setTitle(@Nullable CharSequence title)
     {
         if(title!=null)
-            titleView.setText(title);
-        if(isGone(titleView))
-            titleView.setVisibility(View.VISIBLE);
+            binding.titleView.setText(title);
+        if(isGone(binding.titleView))
+            binding.titleView.setVisibility(View.VISIBLE);
     }
     /**
      * Sets the Title of ProgressDialog using the String resource given.
@@ -306,10 +310,10 @@ public class ProgressDialog
      */
     public boolean hideTitle()
     {
-        if(!isGone(negativeButton))
+        if(!isGone(binding.negativeButton))
             return false;
-        if(isVisible(titleView))
-            titleView.setVisibility(View.GONE);
+        if(isVisible(binding.titleView))
+            binding.titleView.setVisibility(View.GONE);
         return true;
     }
     /**
@@ -324,14 +328,14 @@ public class ProgressDialog
     {
         if(isDeterminate())
         {
-            progressBarDeterminate.setProgress(progress,true);
+            binding.progressbarDeterminate.setProgress(progress,true);
             setProgressText();
             return true;
         }
         else
-            {
-                return false;
-            }
+        {
+            return false;
+        }
     }
     /**
      * Sets the Increment Offset Value for Determinate ProgressBar.
@@ -376,7 +380,7 @@ public class ProgressDialog
     {
         if(isDeterminate())
         {
-            progressBarDeterminate.incrementProgressBy(incrementAmt);
+            binding.progressbarDeterminate.incrementProgressBy(incrementAmt);
             setProgressText();
             return true;
         }
@@ -397,7 +401,7 @@ public class ProgressDialog
     {
         if(isDeterminate())
         {
-            progressBarDeterminate.setMax(maxValue);
+            binding.progressbarDeterminate.setMax(maxValue);
             setProgress(getProgress());
             return true;
         }
@@ -413,7 +417,7 @@ public class ProgressDialog
      */
     public int getMaxValue()
     {
-        return isDeterminate() ? progressBarDeterminate.getMax() : -1;
+        return isDeterminate() ? binding.progressbarDeterminate.getMax() : -1;
     }
     /**
      * Returns the Progress Value of Determinate ProgressBar.
@@ -422,7 +426,7 @@ public class ProgressDialog
      */
     public int getProgress()
     {
-        return isDeterminate() ? progressBarDeterminate.getProgress() : -1;
+        return isDeterminate() ? binding.progressbarDeterminate.getProgress() : -1;
     }
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
@@ -445,7 +449,7 @@ public class ProgressDialog
                     case SHOW_AS_PERCENT:
                     case HIDE_PROGRESS_TEXT:
                         progressViewMode=SHOW_AS_FRACTION;
-                        progressTextView.setText(getProgressAsFraction());
+                        binding.progressTextView.setText(getProgressAsFraction());
                         break;
                 }
             }
@@ -458,7 +462,7 @@ public class ProgressDialog
                     case SHOW_AS_FRACTION:
                     case HIDE_PROGRESS_TEXT:
                         progressViewMode=SHOW_AS_PERCENT;
-                        progressTextView.setText(getProgressAsPercent());
+                        binding.progressTextView.setText(getProgressAsPercent());
                         break;
                 }
             }
@@ -479,9 +483,9 @@ public class ProgressDialog
         if(isDeterminate())
         {
             progressViewMode=HIDE_PROGRESS_TEXT;
-            if(!isGone(progressTextView))
+            if(!isGone(binding.progressTextView))
             {
-                progressTextView.setVisibility(View.GONE);
+                binding.progressTextView.setVisibility(View.GONE);
             }
             return true;
         }
@@ -593,7 +597,7 @@ public class ProgressDialog
     {
         if(isDeterminate())
         {
-            progressBarDeterminate.setSecondaryProgress(secondaryProgress);
+            binding.progressbarDeterminate.setSecondaryProgress(secondaryProgress);
             return true;
         }
         else
@@ -608,7 +612,7 @@ public class ProgressDialog
      */
     public int getSecondaryProgress()
     {
-        return isDeterminate() ? progressBarDeterminate.getSecondaryProgress() : -1;
+        return isDeterminate() ? binding.progressbarDeterminate.getSecondaryProgress() : -1;
     }
     /**
      * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
@@ -642,7 +646,7 @@ public class ProgressDialog
     {
         if(!isDeterminate())
         {
-            progressBarIndeterminate.setIndeterminateDrawable(progressDrawable);
+            binding.progressbarIndeterminate.setIndeterminateDrawable(progressDrawable);
             return true;
         }
         else
@@ -674,7 +678,7 @@ public class ProgressDialog
     @Nullable
     public Drawable getIndeterminateDrawable()
     {
-        return !isDeterminate() ? progressBarIndeterminate.getIndeterminateDrawable() : null;
+        return !isDeterminate() ? binding.progressbarIndeterminate.getIndeterminateDrawable() : null;
     }
     /**
      * Sets a Custom Drawable to the Determinate ProgressBar.
@@ -690,7 +694,7 @@ public class ProgressDialog
     {
         if(isDeterminate())
         {
-            progressBarDeterminate.setProgressDrawable(progressDrawable);
+            binding.progressbarDeterminate.setProgressDrawable(progressDrawable);
             return true;
         }
         else
@@ -722,7 +726,7 @@ public class ProgressDialog
     @Nullable
     public Drawable getDeterminateDrawable()
     {
-        return isDeterminate() ? progressBarDeterminate.getProgressDrawable() : null;
+        return isDeterminate() ? binding.progressbarDeterminate.getProgressDrawable() : null;
     }
     /**
      * Applies a tint to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
@@ -733,9 +737,9 @@ public class ProgressDialog
     public void setProgressTintList(ColorStateList tintList)
     {
         if(!isDeterminate())
-            progressBarIndeterminate.setIndeterminateTintList(tintList);
+            binding.progressbarIndeterminate.setIndeterminateTintList(tintList);
         else
-            progressBarDeterminate.setProgressTintList(tintList);
+            binding.progressbarDeterminate.setProgressTintList(tintList);
     }
     /**
      * Returns the tint applied to Indeterminate Drawable if mode is {@link #MODE_INDETERMINATE}.
@@ -745,7 +749,7 @@ public class ProgressDialog
      */
     public ColorStateList getProgressTintList()
     {
-        return isDeterminate() ? progressBarDeterminate.getProgressTintList() : progressBarIndeterminate.getIndeterminateTintList();
+        return isDeterminate() ? binding.progressbarDeterminate.getProgressTintList() : binding.progressbarIndeterminate.getIndeterminateTintList();
     }
     /**
      * Sets the NegativeButton with the passed text for the ProgressDialog and also sets the OnClickListener for the Button.
@@ -760,10 +764,10 @@ public class ProgressDialog
      */
     public void setNegativeButton(@Nullable CharSequence text,@Nullable CharSequence title,@Nullable final View.OnClickListener listener)
     {
-        if(text!=null) 
-            negativeButton.setText(text);
-        negativeButton.setOnClickListener(listener==null ? (View.OnClickListener) v -> dismiss() : listener);
-        if(isGone(negativeButton))
+        if(text!=null)
+            binding.negativeButton.setText(text);
+        binding.negativeButton.setOnClickListener(listener==null ? (View.OnClickListener) v -> dismiss() : listener);
+        if(isGone(binding.negativeButton))
         {
             enableNegativeButton(title);
         }
@@ -790,9 +794,9 @@ public class ProgressDialog
      */
     public void hideNegativeButton()
     {
-        if(!isGone(negativeButton))
+        if(!isGone(binding.negativeButton))
         {
-            negativeButton.setVisibility(View.GONE);
+            binding.negativeButton.setVisibility(View.GONE);
         }
     }
     private String getProgressAsFraction()
@@ -809,10 +813,10 @@ public class ProgressDialog
         switch(progressViewMode)
         {
             case SHOW_AS_FRACTION:
-                progressTextView.setText(getProgressAsFraction());
+                binding.progressTextView.setText(getProgressAsFraction());
                 break;
             case SHOW_AS_PERCENT:
-                progressTextView.setText(getProgressAsPercent());
+                binding.progressTextView.setText(getProgressAsPercent());
                 break;
             case HIDE_PROGRESS_TEXT:
                 break;
@@ -841,8 +845,8 @@ public class ProgressDialog
     }
     private void enableNegativeButton(@Nullable CharSequence title)
     {
-        negativeButton.setVisibility(View.VISIBLE);
-        if(isGone(titleView))
+        binding.negativeButton.setVisibility(View.VISIBLE);
+        if(isGone(binding.titleView))
             setTitle(title);
     }
     private boolean setThemeInternal(@ThemeConstant int themeConstant)
@@ -850,21 +854,21 @@ public class ProgressDialog
         switch(themeConstant)
         {
             case THEME_DARK:
-                dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog_dark));
-                titleView.setTextColor(ContextCompat.getColor(context, R.color.white));
-                textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
-                textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
-                progressTextView.setTextColor(ContextCompat.getColor(context, R.color.white_dark));
-                negativeButton.setTextColor(ContextCompat.getColor(context, R.color.white));
+                binding.dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog_dark));
+                binding.titleView.setTextColor(ContextCompat.getColor(context, R.color.white));
+                binding.textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
+                binding.textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.white));
+                binding.progressTextView.setTextColor(ContextCompat.getColor(context, R.color.white_dark));
+                binding.negativeButton.setTextColor(ContextCompat.getColor(context, R.color.white));
                 theme = themeConstant;
                 return true;
             case THEME_LIGHT:
-                dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog));
-                titleView.setTextColor(ContextCompat.getColor(context, R.color.black));
-                textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
-                textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
-                progressTextView.setTextColor(ContextCompat.getColor(context, R.color.black_light));
-                negativeButton.setTextColor(ContextCompat.getColor(context, R.color.black));
+                binding.dialogLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_dialog));
+                binding.titleView.setTextColor(ContextCompat.getColor(context, R.color.black));
+                binding.textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
+                binding.textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.black));
+                binding.progressTextView.setTextColor(ContextCompat.getColor(context, R.color.black_light));
+                binding.negativeButton.setTextColor(ContextCompat.getColor(context, R.color.black));
                 theme = themeConstant;
                 return true;
             default:
