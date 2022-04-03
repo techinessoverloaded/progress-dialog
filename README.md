@@ -44,7 +44,7 @@ dependencies {
 ```
 Now import ProgressDialog class in your Activity/Fragment:
 ```java
-import com.techiness.progressdialoglibrary.ProgressDialog;
+import com.techiness.progressdialoglibrary.ProgressDialog2;
 ```
 
 ## Various Constructors available

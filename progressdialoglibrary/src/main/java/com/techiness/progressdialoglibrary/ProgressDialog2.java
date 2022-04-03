@@ -39,7 +39,7 @@ import java.util.Locale;
  * It can also have a NegativeButton.
  * It can be customized according to User's needs using the provided Methods.
  */
-public class ProgressDialog
+public class ProgressDialog2
 {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({THEME_LIGHT,THEME_DARK,THEME_FOLLOW_SYSTEM})
@@ -94,7 +94,7 @@ public class ProgressDialog
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int modeConstant)}).
      */
-    public ProgressDialog(Context context)
+    public ProgressDialog2(Context context)
     {
         this.context=context;
         initialiseDialog(THEME_LIGHT,MODE_INDETERMINATE);
@@ -107,7 +107,7 @@ public class ProgressDialog
      * NOTE : {@link #THEME_FOLLOW_SYSTEM} can be used starting from Android API Level 31 only.
      * Mode is set as Indeterminate by Default (which can be changed later using {@link #setMode(int modeConstant)}).
      */
-    public ProgressDialog(Context context,@ThemeConstant int themeConstant)
+    public ProgressDialog2(Context context, @ThemeConstant int themeConstant)
     {
         this.context = context;
         initialiseDialog(themeConstant,MODE_INDETERMINATE);
@@ -121,7 +121,7 @@ public class ProgressDialog
      * Theme is automatically decided at runtime according to System's Theme if {@link #THEME_FOLLOW_SYSTEM} is passed (This can be changed later using {@link #setTheme(int themeConstant)}).
      * NOTE : {@link #THEME_FOLLOW_SYSTEM} can be used starting from Android API Level 31 only.
      */
-    public ProgressDialog(@ModeConstant int modeConstant,Context context,@ThemeConstant int themeConstant)
+    public ProgressDialog2(@ModeConstant int modeConstant, Context context, @ThemeConstant int themeConstant)
     {
         this.context=context;
         initialiseDialog(themeConstant,modeConstant);
@@ -132,7 +132,7 @@ public class ProgressDialog
      * Mode is set as Indeterminate if {@link #MODE_INDETERMINATE} is passed (This can be changed later using {@link #setMode(int modeConstant)}).
      * Theme is set as Light Theme by Default (which can be changed later using {@link #setTheme(int themeConstant)}).
      */
-    public ProgressDialog(@ModeConstant int modeConstant,Context context)
+    public ProgressDialog2(@ModeConstant int modeConstant, Context context)
     {
         this.context=context;
         initialiseDialog(THEME_LIGHT,modeConstant);
