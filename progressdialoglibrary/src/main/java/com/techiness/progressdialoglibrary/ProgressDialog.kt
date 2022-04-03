@@ -16,39 +16,80 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.techiness.progressdialoglibrary.ProgressDialog.Companion.MODE_DETERMINATE
+import com.techiness.progressdialoglibrary.ProgressDialog.Companion.MODE_INDETERMINATE
+import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_DARK
+import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_LIGHT
 import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.util.*
 
 /**
- * Constructor
+ * Mode is [MODE_INDETERMINATE] by default and remains same if not specified in constructor until changed using [setMode].
+ * Theme is [THEME_LIGHT] by default and remains same if not specified in constructor until changed using [setTheme].
  * Mode is set as Determinate if [MODE_DETERMINATE] is passed (This can be changed later using [setMode]).
- * Mode is set as Indeterminate if [MODE_INDETERMINATE] is passed (This can be changed later using [.setMode]).
- * Theme is set as Light Theme if [THEME_LIGHT] is passed (This can be changed later using [.setTheme]).
- * Theme is set as Dark Theme if [THEME_DARK] is passed (This can be changed later using [.setTheme]).
- * Theme is automatically decided at runtime according to System's Theme if [.THEME_FOLLOW_SYSTEM] is passed (This can be changed later using [.setTheme]).
- * NOTE : [.THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 only.
+ * Theme is set as Dark Theme if [THEME_DARK] is passed (This can be changed later using [setTheme]).
+ * Theme is automatically decided at runtime according to System's Theme if [THEME_FOLLOW_SYSTEM] is passed (This can be changed later using [setTheme]).
+ * NOTE : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 only.
  */
 class ProgressDialog @JvmOverloads constructor(
     @ModeConstant modeConstant: Int = MODE_INDETERMINATE,
     private val context: Context,
     @ThemeConstant themeConstant: Int = THEME_LIGHT)
 {
-
-    @Retention(RetentionPolicy.SOURCE)
     @IntDef(THEME_LIGHT, THEME_DARK, THEME_FOLLOW_SYSTEM)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class ThemeConstant
 
-    @Retention(RetentionPolicy.SOURCE)
     @IntDef(MODE_INDETERMINATE, MODE_DETERMINATE)
+    @Retention(AnnotationRetention.SOURCE)
     annotation class ModeConstant
 
-    private var progressDialog: AlertDialog? = null
+    companion object
+    {
+        /**
+         * The default Theme for ProgressDialog (even if it is not passed in Constructor).
+         * Suitable for apps having a Light Theme.
+         * Theme can be changed later using [setTheme].
+         */
+        const val THEME_LIGHT = 1
 
+        /**
+         * This theme is suitable for apps having a Dark Theme.
+         * This Constant SHOULD be passed explicitly in the Constructor for setting Dark Theme for ProgressDialog.
+         * Theme can be changed later using [setTheme].
+         */
+        const val THEME_DARK = 2
+
+        /**
+         * When this ThemeConstant is used, ProgressDialog's theme is automatically changed to match the System's theme each time before [show] is called.
+         * This Constant can be used starting from Android API Level 31 (Android 11) ONLY.
+         * [setTheme] will throw [IllegalArgumentException] if this Constant is passed in method call in Android versions lower than Android 11.
+         */
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        const val THEME_FOLLOW_SYSTEM = 3
+
+        /**
+         * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
+         * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
+         */
+        const val MODE_INDETERMINATE = 4
+
+        /**
+         * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
+         * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
+         * Progress Value is shown as Percentage by Default which can be changed using [showProgressTextAsFraction];
+         */
+        const val MODE_DETERMINATE = 5
+        private const val SHOW_AS_FRACTION = 6
+        private const val SHOW_AS_PERCENT = 7
+        private const val HIDE_PROGRESS_TEXT = 8
+    }
+
+    private var progressDialog: AlertDialog? = null
     private var mode = 0
     private var theme = 0
     private var incrementAmt = 0
@@ -56,6 +97,9 @@ class ProgressDialog @JvmOverloads constructor(
     private var cancelable = false
     private var autoThemeEnabled = false
     private var binding: LayoutProgressdialogBinding? = null
+
+    constructor(context: Context,@ThemeConstant themeConstant: Int = THEME_LIGHT):
+            this(modeConstant = MODE_INDETERMINATE, context = context, themeConstant = themeConstant)
 
     init
     {
@@ -67,23 +111,24 @@ class ProgressDialog @JvmOverloads constructor(
         {
             progressDialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
         }
-        setTheme(themeConstant)
-        setTheme(themeConstant)
         setMode(modeConstant)
+        setTheme(themeConstant)
         setCancelable(false)
     }
 
+
     /**
-     * Sets/Changes the mode of ProgressDialog which is [.MODE_INDETERMINATE] by Default.
+     * Sets/Changes the mode of ProgressDialog which is [MODE_INDETERMINATE] by Default.
      * If you're going to use only one Mode constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Mode during Instantiation.
-     * @param modeConstant The Mode Constant to be passed as Argument ([.MODE_DETERMINATE] or [.MODE_INDETERMINATE]).
+     * @param modeConstant The Mode Constant to be passed as Argument ([MODE_DETERMINATE] or [MODE_INDETERMINATE]).
      * @return true if the passed modeConstant is valid and is set. false if the passed Mode is the current Mode or if modeConstant is invalid.
      */
     fun setMode(@ModeConstant modeConstant: Int): Boolean
     {
-        return if (modeConstant == mode) false else
-            when (modeConstant)
-            {
+        if(modeConstant == mode)
+            return false
+        when (modeConstant)
+        {
             MODE_DETERMINATE -> {
                 binding!!.textViewIndeterminate.visibility = View.GONE
                 binding!!.progressbarIndeterminate.visibility = View.GONE
@@ -93,7 +138,7 @@ class ProgressDialog @JvmOverloads constructor(
                 binding!!.progressTextView.visibility = View.VISIBLE
                 incrementAmt = if (incrementAmt == 0) 1 else incrementAmt
                 mode = modeConstant
-                true
+                return true
             }
             MODE_INDETERMINATE -> {
                 binding!!.textViewDeterminate.visibility = View.GONE
@@ -102,15 +147,15 @@ class ProgressDialog @JvmOverloads constructor(
                 binding!!.textViewIndeterminate.visibility = View.VISIBLE
                 binding!!.progressbarIndeterminate.visibility = View.VISIBLE
                 mode = modeConstant
-                true
+                return true
             }
-            else -> false
+            else -> return false
         }
     }
 
     /**
      * Returns the Current Mode of ProgressDialog.
-     * @return The current Mode of ProgressDialog ([.MODE_DETERMINATE] or [.MODE_INDETERMINATE]).
+     * @return The current Mode of ProgressDialog ([MODE_DETERMINATE] or [MODE_INDETERMINATE]).
      */
     @ModeConstant
     fun getMode() : Int
@@ -119,35 +164,39 @@ class ProgressDialog @JvmOverloads constructor(
     }
 
     /**
-     * Sets/Changes the Theme of ProgressDialog which is [.THEME_LIGHT] by Default.
+     * Sets/Changes the Theme of ProgressDialog which is [THEME_LIGHT] by Default.
      * If you're going to use only one Theme constantly, this method is not needed. Instead, use an appropriate Constructor to set the required Theme during Instantiation.
-     * @param themeConstant The Theme Constant to be passed.Use [.THEME_LIGHT] for Light Mode. Use [.THEME_DARK] for Dark Mode. Use [.THEME_FOLLOW_SYSTEM] for AutoTheming based on System theme (can be used starting from Android 11 (API Level 31) ONLY).
+     * @param themeConstant The Theme Constant to be passed.Use [THEME_LIGHT] for Light Mode. Use [THEME_DARK] for Dark Mode. Use [THEME_FOLLOW_SYSTEM] for AutoTheming based on System theme (can be used starting from Android 11 (API Level 31) ONLY).
      * @return true if the passed themeConstant is valid and is set. false if the passed Theme is the current Theme or if themeConstant is invalid.
-     * @throws IllegalArgumentException if [.THEME_FOLLOW_SYSTEM] is passed as Argument to this method in Android Versions lower than Android 11 (API Level 30)}.
+     * @throws IllegalArgumentException if [THEME_FOLLOW_SYSTEM] is passed as Argument to this method in Android Versions lower than Android 11 (API Level 30)}.
      */
     @Throws(IllegalArgumentException::class)
     fun setTheme(@ThemeConstant themeConstant: Int): Boolean
     {
-        return if (themeConstant == theme) false else
-            when (themeConstant)
+        if(themeConstant == theme)
+            return false
+        when (themeConstant)
+        {
+            THEME_DARK, THEME_LIGHT ->
             {
-            THEME_DARK, THEME_LIGHT -> {
                 autoThemeEnabled = false
                 setThemeInternal(themeConstant)
+                return true
             }
-            THEME_FOLLOW_SYSTEM -> {
+            THEME_FOLLOW_SYSTEM ->
+            {
                 require(isAboveOrEqualToAnd11)
                 { "THEME_FOLLOW_SYSTEM can be used starting from Android 11 (API Level 30) only !" }
                 autoThemeEnabled = true
-                true
+                return true
             }
-            else -> false
+            else -> return false
         }
     }
 
     /**
      * Returns the Current Theme of ProgressDialog.
-     * @return The current Theme of ProgressDialog ([.THEME_LIGHT] or [.THEME_DARK] or [.THEME_FOLLOW_SYSTEM](starting from Android 11)).
+     * @return The current Theme of ProgressDialog ([THEME_LIGHT] or [THEME_DARK] or [THEME_FOLLOW_SYSTEM](starting from Android 11)).
      */
     @ThemeConstant
     fun getTheme(): Int
@@ -184,12 +233,11 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets the Title of ProgressDialog.
-     * This is "ProgressDialog" by Default. This can be used by passing null as parameter.
-     * Title is Hidden by Default. This Method makes the Title Visible even if null is passed as parameter.
-     * Title will be made visible automatically if [.setNegativeButton] or
-     * [.setNegativeButton] was used before.
-     * Alternative to [.setTitle].
-     * @param title The text to be set as the Title of ProgressDialog. If null is passed, "ProgressDialog" will be set.
+     * This is "ProgressDialog" by Default.
+     * Title is Hidden by Default. This Method makes the Title Visible.
+     * Title will be made visible automatically if [setNegativeButton] or
+     * [setNegativeButton] was used before.
+     * @param title The text to be set as the Title of ProgressDialog.
      */
     fun setTitle(title: CharSequence)
     {
@@ -201,10 +249,9 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Sets the Title of ProgressDialog using the String resource given.
      * Title is "ProgressDialog" by Default.
-     * Title is Hidden by Default. This Method makes the Title Visible even if "null" is passed as argument.
-     * Title will be made visible automatically if [.setNegativeButton] or
-     * [.setNegativeButton] was used before.
-     * Alternative to [.setTitle].
+     * Title is Hidden by Default. This Method makes the Title Visible.
+     * Title will be made visible automatically if [setNegativeButton] or
+     * [setNegativeButton] was used before.
      * @param titleResID The resource id of the string resource.
      */
     fun setTitle(@StringRes titleResID: Int)
@@ -215,9 +262,8 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Hides the Title of ProgressDialog.
      * Title is Hidden by Default.
-     * Use this method only if you have used [.setTitle] before.
-     * This method won't work if [.setNegativeButton] or
-     * [.setNegativeButton] was used before.
+     * Use this method only if you have used [setTitle] before.
+     * This method won't work if [setNegativeButton] was used before.
      * @return true if Title is Hid. false if the Title is already Hidden or if NegativeButton is used.
      */
     fun hideTitle(): Boolean
@@ -229,10 +275,10 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets the Progress Value of Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
+     * Can be used only in [MODE_DETERMINATE] Mode.
      * If the parameter progress is greater than MaxValue, MaxValue will be set as Progress.
      * @param progress The Integral Progress Value to be set in Determinate ProgressBar.
-     * @return true if Mode is [.MODE_DETERMINATE] and Progress is set. false otherwise.
+     * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise.
      * @see .incrementProgress
      */
     fun setProgress(progress: Int): Boolean
@@ -252,10 +298,10 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Sets the Increment Offset Value for Determinate ProgressBar.
      * The value is 1 by Default.
-     * Should be called before calling [.incrementProgress] method.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
+     * Should be called before calling [incrementProgress] method.
+     * Can be used only in [MODE_DETERMINATE] Mode.
      * @param increment The Integral Offset Value for Incrementing Progress in Determinate ProgressBar.
-     * @return true if Mode is [.MODE_DETERMINATE] and Progress is set. false otherwise.
+     * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise.
      * @see .incrementProgress
      */
     fun setIncrementValue(increment: Int): Boolean
@@ -273,15 +319,15 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Returns the Current Increment Offset Value.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
-     * @return The Current Increment Offset Value of Determinate ProgressBar if Mode is [.MODE_DETERMINATE]. Else -1 is returned.
+     * Can be used only in [MODE_DETERMINATE] Mode.
+     * @return The Current Increment Offset Value of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
     val incrementValue: Int
         get() = if (isDeterminate) incrementAmt else -1
 
     /**
-     * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using [.setIncrementValue].
-     * Can be used only in [) Mode.][.MODE_DETERMINATE]
+     * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using [setIncrementValue].
+     * Can be used only in [) Mode.][MODE_DETERMINATE]
      */
     fun incrementProgress(): Boolean
     {
@@ -300,10 +346,10 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Sets the Maximum value of Determinate ProgressBar.
      * The Default MaxValue of Determinate ProgressBar is 100.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
-     * It is advised to use this method before calling [.setProgress] or [.incrementProgress] if you want to change the Default MaxValue.
+     * Can be used only in [MODE_DETERMINATE] Mode.
+     * It is advised to use this method before calling [setProgress] or [incrementProgress] if you want to change the Default MaxValue.
      * @param maxValue The Integral Value to be set as MaxValue for Determinate ProgressBar.
-     * @return true if Mode is [.MODE_DETERMINATE] and Progress is set. false otherwise.
+     * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise.
      */
     fun setMaxValue(maxValue: Int): Boolean
     {
@@ -321,16 +367,16 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Returns the MaxValue of Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
-     * @return The Current MaxValue of Determinate ProgressBar if Mode is [.MODE_DETERMINATE]. Else -1 is returned.
+     * Can be used only in [MODE_DETERMINATE] Mode.
+     * @return The Current MaxValue of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
     val maxValue: Int
         get() = if (isDeterminate) binding!!.progressbarDeterminate.max else -1
 
     /**
      * Returns the Progress Value of Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE] Mode.
-     * @return The Current Progress Value of Determinate ProgressBar if Mode is [.MODE_DETERMINATE]. Else -1 is returned.
+     * Can be used only in [MODE_DETERMINATE] Mode.
+     * @return The Current Progress Value of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
     val progress: Int
         get() = if (isDeterminate) binding!!.progressbarDeterminate.progress else -1
@@ -338,10 +384,10 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
      * Progress TextView's Default format is Percentage format.
-     * Can be used only in [.MODE_DETERMINATE].
-     * If [.hideProgressText] was used before, this method will again make Progress TextView visible.
+     * Can be used only in [MODE_DETERMINATE].
+     * If [hideProgressText] was used before, this method will again make Progress TextView visible.
      * @param progressTextAsFraction The boolean value to change Progress TextView's format.
-     * @return true if Mode is [.MODE_DETERMINATE] and Progress is set. false otherwise and also on Redundant Calls.
+     * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise and also on Redundant Calls.
      */
     fun showProgressTextAsFraction(progressTextAsFraction: Boolean): Boolean
     {
@@ -376,8 +422,8 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Hides the Progress TextView.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return true if Mode is [.MODE_DETERMINATE] and Progress TextView is hidden. false otherwise.
+     * Can be used only in [MODE_DETERMINATE].
+     * @return true if Mode is [MODE_DETERMINATE] and Progress TextView is hidden. false otherwise.
      */
     fun hideProgressText(): Boolean
     {
@@ -403,13 +449,15 @@ class ProgressDialog @JvmOverloads constructor(
     {
         if (autoThemeEnabled)
         {
-            if (isSystemInNightMode && theme == THEME_LIGHT)
+            if (isSystemInNightMode)
             {
-                setThemeInternal(THEME_DARK)
+                if(theme != THEME_DARK)
+                    setThemeInternal(THEME_DARK)
             }
-            else if (!isSystemInNightMode && theme == THEME_DARK)
+            else if (!isSystemInNightMode)
             {
-                setThemeInternal(THEME_LIGHT)
+                if(theme != THEME_LIGHT)
+                    setThemeInternal(THEME_LIGHT)
             }
         }
         progressDialog!!.show()
@@ -417,7 +465,7 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Dismisses the ProgressDialog, removing it from the Screen.
-     * Calls [DialogInterface.OnDismissListener], if it is set using [.setOnDismissListener].
+     * Calls [DialogInterface.OnDismissListener], if it is set using [setOnDismissListener].
      * To be used after the Task calling ProgressDialog is Over or if any Exception Occurs during Task execution.
      * In case of passing to Another Activity/Fragment, this method SHOULD be called before starting the next Activity/Fragment.
      * Else, it would cause WindowLeakedException.
@@ -429,7 +477,7 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets the [DialogInterface.OnCancelListener] for ProgressDialog.
-     * Should be used only if [.setCancelable] was passed with true earlier since cancel() cannot be called explicitly
+     * Should be used only if [setCancelable] was passed with true earlier since cancel() cannot be called explicitly
      * and ProgressDialog is NOT cancelable by Default.
      * @param onCancelListener [DialogInterface.OnCancelListener] listener object.
      * @return true if ProgressDialog is Cancelable. false otherwise.
@@ -477,25 +525,25 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Checks if ProgressValue is equal to MaxValue.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
+     * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not [MODE_DETERMINATE].
      */
     val hasProgressReachedMaxValue: Boolean
         get() = if (isDeterminate) progress == maxValue else false
 
     /**
      * Gets the Integral Value required to reach MaxValue from the current ProgressValue.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return The Integral Amount required to reach MaxValue. -1 if mode is not [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
+     * @return The Integral Amount required to reach MaxValue. -1 if mode is not [MODE_DETERMINATE].
      */
     val remainingProgress: Int
         get() = if (isDeterminate) maxValue - progress else -1
 
     /**
      * Sets the Secondary ProgressValue.
-     * Can be used only in [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
      * @param secondaryProgress The integral value to be set as Secondary ProgressValue.
-     * @return true if mode is [.MODE_DETERMINATE] and Secondary ProgressValue is set. false otherwise.
+     * @return true if mode is [MODE_DETERMINATE] and Secondary ProgressValue is set. false otherwise.
      */
     fun setSecondaryProgress(secondaryProgress: Int): Boolean
     {
@@ -512,35 +560,34 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Gets the Secondary ProgressValue.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return Integral Secondary ProgressValue if mode is [.MODE_DETERMINATE]. -1 otherwise.
+     * Can be used only in [MODE_DETERMINATE].
+     * @return Integral Secondary ProgressValue if mode is [MODE_DETERMINATE]. -1 otherwise.
      */
     val secondaryProgress: Int
         get() = if (isDeterminate) binding!!.progressbarDeterminate.secondaryProgress else -1
 
     /**
      * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
+     * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not [MODE_DETERMINATE].
      */
     val secondaryRemainingProgress: Int
         get() = if (isDeterminate) maxValue - secondaryProgress else -1
 
     /**
      * Checks if Secondary ProgressValue is equal to MaxValue.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
+     * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not [MODE_DETERMINATE].
      */
     val hasSecondaryProgressReachedMaxValue: Boolean
         get() = if (isDeterminate) secondaryProgress == maxValue else false
 
     /**
      * Sets a Custom Drawable to the Indeterminate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
-     * Alternative to [.setIndeterminateDrawable].
      * @param progressDrawable The Drawable object used to draw the Indeterminate ProgressBar.
-     * @return true if mode is [.MODE_INDETERMINATE] and the Drawable is set. false otherwise.
+     * @return true if mode is [MODE_INDETERMINATE] and the Drawable is set. false otherwise.
      * @see .getIndeterminateDrawable
      * @see .setProgressTintList
      */
@@ -559,11 +606,10 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets a Custom Drawable from the passed Drawable resource to the Indeterminate ProgressBar.
-     * Can be used only in [.MODE_INDETERMINATE].
+     * Can be used only in [MODE_INDETERMINATE].
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
-     * Alternative to [.setIndeterminateDrawable].
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
-     * @return true if mode is [.MODE_INDETERMINATE] and the Drawable is set. false otherwise.
+     * @return true if mode is [MODE_INDETERMINATE] and the Drawable is set. false otherwise.
      * @see .getIndeterminateDrawable
      * @see .setProgressTintList
      */
@@ -574,8 +620,8 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Gets the Drawable object used to draw the Indeterminate ProgressBar.
-     * Can be used only in [.MODE_INDETERMINATE].
-     * @return Drawable Object if mode is [.MODE_INDETERMINATE]. null otherwise.
+     * Can be used only in [MODE_INDETERMINATE].
+     * @return Drawable Object if mode is [MODE_INDETERMINATE]. null otherwise.
      * @see .setIndeterminateDrawable
      * @see .getProgressTintList
      */
@@ -584,11 +630,10 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets a Custom Drawable to the Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
-     * Alternative to [.setDeterminateDrawable].
      * @param progressDrawable The Drawable object used to draw the Determinate ProgressBar.
-     * @return true if mode is [.MODE_DETERMINATE] and the Drawable is set. false otherwise.
+     * @return true if mode is [MODE_DETERMINATE] and the Drawable is set. false otherwise.
      * @see .getDeterminateDrawable
      * @see .setProgressTintList
      */
@@ -604,11 +649,10 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets a Custom Drawable from the passed Drawable resource to the Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE].
+     * Can be used only in [MODE_DETERMINATE].
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
-     * Alternative to [.setDeterminateDrawable].
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
-     * @return true if mode is [.MODE_DETERMINATE] and the Drawable is set. false otherwise.
+     * @return true if mode is [MODE_DETERMINATE] and the Drawable is set. false otherwise.
      * @see .getDeterminateDrawable
      * @see .setProgressTintList
      */
@@ -618,22 +662,22 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Gets the Drawable object used to draw the Determinate ProgressBar.
-     * Can be used only in [.MODE_DETERMINATE].
-     * @return Drawable Object if mode is [.MODE_DETERMINATE]. null otherwise.
+     * Can be used only in [MODE_DETERMINATE].
+     * @return Drawable Object if mode is [MODE_DETERMINATE]. null otherwise.
      * @see .setDeterminateDrawable
      * @see .getProgressTintList
      */
     val determinateDrawable: Drawable?
         get() = if (isDeterminate) binding!!.progressbarDeterminate.progressDrawable else null
     /**
-     * Returns the tint applied to Indeterminate Drawable if mode is [.MODE_INDETERMINATE].
-     * Returns the tint applied to Determinate Drawable if mode is [.MODE_DETERMINATE].
+     * Returns the tint applied to Indeterminate Drawable if mode is [MODE_INDETERMINATE].
+     * Returns the tint applied to Determinate Drawable if mode is [MODE_DETERMINATE].
      * @return ColorStateList object specifying the tint applied to ProgressBar's Drawable.
      * @see .setProgressTintList
      */
     /**
-     * Applies a tint to Indeterminate Drawable if mode is [.MODE_INDETERMINATE].
-     * Applies a tint to Determinate Drawable if mode is [.MODE_DETERMINATE].
+     * Applies a tint to Indeterminate Drawable if mode is [MODE_INDETERMINATE].
+     * Applies a tint to Determinate Drawable if mode is [MODE_DETERMINATE].
      * @param tintList The ColorStateList object used to apply tint to ProgressBar's Drawable.
      * @see .getProgressTintList
      */
@@ -648,12 +692,11 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Sets the NegativeButton with the passed text for the ProgressDialog and also sets the OnClickListener for the Button.
      * NegativeButton is hidden by default. This method makes it visible.
-     * This method also enables the Title to be shown (even if it was hidden till then). If null is passed, default title "ProgressDialog" will be used.
-     * If [.setTitle] or [.setTitle] was used before, and new Title is passed, the new Title will Override the previously set Title.
+     * This method also enables the Title to be shown (even if it was hidden till then).
+     * If [setTitle] or [setTitle] was used before, and new Title is passed, the new Title will Override the previously set Title.
      * If null is passed for listener, default listener which dismisses the ProgressDialog when clicked, will be used.
-     * Alternative to [.setNegativeButton].
-     * @param text The text to be set in the NegativeButton. If null, "CANCEL" will be set.
-     * @param listener The [View.OnClickListener] listener to be set to NegativeButton.
+     * @param text The text to be set in the NegativeButton.
+     * @param listener The [View.OnClickListener] listener to be set to NegativeButton. If null, default cancel listener will be used.
      */
     fun setNegativeButton(
         text: CharSequence,
@@ -671,8 +714,8 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Sets the NegativeButton with the text from passed resource id for the ProgressDialog and also sets the OnClickListener for the Button.
      * NegativeButton is hidden by default. This method makes it visible.
-     * This method also enables the Title to be shown (even if it was hidden till then). If invalid titleResID is passed, default title "ProgressDialog" will be used.
-     * If [.setTitle] or [.setTitle] was used before, and new titleResID is passed, the new Title will Override the previously set Title.
+     * This method also enables the Title to be shown (even if it was hidden till then).
+     * If [setTitle] or [setTitle] was used before, and new titleResID is passed, the new Title will Override the previously set Title.
      * If null is passed for listener, default listener which dismisses the ProgressDialog when clicked, will be used.
      * @param textResID The resource id of the text to be set in the NegativeButton.
      * @param listener The [View.OnClickListener] listener to be set to NegativeButton.
@@ -691,9 +734,9 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Hides the NegativeButton. NegativeButton is Hidden by Default.
-     * Use this method only if you have used [.setNegativeButton] or
-     * [.setNegativeButton] before.
-     * Note : This method will not hide the Title. You have to explicitly call [.hideTitle] to do the same.
+     * Use this method only if you have used [setNegativeButton] or
+     * [setNegativeButton] before.
+     * Note : This method will not hide the Title. You have to explicitly call [hideTitle] to do the same.
      */
     fun hideNegativeButton()
     {
@@ -820,46 +863,5 @@ class ProgressDialog @JvmOverloads constructor(
             }
             else -> false
         }
-    }
-
-    companion object
-    {
-        /**
-         * The default Theme for ProgressDialog (even if it is not passed in Constructor).
-         * Suitable for apps having a Light Theme.
-         * Theme can be changed later using [.setTheme].
-         */
-        const val THEME_LIGHT = 1
-
-        /**
-         * This theme is suitable for apps having a Dark Theme.
-         * This Constant SHOULD be passed explicitly in the Constructor for setting Dark Theme for ProgressDialog.
-         * Theme can be changed later using [.setTheme].
-         */
-        const val THEME_DARK = 2
-
-        /**
-         * When this ThemeConstant is used, ProgressDialog's theme is automatically changed to match the System's theme each time before [.show] is called.
-         * This Constant can be used starting from Android API Level 31 (Android 11) ONLY.
-         * [.setTheme] will throw [IllegalArgumentException] if this Constant is passed in method call in Android versions lower than Android 11.
-         */
-        @RequiresApi(api = Build.VERSION_CODES.R)
-        const val THEME_FOLLOW_SYSTEM = 3
-
-        /**
-         * The default mode for ProgressDialog where an Indeterminate Spinner is shown for indicating Progress (even if it is not passed in Constructor).
-         * Suitable for implementations where the exact progress of an operation is unknown to the Developer.
-         */
-        const val MODE_INDETERMINATE = 4
-
-        /**
-         * In this mode, a Determinate ProgressBar is shown inside the ProgressDialog for indicating Progress.
-         * It also has a TextView for numerically showing the Progress Value either as Percentage or as Fraction.
-         * Progress Value is shown as Percentage by Default which can be changed using [.showProgressTextAsFraction];
-         */
-        const val MODE_DETERMINATE = 5
-        private const val SHOW_AS_FRACTION = 6
-        private const val SHOW_AS_PERCENT = 7
-        private const val HIDE_PROGRESS_TEXT = 8
     }
 }

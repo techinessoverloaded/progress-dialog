@@ -3,8 +3,6 @@ package com.techiness.progressdialogexample;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
-
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -26,6 +24,7 @@ public class MainActivity extends AppCompatActivity
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             progressDialog = new ProgressDialog(this,ProgressDialog.THEME_FOLLOW_SYSTEM);
+            //progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM);
             darkSwitch.setEnabled(false);
         }
         else
