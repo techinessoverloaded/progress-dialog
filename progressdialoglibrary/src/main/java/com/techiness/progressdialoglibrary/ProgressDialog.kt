@@ -27,7 +27,16 @@ import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_LIGHT
 import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding
 import java.util.*
 
-
+/**
+ * An easy to use ProgressDialog library for Android API level 24 and above.
+ * The below given parameters apply for all the overloaded constructors in Java or a Single Constructor with default arguments in Kotlin.
+ * @param context The Activity context which must be provided for sure no matter which overloaded constructor is called.
+ * @param modeConstant The [Int] constant, which is an optional parameter that accepts either [MODE_DETERMINATE] or [MODE_INDETERMINATE]. If it is not passed, [MODE_INDETERMINATE] will be set by default, which can be changed later using [setMode].
+ * @param themeConstant The [Int] constant, which is an optional parameter that accepts either [THEME_DARK], [THEME_LIGHT], or [THEME_FOLLOW_SYSTEM]
+ * If it is not passed, [THEME_LIGHT] will be set by default, which can be changed later using [setTheme].
+ *
+ * **NOTE** : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 (Android 11) only. Attempting to use it in lower versions will throw [IllegalArgumentException].
+ */
 class ProgressDialog @JvmOverloads constructor(
     @ModeConstant modeConstant: Int = MODE_INDETERMINATE,
     private val context: Context,
@@ -91,14 +100,6 @@ class ProgressDialog @JvmOverloads constructor(
     private var autoThemeEnabled = false
     private var binding: LayoutProgressdialogBinding? = null
 
-    /**
-     * Mode is [MODE_INDETERMINATE] by default and remains same if not specified in constructor until changed using [setMode].
-     * Theme is [THEME_LIGHT] by default and remains same if not specified in constructor until changed using [setTheme].
-     * Mode is set as Determinate if [MODE_DETERMINATE] is passed (This can be changed later using [setMode]).
-     * Theme is set as Dark Theme if [THEME_DARK] is passed (This can be changed later using [setTheme]).
-     * Theme is automatically decided at runtime according to System's Theme if [THEME_FOLLOW_SYSTEM] is passed (This can be changed later using [setTheme]).
-     * NOTE : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 only.
-     */
     constructor(context: Context,@ThemeConstant themeConstant: Int = THEME_LIGHT):
             this(modeConstant = MODE_INDETERMINATE, context = context, themeConstant = themeConstant)
 

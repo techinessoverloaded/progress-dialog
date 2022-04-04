@@ -2,8 +2,10 @@ package com.techiness.progressdialogexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RestrictTo
 import com.techiness.progressdialoglibrary.ProgressDialog
 
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class KotlinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,5 +1,6 @@
 package com.techiness.progressdialogexample;
 
+import androidx.annotation.RestrictTo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.techiness.progressdialoglibrary.ProgressDialog;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class MainActivity extends AppCompatActivity
 {
     ProgressDialog progressDialog;
