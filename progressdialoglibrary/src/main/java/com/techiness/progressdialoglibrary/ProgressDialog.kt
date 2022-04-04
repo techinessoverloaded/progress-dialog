@@ -281,7 +281,7 @@ class ProgressDialog @JvmOverloads constructor(
      * If the parameter progress is greater than MaxValue, MaxValue will be set as Progress.
      * @param progress The Integral Progress Value to be set in Determinate ProgressBar.
      * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise.
-     * @see .incrementProgress
+     * @see incrementProgress
      */
     fun setProgress(progress: Int): Boolean
     {
@@ -304,7 +304,7 @@ class ProgressDialog @JvmOverloads constructor(
      * Can be used only in [MODE_DETERMINATE] Mode.
      * @param increment The Integral Offset Value for Incrementing Progress in Determinate ProgressBar.
      * @return true if Mode is [MODE_DETERMINATE] and Progress is set. false otherwise.
-     * @see .incrementProgress
+     * @see incrementProgress
      */
     fun setIncrementValue(increment: Int): Boolean
     {
@@ -324,8 +324,10 @@ class ProgressDialog @JvmOverloads constructor(
      * Can be used only in [MODE_DETERMINATE] Mode.
      * @return The Current Increment Offset Value of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
-    val incrementValue: Int
-        get() = if (isDeterminate) incrementAmt else -1
+    fun getIncrementValue(): Int
+    {
+        return if (isDeterminate) incrementAmt else -1
+    }
 
     /**
      * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using [setIncrementValue].
@@ -358,7 +360,7 @@ class ProgressDialog @JvmOverloads constructor(
         return if (isDeterminate)
         {
             binding!!.progressbarDeterminate.max = maxValue
-            setProgress(progress)
+            setProgress(getProgress())
             true
         }
         else
@@ -372,16 +374,14 @@ class ProgressDialog @JvmOverloads constructor(
      * Can be used only in [MODE_DETERMINATE] Mode.
      * @return The Current MaxValue of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
-    val maxValue: Int
-        get() = if (isDeterminate) binding!!.progressbarDeterminate.max else -1
+    fun getMaxValue(): Int = if (isDeterminate) binding!!.progressbarDeterminate.max else -1
 
     /**
      * Returns the Progress Value of Determinate ProgressBar.
      * Can be used only in [MODE_DETERMINATE] Mode.
      * @return The Current Progress Value of Determinate ProgressBar if Mode is [MODE_DETERMINATE]. Else -1 is returned.
      */
-    val progress: Int
-        get() = if (isDeterminate) binding!!.progressbarDeterminate.progress else -1
+    fun getProgress(): Int = if (isDeterminate) binding!!.progressbarDeterminate.progress else -1
 
     /**
      * Toggles the Progress TextView's format as Fraction if "true" is passed.
@@ -520,7 +520,8 @@ class ProgressDialog @JvmOverloads constructor(
      * It is NOT RECOMMENDED to set Cancelable to true.
      * @param cancelable boolean value which toggles the Cancelable property of ProgressDialog.
      */
-    fun setCancelable(cancelable: Boolean) {
+    fun setCancelable(cancelable: Boolean)
+    {
         progressDialog!!.setCancelable(cancelable)
         this.cancelable = cancelable
     }
@@ -530,16 +531,14 @@ class ProgressDialog @JvmOverloads constructor(
      * Can be used only in [MODE_DETERMINATE].
      * @return true if ProgressValue is equal to MaxValue. false otherwise and also if mode is not [MODE_DETERMINATE].
      */
-    val hasProgressReachedMaxValue: Boolean
-        get() = if (isDeterminate) progress == maxValue else false
+    fun hasProgressReachedMaxValue(): Boolean = if (isDeterminate) getProgress() == getMaxValue() else false
 
     /**
      * Gets the Integral Value required to reach MaxValue from the current ProgressValue.
      * Can be used only in [MODE_DETERMINATE].
      * @return The Integral Amount required to reach MaxValue. -1 if mode is not [MODE_DETERMINATE].
      */
-    val remainingProgress: Int
-        get() = if (isDeterminate) maxValue - progress else -1
+    fun remainingProgress(): Int = if (isDeterminate) getMaxValue() - getProgress() else -1
 
     /**
      * Sets the Secondary ProgressValue.
@@ -565,24 +564,21 @@ class ProgressDialog @JvmOverloads constructor(
      * Can be used only in [MODE_DETERMINATE].
      * @return Integral Secondary ProgressValue if mode is [MODE_DETERMINATE]. -1 otherwise.
      */
-    val secondaryProgress: Int
-        get() = if (isDeterminate) binding!!.progressbarDeterminate.secondaryProgress else -1
+    fun getSecondaryProgress(): Int = if (isDeterminate) binding!!.progressbarDeterminate.secondaryProgress else -1
 
     /**
      * Gets the Integral Value required to reach MaxValue from the current Secondary ProgressValue.
      * Can be used only in [MODE_DETERMINATE].
      * @return The Integral Amount required to reach MaxValue from Secondary ProgressValue. -1 if mode is not [MODE_DETERMINATE].
      */
-    val secondaryRemainingProgress: Int
-        get() = if (isDeterminate) maxValue - secondaryProgress else -1
+    fun secondaryRemainingProgress(): Int = if (isDeterminate) getMaxValue() - getSecondaryProgress() else -1
 
     /**
      * Checks if Secondary ProgressValue is equal to MaxValue.
      * Can be used only in [MODE_DETERMINATE].
      * @return true if Secondary ProgressValue is equal to MaxValue. false otherwise and also if mode is not [MODE_DETERMINATE].
      */
-    val hasSecondaryProgressReachedMaxValue: Boolean
-        get() = if (isDeterminate) secondaryProgress == maxValue else false
+    fun hasSecondaryProgressReachedMaxValue(): Boolean = if (isDeterminate) getSecondaryProgress() == getMaxValue() else false
 
     /**
      * Sets a Custom Drawable to the Indeterminate ProgressBar.
@@ -590,8 +586,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
      * @param progressDrawable The Drawable object used to draw the Indeterminate ProgressBar.
      * @return true if mode is [MODE_INDETERMINATE] and the Drawable is set. false otherwise.
-     * @see .getIndeterminateDrawable
-     * @see .setProgressTintList
+     * @see getIndeterminateDrawable
+     * @see setProgressTintList
      */
     fun setIndeterminateDrawable(progressDrawable: Drawable?): Boolean
     {
@@ -612,8 +608,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Use this when you need to define a custom Drawable Design for Indeterminate ProgressBar.
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Indeterminate ProgressBar.
      * @return true if mode is [MODE_INDETERMINATE] and the Drawable is set. false otherwise.
-     * @see .getIndeterminateDrawable
-     * @see .setProgressTintList
+     * @see getIndeterminateDrawable
+     * @see setProgressTintList
      */
     fun setIndeterminateDrawable(@DrawableRes progressDrawableResID: Int): Boolean
     {
@@ -624,11 +620,13 @@ class ProgressDialog @JvmOverloads constructor(
      * Gets the Drawable object used to draw the Indeterminate ProgressBar.
      * Can be used only in [MODE_INDETERMINATE].
      * @return Drawable Object if mode is [MODE_INDETERMINATE]. null otherwise.
-     * @see .setIndeterminateDrawable
-     * @see .getProgressTintList
+     * @see setIndeterminateDrawable
+     * @see getProgressTintList
      */
-    val indeterminateDrawable: Drawable?
-        get() = if (!isDeterminate) binding!!.progressbarIndeterminate.indeterminateDrawable else null
+    fun getIndeterminateDrawable(): Drawable?
+    {
+       return if (!isDeterminate) binding!!.progressbarIndeterminate.indeterminateDrawable else null
+    }
 
     /**
      * Sets a Custom Drawable to the Determinate ProgressBar.
@@ -636,8 +634,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
      * @param progressDrawable The Drawable object used to draw the Determinate ProgressBar.
      * @return true if mode is [MODE_DETERMINATE] and the Drawable is set. false otherwise.
-     * @see .getDeterminateDrawable
-     * @see .setProgressTintList
+     * @see getDeterminateDrawable
+     * @see setProgressTintList
      */
     fun setDeterminateDrawable(progressDrawable: Drawable?): Boolean
     {
@@ -655,8 +653,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Use this when you need to define a custom Drawable Design for Determinate ProgressBar.
      * @param progressDrawableResID The resource id of the Drawable resource used to draw the Determinate ProgressBar.
      * @return true if mode is [MODE_DETERMINATE] and the Drawable is set. false otherwise.
-     * @see .getDeterminateDrawable
-     * @see .setProgressTintList
+     * @see getDeterminateDrawable
+     * @see setProgressTintList
      */
     fun setDeterminateDrawable(@DrawableRes progressDrawableResID: Int): Boolean {
         return setDeterminateDrawable(ContextCompat.getDrawable(context, progressDrawableResID))
@@ -666,30 +664,38 @@ class ProgressDialog @JvmOverloads constructor(
      * Gets the Drawable object used to draw the Determinate ProgressBar.
      * Can be used only in [MODE_DETERMINATE].
      * @return Drawable Object if mode is [MODE_DETERMINATE]. null otherwise.
-     * @see .setDeterminateDrawable
-     * @see .getProgressTintList
+     * @see setDeterminateDrawable
+     * @see getProgressTintList
      */
-    val determinateDrawable: Drawable?
-        get() = if (isDeterminate) binding!!.progressbarDeterminate.progressDrawable else null
+    fun getDeterminateDrawable(): Drawable?
+    {
+        return if (isDeterminate) binding!!.progressbarDeterminate.progressDrawable else null
+    }
+
     /**
      * Returns the tint applied to Indeterminate Drawable if mode is [MODE_INDETERMINATE].
      * Returns the tint applied to Determinate Drawable if mode is [MODE_DETERMINATE].
      * @return ColorStateList object specifying the tint applied to ProgressBar's Drawable.
-     * @see .setProgressTintList
+     * @see setProgressTintList
      */
+    fun getProgressTintList(): ColorStateList?
+    {
+        return if (isDeterminate) binding!!.progressbarDeterminate.progressTintList else binding!!.progressbarIndeterminate.indeterminateTintList
+    }
+
     /**
      * Applies a tint to Indeterminate Drawable if mode is [MODE_INDETERMINATE].
      * Applies a tint to Determinate Drawable if mode is [MODE_DETERMINATE].
      * @param tintList The ColorStateList object used to apply tint to ProgressBar's Drawable.
-     * @see .getProgressTintList
+     * @see getProgressTintList
      */
-    var progressTintList: ColorStateList?
-        get() = if (isDeterminate) binding!!.progressbarDeterminate.progressTintList else binding!!.progressbarIndeterminate.indeterminateTintList
-        set(tintList) {
-            if (!isDeterminate) binding!!.progressbarIndeterminate.indeterminateTintList =
-                tintList else binding!!.progressbarDeterminate.progressTintList =
-                tintList
-        }
+    fun setProgressTintList(tintList : ColorStateList?)
+    {
+        if (!isDeterminate)
+            binding!!.progressbarIndeterminate.indeterminateTintList = tintList
+        else
+            binding!!.progressbarDeterminate.progressTintList = tintList
+    }
 
     /**
      * Sets the NegativeButton with the passed text for the ProgressDialog and also sets the OnClickListener for the Button.
@@ -707,7 +713,7 @@ class ProgressDialog @JvmOverloads constructor(
     ) {
         binding!!.negativeButton.text = text
         binding!!.negativeButton.setOnClickListener(listener
-            ?: View.OnClickListener { v: View? -> dismiss() })
+            ?: View.OnClickListener { dismiss() })
         if (isGone(binding!!.negativeButton)) {
             enableNegativeButton(title)
         }
@@ -749,12 +755,12 @@ class ProgressDialog @JvmOverloads constructor(
     }
 
     private val progressAsFraction: String
-       get() = "$progress/$maxValue"
+       get() = "${getProgress()}/${getMaxValue()}"
 
     private val progressAsPercent: String
         get()
         {
-            val `val` = progress.toDouble() / maxValue.toDouble() * 100
+            val `val` = getProgress().toDouble() / getMaxValue().toDouble() * 100
             return String.format(Locale.getDefault(), "%.2f", `val`) + "%"
         }
 
