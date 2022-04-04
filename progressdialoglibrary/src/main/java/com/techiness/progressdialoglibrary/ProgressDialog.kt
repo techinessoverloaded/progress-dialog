@@ -27,14 +27,7 @@ import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_LIGHT
 import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding
 import java.util.*
 
-/**
- * Mode is [MODE_INDETERMINATE] by default and remains same if not specified in constructor until changed using [setMode].
- * Theme is [THEME_LIGHT] by default and remains same if not specified in constructor until changed using [setTheme].
- * Mode is set as Determinate if [MODE_DETERMINATE] is passed (This can be changed later using [setMode]).
- * Theme is set as Dark Theme if [THEME_DARK] is passed (This can be changed later using [setTheme]).
- * Theme is automatically decided at runtime according to System's Theme if [THEME_FOLLOW_SYSTEM] is passed (This can be changed later using [setTheme]).
- * NOTE : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 only.
- */
+
 class ProgressDialog @JvmOverloads constructor(
     @ModeConstant modeConstant: Int = MODE_INDETERMINATE,
     private val context: Context,
@@ -98,6 +91,14 @@ class ProgressDialog @JvmOverloads constructor(
     private var autoThemeEnabled = false
     private var binding: LayoutProgressdialogBinding? = null
 
+    /**
+     * Mode is [MODE_INDETERMINATE] by default and remains same if not specified in constructor until changed using [setMode].
+     * Theme is [THEME_LIGHT] by default and remains same if not specified in constructor until changed using [setTheme].
+     * Mode is set as Determinate if [MODE_DETERMINATE] is passed (This can be changed later using [setMode]).
+     * Theme is set as Dark Theme if [THEME_DARK] is passed (This can be changed later using [setTheme]).
+     * Theme is automatically decided at runtime according to System's Theme if [THEME_FOLLOW_SYSTEM] is passed (This can be changed later using [setTheme]).
+     * NOTE : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 only.
+     */
     constructor(context: Context,@ThemeConstant themeConstant: Int = THEME_LIGHT):
             this(modeConstant = MODE_INDETERMINATE, context = context, themeConstant = themeConstant)
 
