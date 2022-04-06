@@ -54,10 +54,15 @@ import com.techiness.progressdialoglibrary.ProgressDialog2;
 ### Simple Constructor 
 #### Uses Light Theme by Default. Note: Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
 **IMPORTANT** : If you want to Instantiate ProgressDialog object in a Fragment, use **requireContext()** method instead of **this** keyword for passing Context object. Similarly, for Instantiating ProgressDialog object in inner classes, use **YourActivity.this** instead of simple **this** keyword for passing Context object.
-#### Code:
+#### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this,ProgressDialog.THEME_LIGHT);
 ```
+#### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(this) //same as ProgressDialog(this,ProgressDialog.THEME_LIGHT)
+```
+
 ### Constructor for Alternate Theme 
 #### This Constructor can be used for setting Dark Theme.
 #### Code:
