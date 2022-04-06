@@ -31,10 +31,10 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level **build.gradle** file:
-#### Note: Current latest version is **1.3.1**. **Replace latest-version with 1.3.1 in the code below**
+#### Note: Current latest version is **1.3.1**.
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.3.1
+	        implementation 'com.github.techinessoverloaded:progress-dialog:1.3.1'
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
@@ -46,14 +46,14 @@ dependencies {
 ```
 Now import ProgressDialog class in your Activity/Fragment:
 ```java
-import com.techiness.progressdialoglibrary.ProgressDialog2;
+import com.techiness.progressdialoglibrary.ProgressDialog;
 ```
 
 ## Various Constructors available
 
 ### Simple Constructor 
 #### Uses Light Theme by Default. Note: Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
-**IMPORTANT** : If you want to Instantiate ProgressDialog object in a Fragment, use **requireContext()** method instead of **this** keyword for passing Context object. Similarly, for Instantiating ProgressDialog object in inner classes, use **YourActivity.this** instead of simple **this** keyword for passing Context object.
+**IMPORTANT** : If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in ***Inner Classes***, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
 #### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this,ProgressDialog.THEME_LIGHT);
