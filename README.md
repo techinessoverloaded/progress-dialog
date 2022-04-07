@@ -54,22 +54,27 @@ import com.techiness.progressdialoglibrary.ProgressDialog;
 
 ### Simple Constructor 
 #### Uses Light Theme by Default. Note: Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
-**IMPORTANT** : If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in ***Inner Classes***, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
+**IMPORTANT** : If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in **Inner Classes**, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
 #### Java Code:
 ```java
-ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this,ProgressDialog.THEME_LIGHT);
+ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this, ProgressDialog.THEME_LIGHT);
 ```
 #### Kotlin Code:
 ```kotlin
-val progressDialog = ProgressDialog(this) //same as ProgressDialog(this,ProgressDialog.THEME_LIGHT)
+val progressDialog = ProgressDialog(this) //same as ProgressDialog(this, ProgressDialog.THEME_LIGHT)
 ```
 
 ### Constructor for Alternate Theme 
 #### This Constructor can be used for setting Dark Theme.
-#### Code:
+#### Java Code:
 ```java
-ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK);
+ProgressDialog progressDialog = new ProgressDialog(this, ProgressDialog.THEME_DARK);
 ```
+#### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(this, ProgressDialog.THEME_DARK)
+```
+
 ### Constructor for Alternate Mode 
 #### Default mode is Indeterminate mode. Note: Mode can be changed as and when necessary using in-built methods.
 #### Code:
