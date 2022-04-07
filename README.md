@@ -120,10 +120,17 @@ progressDialog.setTheme(ProgressDialog.THEME_DARK); // or ProgressDialog.THEME_L
 ```
 
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
-#### Code:
+#### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(this);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(ProgressDialog(this))
+{ 
+  show()
+}
 ```
 #### Output:
 <img src="./output/indeter.jpg" width=26% height=26%>
