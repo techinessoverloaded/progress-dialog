@@ -14,3 +14,4 @@
 .cxx
 github.properties
 local.properties
+*.hprof
