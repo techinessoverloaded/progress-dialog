@@ -38,49 +38,49 @@ task sourceJar(type: Jar) {
     archiveClassifier.set("sources")
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.github.techinessoverloaded'
-            artifactId = 'progress-dialog'
-            version = '1.4.0a6'
-            artifact sourceJar
-            artifact "$buildDir/outputs/aar/progress-dialog-release.aar"
-
-            pom {
-                name = 'ProgressDialog Library'
-                description = 'A ProgressDialog Library for Android API Level 24 and above. Quite Useful for showing progress during any operation.'
-                url = 'https://github.com/techinessoverloaded/progress-dialog'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'techinessoverloaded'
-                        name = 'Arunprasadh C'
-                        email = 'techinessover@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            def propsFile = rootProject.file('github.properties')
-            def props = new Properties()
-            props.load(new FileInputStream(propsFile))
-            name = "GitHubPackages"
-            url = uri(props['repouri'])
-            credentials {
-                username props['username']
-                password props['token']
-            }
-        }
-    }
-}
+//publishing {
+//    publications {
+//        release(MavenPublication) {
+//            groupId = 'com.github.techinessoverloaded'
+//            artifactId = 'progress-dialog'
+//            version = '1.4.0a6'
+//            artifact sourceJar
+//            artifact "$buildDir/outputs/aar/progress-dialog-release.aar"
+//
+//            pom {
+//                name = 'ProgressDialog Library'
+//                description = 'A ProgressDialog Library for Android API Level 24 and above. Quite Useful for showing progress during any operation.'
+//                url = 'https://github.com/techinessoverloaded/progress-dialog'
+//                licenses {
+//                    license {
+//                        name = 'The Apache License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id = 'techinessoverloaded'
+//                        name = 'Arunprasadh C'
+//                        email = 'techinessover@gmail.com'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            def propsFile = rootProject.file('github.properties')
+//            def props = new Properties()
+//            props.load(new FileInputStream(propsFile))
+//            name = "GitHubPackages"
+//            url = uri(props['repouri'])
+//            credentials {
+//                username props['username']
+//                password props['token']
+//            }
+//        }
+//    }
+//}
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
