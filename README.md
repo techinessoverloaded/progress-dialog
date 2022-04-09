@@ -1,6 +1,9 @@
-# ProgressDialog Library [![](https://jitpack.io/v/techinessoverloaded/progress-dialog.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog)
+# ProgressDialog Library [![](https://jitpack.io/v/techinessoverloaded/progress-dialog.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog) [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release&logo=GitHub)](https://github.com/techinessoverloaded/progress-dialog/releases/1.3.1)
+
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
+
+**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
 ## Key Features
 - Highly Customisable.
@@ -29,10 +32,10 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level **build.gradle** file:
-#### Note: Current latest version is **1.3.1**. **Replace latest-version with 1.3.1 in the code below**
+#### Note: Current latest version is **1.3.1**.
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:latest-version' //1.3.1
+	        implementation 'com.github.techinessoverloaded:progress-dialog:1.3.1'
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
@@ -44,42 +47,61 @@ dependencies {
 ```
 Now import ProgressDialog class in your Activity/Fragment:
 ```java
-import com.techiness.progressdialoglibrary.ProgressDialog2;
+import com.techiness.progressdialoglibrary.ProgressDialog; //without semicolon in Kotlin
 ```
 
 ## Various Constructors available
 
 ### Simple Constructor 
 #### Uses Light Theme by Default. Note: Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
-**IMPORTANT** : If you want to Instantiate ProgressDialog object in a Fragment, use **requireContext()** method instead of **this** keyword for passing Context object. Similarly, for Instantiating ProgressDialog object in inner classes, use **YourActivity.this** instead of simple **this** keyword for passing Context object.
-#### Code:
+**IMPORTANT** : If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in **Inner Classes**, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
+#### Java Code:
 ```java
-ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this,ProgressDialog.THEME_LIGHT);
+ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this, ProgressDialog.THEME_LIGHT);
 ```
+#### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(this) //same as ProgressDialog(this, ProgressDialog.THEME_LIGHT)
+```
+
 ### Constructor for Alternate Theme 
 #### This Constructor can be used for setting Dark Theme.
-#### Code:
+#### Java Code:
 ```java
-ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK);
+ProgressDialog progressDialog = new ProgressDialog(this, ProgressDialog.THEME_DARK);
 ```
+#### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(this, ProgressDialog.THEME_DARK)
+```
+
 ### Constructor for Alternate Mode 
 #### Default mode is Indeterminate mode. Note: Mode can be changed as and when necessary using in-built methods.
-#### Code:
+#### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this); // for instantiating with Determinate mode
 ```
+### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(ProgressDialog.MODE_DETERMINATE,this) // for instantiating with Determinate mode
+```
+
 ### Constructor for Alternate Mode and Theme
 #### This constructor can be used to customise both Mode and Theme of ProgressDialog.
-#### Code:
+#### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this,ProgressDialog.THEME_DARK); 
 ```
+#### Kotlin Code:
+```kotlin
+val progressDialog = ProgressDialog(ProgressDialog.MODE_DETERMINATE,this,ProgressDialog.THEME_DARK)
+```
 ## Simple Examples
 
-#### Note: These examples are for simple illustration of ProgressDialog Library. For completely knowing about the Library, refer to the javadoc Documentation of the Library through Android Studio.
+#### Note: These examples are for simple illustration of ProgressDialog Library. For completely knowing about the Library, refer to the JavaDoc/KDoc Documentation of the Library through Android Studio.
 
 ### How to use `ProgressDialog.THEME_FOLLOW_SYSTEM` with Constructor ?
-#### Code:
+#### Java Code:
 ```java
 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
 {
@@ -91,9 +113,21 @@ else //Autotheming not compatible
 ProgressDialog progressDialog = new ProgressDialog(this,ProgressDialog.THEME_DARK); // or any other constructors mentioned above
 }
 ```
+#### Kotlin Code:
+```kotlin
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
+{
+AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_FOLLOW_SYSTEM) //This is optional. This will enable Android's Autotheming for the entire App
+val progressDialog = ProgressDialog(this,ProgressDialog.THEME_FOLLOW_SYSTEM) // Enables AutoTheming for the ProgressDialog instance.
+}
+else //Autotheming not compatible
+{
+val progressDialog = ProgressDialog(this,ProgressDialog.THEME_DARK) // or any other constructors mentioned above
+}
+```
 
 ### How to use `ProgressDialog.THEME_FOLLOW_SYSTEM` with `setTheme(int themeConstant)` method ?
-#### Code:
+#### Java Code:
 ```java
 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
 {
@@ -105,27 +139,54 @@ else //Autotheming not compatible
 progressDialog.setTheme(ProgressDialog.THEME_DARK); // or ProgressDialog.THEME_LIGHT
 }
 ```
+#### Kotlin Code:
+```kotlin
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //Check if Android API Level is greater than or equal to 30
+{
+AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_FOLLOW_SYSTEM) //This is optional. This will enable Android's Autotheming for the entire App
+progressDialog.theme = ProgressDialog.THEME_FOLLOW_SYSTEM) // Enables AutoTheming for the ProgressDialog instance.
+}
+else //Autotheming not compatible
+{
+progressDialog.theme = ProgressDialog.THEME_DARK // or ProgressDialog.THEME_LIGHT
+}
+```
 
 ### Indeterminate ProgressDialog without Title (Light Theme) 	
-#### Code:
+#### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(this);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(ProgressDialog(this))
+{ 
+  show()
+}
 ```
 #### Output:
 <img src="./output/indeter.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog without Title (Dark Theme) 	
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog) 
+{
+   theme = ProgressDialog.THEME_DARK
+   show()
+}
 ```
 #### Output:
 <img src="./output/indeter_dark.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog without Title, without ProgressView, with Secondary Progress (Light Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -133,6 +194,18 @@ progressDialog.setProgress(65);
 progressDialog.setSecondaryProgress(80);
 progressDialog.hideProgressText();
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_DETERMINATE
+   progress = 65
+   secondaryProgress = 80
+   hideProgressText()
+   show()
+}
 ```
 #### Output:
 <img src="./output/deter_without_progress.jpg" width=26% height=26%>
