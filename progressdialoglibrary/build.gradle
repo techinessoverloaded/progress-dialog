@@ -2,14 +2,15 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'maven-publish'
+    id 'org.jetbrains.dokka'
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 32
+        targetSdkVersion 31
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -25,12 +26,59 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
-
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
+    }
+}
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.github.techinessoverloaded'
+            artifactId = 'progress-dialog'
+            version = '1.4.0a6'
+            artifact sourceJar
+            artifact "$buildDir/outputs/aar/progress-dialog-release.aar"
+
+            pom {
+                name = 'ProgressDialog Library'
+                description = 'A ProgressDialog Library for Android API Level 24 and above. Quite Useful for showing progress during any operation.'
+                url = 'https://github.com/techinessoverloaded/progress-dialog'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'techinessoverloaded'
+                        name = 'Arunprasadh C'
+                        email = 'techinessover@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def propsFile = rootProject.file('github.properties')
+            def props = new Properties()
+            props.load(new FileInputStream(propsFile))
+            name = "GitHubPackages"
+            url = uri(props['repouri'])
+            credentials {
+                username props['username']
+                password props['token']
+            }
+        }
     }
 }
 

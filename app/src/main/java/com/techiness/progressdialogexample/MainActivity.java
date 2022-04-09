@@ -4,6 +4,8 @@ import androidx.annotation.RestrictTo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -26,15 +28,15 @@ public class MainActivity extends AppCompatActivity
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this,ProgressDialog.THEME_FOLLOW_SYSTEM);
-            //progressDialog.setTheme(ProgressDialog.THEME_FOLLOW_SYSTEM);
             darkSwitch.setEnabled(false);
         }
         else
         {
             progressDialog = new ProgressDialog(this);
+            progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
         }
-        progressDialog.setCancelable(true);
         showDeterBut.setText(String.valueOf(progressDialog.getTheme()));
+        progressDialog.setCancelable(true);
         setOnClickListeners();
     }
     private void bindViews()
@@ -127,8 +129,8 @@ public class MainActivity extends AppCompatActivity
                     progressDialog.dismiss();
                 });
                 progressDialog.show();
-                /*Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

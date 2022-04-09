@@ -10,7 +10,9 @@ class KotlinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin)
-        val progressDialog = ProgressDialog(this)
-        progressDialog.show()
+        ProgressDialog(this).also { progressDialog ->
+            progressDialog.mode = ProgressDialog.MODE_DETERMINATE
+            progressDialog.show()
+        }
     }
 }
