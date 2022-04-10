@@ -51,7 +51,7 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level **build.gradle** file:
-#### Note: Current latest version is **1.3.1**.
+#### Note: Current latest version is **1.4.1**.
 ```groovy
 dependencies {
 	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.1'
