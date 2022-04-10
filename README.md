@@ -5,7 +5,8 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 **NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
-**Usage examples can be found in this same README.md file. Documentation of classes and methods is available at** [Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
+**Usage examples available at** [Usage Examples](https://github.com/techinessoverloaded/progress-dialog#steps-to-add-progressdialog-library-to-your-android-studio-project) 
+</br>**Documentation of Class and Methods available at** [Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
 
 ## Key Features
 - Highly Customisable.
@@ -29,6 +30,13 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 ### The following changes were made in the previous version (1.3.1)
 - Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
+
+### How can you contribute to this Project ?
+- You can point out any issue which you faced while using this library.
+- You can suggest new features to be added to this library.
+- You can give pull requests with any reasonable changes or feature additions.
+- I haven't done JUnit testing for this library. You can help out with the same.
+- You can share about this library to your peer Android developers.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
