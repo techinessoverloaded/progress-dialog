@@ -57,7 +57,7 @@ dependencies {
 ```
 Now import ProgressDialog class in your Activity/Fragment:
 ```java
-import com.techiness.progressdialoglibrary.ProgressDialog; //without semicolon in Kotlin
+import com.techiness.progressdialoglibrary.ProgressDialog;
 ```
 
 ## Various Constructors available
@@ -170,7 +170,8 @@ progressDialog.show();
 ```
 #### Kotlin Code:
 ```kotlin
-with(ProgressDialog(this))
+val progressDialog = ProgressDialog(this)
+with(progressDialog)
 { 
   show()
 }
@@ -221,7 +222,7 @@ with(progressDialog)
 <img src="./output/deter_without_progress.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog without Title, without ProgressView, with Secondary Progress (Dark Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -230,55 +231,107 @@ progressDialog.setSecondaryProgress(80);
 progressDialog.hideProgressText();
 progressDialog.show();
 ```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_DETERMINATE
+   progress = 65
+   secondaryProgress = 80
+   hideProgressText()
+   show()
+}
+```
 #### Output:
 <img src="./output/deter_without_progress_dark.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog without Title, with ProgressView as Percentage (Light Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
 progressDialog.setProgress(65);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_DETERMINATE
+   setprogress = 65
+   show()
+}
 ```
 #### Output:
 <img src="./output/deter_percent.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog without Title, with ProgressView as Percentage (Dark Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
 progressDialog.setProgress(65);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_DETERMINATE
+   progress = 65
+   show()
+}
 ```
 #### Output:
 <img src="./output/deter_percent_dark.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with Title (Light Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
 progressDialog.setTitle("Indeterminate");
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_INDETERMINATE
+   setTitle("Indeterminate")
+   show()
+}
 ```
 #### Output:
 <img src="./output/indeter_with_title.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with Title (Dark Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
 progressDialog.setTitle("Indeterminate");
 progressDialog.show();
 ```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_INDETERMINATE
+   setTitle("Indeterminate")
+   show()
+}
+```
 #### Output:
 <img src="./output/indeter_with_title_dark.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Light Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -288,11 +341,24 @@ progressDialog.setSecondaryProgress(80);
 progressDialog.showProgressTextAsFraction(true);
 progressDialog.show();
 ```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_DETERMINATE
+   setTitle("Determinate")
+   progress = 65
+   secondaryProgress = 80
+   showProgressTextAsFraction(true)
+   show()
+}
+```
 #### Output:
 <img src="./output/deter_title.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog with Title, Secondary Progress and ProgressView as Fraction (Dark Theme)
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -301,13 +367,26 @@ progressDialog.setProgress(65);
 progressDialog.setSecondaryProgress(80);
 progressDialog.showProgressTextAsFraction(true);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_DETERMINATE
+   setTitle("Determinate")
+   progress = 65
+   secondaryProgress = 80
+   showProgressTextAsFraction(true)
+   show()
+}
 ```
 #### Output:
 <img src="./output/deter_title_dark.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Light Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
@@ -316,13 +395,26 @@ progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
                     progressDialog.dismiss();
                 });
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_INDETERMINATE
+   setNegativeButton("Dismiss", "Determinate") {
+     Toast.makeText(this@KotlinActivity, "Custom OnClickListener for Indeterminate", Toast.LENGTH_LONG).show()
+     dismiss()
+   }   
+   show()
+}
 ```
 #### Output:
 <img src="./output/indeter_with_negativebtn.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Dark Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
@@ -332,12 +424,25 @@ progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
                 });
 progressDialog.show();
 ```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_INDETERMINATE
+   setNegativeButton("Dismiss", "Determinate") {
+     Toast.makeText(this@KotlinActivity, "Custom OnClickListener for Indeterminate", Toast.LENGTH_LONG).show()
+     dismiss()
+   }
+   show()
+}
+```
 #### Output:
 <img src="./output/indeter_with_negativebtn_dark.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Light Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -346,12 +451,24 @@ progressDialog.showProgressTextAsFraction(true);
 progressDialog.setNegativeButton("Cancel","Determinate",null);
 progressDialog.show();
 ```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_LIGHT
+   mode = ProgressDialog.MODE_DETERMINATE
+   progress = 54
+   showProgressTextAsFraction(true)
+   setNegativeButton("Cancel","Determinate",null)
+   show()
+}
+```
 #### Output:
 <img src="./output/deter_with_negativebtn.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Dark Theme)
 ##### Note: Enabling NegativeButton will automatically enable TitleView.
-#### Code:
+#### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
 progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
@@ -359,6 +476,18 @@ progressDialog.setProgress(54);
 progressDialog.showProgressTextAsFraction(true);
 progressDialog.setNegativeButton("Cancel","Determinate",null);
 progressDialog.show();
+```
+#### Kotlin Code:
+```kotlin
+with(progressDialog)
+{
+   theme = ProgressDialog.THEME_DARK
+   mode = ProgressDialog.MODE_DETERMINATE
+   progress = 54
+   showProgressTextAsFraction(true)
+   setNegativeButton("Cancel","Determinate",null)
+   show()
+}
 ```
 #### Output:
 <img src="./output/deter_with_negativebtn_dark.jpg" width=26% height=26%>
