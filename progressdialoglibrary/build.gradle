@@ -32,12 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
+//    publishing {
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
+//    }
 }
 
 publishing {
@@ -46,7 +46,7 @@ publishing {
             from components.findByName("release")
             groupId = 'com.github.techinessoverloaded'
             artifactId = 'progress-dialog'
-            version = '1.4.0a15'
+            version = '1.4.0a16'
         }
     }
 }
