@@ -5,7 +5,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 **NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
-**Usage examples available at** [Usage Examples](https://github.com/techinessoverloaded/progress-dialog#steps-to-add-progressdialog-library-to-your-android-studio-project) 
+**Usage examples available at** [Usage Examples](#steps-to-add-progressdialog-library-to-your-android-studio-project) 
 </br>**Documentation of Class and Methods available at** [Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
 
 ## Key Features
