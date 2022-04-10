@@ -171,10 +171,7 @@ progressDialog.show();
 #### Kotlin Code:
 ```kotlin
 val progressDialog = ProgressDialog(this)
-with(progressDialog)
-{ 
-  show()
-}
+progressDialog.show()
 ```
 #### Output:
 <img src="./output/indeter.jpg" width=26% height=26%>
