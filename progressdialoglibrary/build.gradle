@@ -32,12 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-//    publishing {
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
