@@ -46,26 +46,7 @@ publishing {
             from components.findByName("release")
             groupId = 'com.github.techinessoverloaded'
             artifactId = 'progress-dialog'
-            version = '1.4.0a11'
-
-            pom {
-                name = 'ProgressDialog Library'
-                description = 'A ProgressDialog Library for Android API Level 24 and above. Quite Useful for showing progress during any operation.'
-                url = 'https://github.com/techinessoverloaded/progress-dialog'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'techinessoverloaded'
-                        name = 'Arunprasadh C'
-                        email = 'techinessover@gmail.com'
-                    }
-                }
-            }
+            version = '1.4.0a12'
         }
     }
 }
