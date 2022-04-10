@@ -5,6 +5,8 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 **NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
+**Full Documentation is available at** [Complete Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
+
 ## Key Features
 - Highly Customisable.
 - Has support for Dark Theme.
