@@ -26,7 +26,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Solved an issue where `ProgressDialog.THEME_FOLLOW_SYSTEM` didn't work when set with Constructor.
 - Added Getters for Title and Message of `ProgressDialog`.
 - Added Getters and Setters for Secondary Progress Tint List.
-- Removed Boolean Return Types for some setters and made some Setters to throw `UnsupportedOperationException` when called on undesirable scenarios.
+- Removed Boolean Return Types for some Setters and made some Setters to throw `UnsupportedOperationException` when called on undesirable scenarios.
 
 ### The following changes were made in the previous version (1.3.1)
 - Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
