@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdkVersion 32
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -40,16 +40,16 @@ android {
     }
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            from components.findByName("release")
-            groupId = 'com.github.techinessoverloaded'
-            artifactId = 'progress-dialog'
-            version = '1.4.0a12'
-        }
-    }
-}
+//publishing {
+//    publications {
+//        release(MavenPublication) {
+//            from components.findByName("release")
+//            groupId = 'com.github.techinessoverloaded'
+//            artifactId = 'progress-dialog'
+//            version = '1.4.0a12'
+//        }
+//    }
+//}
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
