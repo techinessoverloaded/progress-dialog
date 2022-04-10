@@ -32,24 +32,21 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
-task sourceJar(type: Jar) {
+task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier "sources"
 }
-publishing {
-    publications {
-        release(MavenPublication) {
-            from components.findByName("release")
-            groupId = 'com.github.techinessoverloaded'
-            artifactId = 'progress-dialog'
-            version = '1.4.0a19'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.techinessoverloaded'
+                artifactId = 'progress-dialog'
+                version = '1.4.0a21'
+                artifact androidSourcesJar
+            }
         }
     }
 }
