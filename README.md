@@ -1,11 +1,11 @@
-# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://github.com/techinessoverloaded/progress-dialog/releases/1.4.1)
+# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://jitpack.io/#techinessoverloaded/progress-dialog/1.4.1)
 
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
 **NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
-**Full Documentation is available at** [Complete Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
+**Usage examples can be found in this same README.md file. Documentation of classes and methods is available at** [Documentation](https://techinessoverloaded.github.io/progress-dialog/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
 
 ## Key Features
 - Highly Customisable.
@@ -14,13 +14,21 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Can be set in both Determinate and Indeterminate Mode.
 - Has support for Negative Button, Title, and ProgressView.
 
-## What's New in Version 1.3.1 ?
-- Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
+## What's New in Version 1.4.1 ?
+- Changed Target Android Version to Android 12.1 (API Level 32).
+- Migrated to Gradle version 7.2 and JDK 11.
+- Migrated from `findViewById()` to **Android ViewBinding**.
+- Migrated the `ProgressDialog` class from **Java** to **Kotlin**.
+- Migrated variables to Kotlin `var` Properties. So, Property Syntax can be used by **Kotlin** users and usual Getters/Setters can be used by **Java** Users.
+- Still, Properties which have overloaded setters (Example `setMessage()`) or are Set-Only Properties don't support Property Syntax of **Kotlin**. Usual Getter/Setter should only be used.
+- `null` is not accepted as an argument anymore in any of the methods (excluding those which support Default Listeners).
+- Solved an issue where `ProgressDialog.THEME_FOLLOW_SYSTEM` didn't work when set with Constructor.
+- Added Getters for Title and Message of `ProgressDialog`.
+- Added Getters and Setters for Secondary Progress Tint List.
+- Removed Boolean Return Types for some setters and made some Setters to throw `UnsupportedOperationException` when called on undesirable scenarios.
 
-### The following changes were made in the previous version (1.3.0)
-- `ProgressDialog.THEME_FOLLOW_SYSTEM` constant can be used in `setTheme(int themeConstant)` method and Constructors starting from Android API Level 30 (Android 11) to enable AutoTheming. The theme of ProgressDialog will be automatically changed to match the System Theme before each `show()` method call. If this Constant is used in method calls in Android versions lower than Android 11, `IllegalArgumentException` will be thrown at runtime.
-- Constants and Numbers other than those provided in ProgressDialog class are **NOT** allowed hereafterwards for setting Theme and Mode. Existing Constants were marked with `@IntDef` Annotations to enable CompileTime Checking.
-- TextView was changed to MaterialButton for NegativeButton purpose. Hence, Material Ripple effect will be enabled on NegativeButton from now on.
+### The following changes were made in the previous version (1.3.1)
+- Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
