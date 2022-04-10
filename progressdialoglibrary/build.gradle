@@ -39,17 +39,20 @@ android {
 //        }
 //    }
 }
-
-//publishing {
-//    publications {
-//        release(MavenPublication) {
-//            from components.findByName("release")
-//            groupId = 'com.github.techinessoverloaded'
-//            artifactId = 'progress-dialog'
-//            version = '1.4.0a16'
-//        }
-//    }
-//}
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.findByName("release")
+            groupId = 'com.github.techinessoverloaded'
+            artifactId = 'progress-dialog'
+            version = '1.4.0a18'
+        }
+    }
+}
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'

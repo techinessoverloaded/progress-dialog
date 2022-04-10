@@ -1,2 +1,5 @@
 jdk:
   - openjdk11
+install:
+  - FILE="-Dfile=progressdialoglibrary-release.aar"
+  - mvn install:install-file $FILE -DgroupId=com.github.techinessoverloaded -DartifactId=progress-dialog -Dversion=1.4.018 -Dpackaging=aar -DgeneratePom=true
