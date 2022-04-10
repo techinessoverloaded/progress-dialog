@@ -15,6 +15,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Has support for AutoTheming from Android 11 (API Level 30).
 - Can be set in both Determinate and Indeterminate Mode.
 - Has support for Negative Button, Title, and ProgressView.
+- Desgined for usage in both Java and Kotlin Android Projects.
 
 ## What's New in Version 1.4.1 ?
 - Changed Target Android Version to Android 12.1 (API Level 32).
