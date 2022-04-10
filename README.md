@@ -6,8 +6,8 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 **NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4).
 
 **Usage examples available at** [Usage Examples](#steps-to-add-progressdialog-library-to-your-android-studio-project) 
-</br>**Java Documentation of Class and Methods available at** [Java Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/java/progressdialoglibrary/com.techiness.progressdialoglibrary/index.html)
-</br>**Kotlin Documentation of Class and Methods available at** [Kotlin Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/kotlin/progressdialoglibrary/com.techiness.progressdialoglibrary/index.html)
+</br>**Java Documentation of Class and Methods available at** [Java Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/java/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
+</br>**Kotlin Documentation of Class and Methods available at** [Kotlin Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/kotlin/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html)
 
 ## Key Features
 - Highly Customisable.
