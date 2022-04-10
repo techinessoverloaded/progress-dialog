@@ -42,6 +42,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
+**Make Sure that you are using Gradle version 7.0 and above and JDK Version 11**</br></br>
 Include the following code in your Project-level **build.gradle** file at the end of repositories:
 ```groovy
 allprojects {
