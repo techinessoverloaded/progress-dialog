@@ -1,4 +1,4 @@
-# ProgressDialog Library [![](https://jitpack.io/v/techinessoverloaded/progress-dialog.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog) [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release&logo=GitHub)](https://github.com/techinessoverloaded/progress-dialog/releases/1.3.1)
+# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://github.com/techinessoverloaded/progress-dialog/releases/1.4.1)
 
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
@@ -37,13 +37,13 @@ Now, include the following dependency in your App-level **build.gradle** file:
 #### Note: Current latest version is **1.3.1**.
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:1.3.1'
+	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.1'
 	     }
 ```
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
 ```groovy
 dependencies {
-                def latest-version = "1.3.1"
+                def latest-version = "1.4.1"
 	        implementation "com.github.techinessoverloaded:progress-dialog:$latest-version"
 	     }
 ```
