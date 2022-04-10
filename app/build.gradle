@@ -32,7 +32,7 @@ android {
 
 dependencies {
     implementation project(path: ':progressdialoglibrary')
-    def progress_version = "1.4.0a15"
+    def progress_version = "1.4.0a16"
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'

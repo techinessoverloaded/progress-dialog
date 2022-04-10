@@ -40,16 +40,16 @@ android {
 //    }
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            from components.findByName("release")
-            groupId = 'com.github.techinessoverloaded'
-            artifactId = 'progress-dialog'
-            version = '1.4.0a16'
-        }
-    }
-}
+//publishing {
+//    publications {
+//        release(MavenPublication) {
+//            from components.findByName("release")
+//            groupId = 'com.github.techinessoverloaded'
+//            artifactId = 'progress-dialog'
+//            version = '1.4.0a16'
+//        }
+//    }
+//}
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0-alpha01'
