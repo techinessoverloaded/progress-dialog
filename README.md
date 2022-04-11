@@ -1,4 +1,4 @@
-# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://jitpack.io/#techinessoverloaded/progress-dialog/1.4.1)
+# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=JitPack)](https://jitpack.io/#techinessoverloaded/progress-dialog/1.4.1) [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://github.com/techinessoverloaded/progress-dialog/releases/tag/1.4.1)
 
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
