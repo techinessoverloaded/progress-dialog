@@ -34,11 +34,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Resolved an issue where **NegativeButton** showed up even when the `setNegativeButton()` method was not called
 
 ## How can you contribute to this Project ?
-- You can point out any issue which you faced while using this library.
-- You can suggest new features to be added to this library.
-- You can give pull requests with any reasonable changes or feature additions.
-- I haven't done JUnit testing for this library. You can help out with the same.
-- You can share about this library to your peer Android developers.
+See the [Contributing Guide](https://github.com/techinessoverloaded/progress-dialog/blob/master/CONTRIBUTING.md) to learn more about Contributing to this Project.
 
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
