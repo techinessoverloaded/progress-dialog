@@ -18,8 +18,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Generate KDoc
+        if: ${{github.event_name == 'release'}}
         run: ./gradlew dokkaHtml
       - name: Generate JavaDoc
+        if: ${{github.event_name == 'release'}}
         run: ./gradlew dokkaJavadoc
       - name: Deploy KDoc to GH Pages
         uses: JamesIves/github-pages-deploy-action@4.3.3
@@ -27,7 +29,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
-          target-folder: kotlin/${{ GITHUB_REF }}/
+          target-folder: kotlin/${{ github.ref_name }}/
       - name: Deploy JavaDoc to GH Pages
         uses: JamesIves/github-pages-deploy-action@4.3.3
         with:
