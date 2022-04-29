@@ -24,12 +24,14 @@ jobs:
       - name: Deploy KDoc to GH Pages
         uses: JamesIves/github-pages-deploy-action@4.3.3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
           target-folder: kotlin/${{ GITHUB_REF }}/
       - name: Deploy JavaDoc to GH Pages
         uses: JamesIves/github-pages-deploy-action@4.3.3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
           target-folder: java/${{ GITHUB_REF }}/  
