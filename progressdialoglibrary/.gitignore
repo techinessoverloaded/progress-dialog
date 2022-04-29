@@ -1,0 +1,11 @@
+/build/.transforms/
+/build/generated/
+/build/intermediates/
+/build/kotlin/
+/build/libs/
+/build/publications/
+/build/reports/
+/build/snapshot/
+/build/test-results/
+/build/tmp/
+/build/outputs/
