@@ -36,4 +36,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
-          target-folder: java/${{ GITHUB_REF }}/  
+          target-folder: java/${{ github.ref_name }}/  
