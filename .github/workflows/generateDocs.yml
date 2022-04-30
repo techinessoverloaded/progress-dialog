@@ -41,5 +41,16 @@ jobs:
       - name: Copy Logo File to KDoc Action
         uses: GuillaumeFalourd/copy-push-files@v1
         with:
-       
-    
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          remote_repository: https://github.com/techinessoverloaded/progress-dialog
+          target_branch: gh-pages
+          target_dir: kotlin//${{ github.event.release.tag_name }}/images/
+          source_files: assets/images/logo-icon.svg
+      - name: Copy Logo File to JavaDoc Action
+        uses: GuillaumeFalourd/copy-push-files@v1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          remote_repository: https://github.com/techinessoverloaded/progress-dialog
+          target_branch: gh-pages
+          target_dir: java//${{ github.event.release.tag_name }}/images/
+          source_files: assets/images/logo-icon.svg    
