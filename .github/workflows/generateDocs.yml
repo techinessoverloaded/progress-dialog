@@ -51,22 +51,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/javadoc
-          target-folder: java/latest/      
-      - name: Copy Logo File to KDoc Folder with Version
-        uses: andstor/copycat-action@v3.2.4
-        with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
-          dst_repo_name: progress-dialog
-          dst_owner: techinessoverloaded
-          dst_branch: gh-pages
-          dst_path: kotlin//${{ github.event.release.tag_name }}/images/
-          src_path: assets/images/logo-icon.svg
-      - name: Copy Logo File to KDoc Folder as Latest
-        uses: andstor/copycat-action@v3.2.4
-        with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
-          dst_repo_name: progress-dialog
-          dst_owner: techinessoverloaded
-          dst_branch: gh-pages
-          dst_path: kotlin/latest/images/
-          src_path: assets/images/logo-icon.svg   
+          target-folder: java/latest/
