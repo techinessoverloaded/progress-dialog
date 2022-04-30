@@ -24,33 +24,49 @@ jobs:
       - name: Generate JavaDoc
         if: ${{github.event_name == 'release'}}
         run: ./gradlew dokkaJavadoc
-      - name: Deploy KDoc to GH Pages
+      - name: Deploy KDoc to GH Pages with Version
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
           target-folder: kotlin/${{ github.event.release.tag_name }}/
-      - name: Deploy JavaDoc to GH Pages
+      - name: Deploy KDoc to GH Pages as Latest
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: progressdialoglibrary/build/dokka/html
+          target-folder: kotlin/latest/    
+      - name: Deploy JavaDoc to GH Pages with Version
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/javadoc
-          target-folder: java/${{ github.event.release.tag_name }}/  
-      - name: Copy Logo File to KDoc Action
-        uses: GuillaumeFalourd/copy-push-files@v1
+          target-folder: java/${{ github.event.release.tag_name }}/
+      - name: Deploy JavaDoc to GH Pages as Latest
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-          remote_repository: https://github.com/techinessoverloaded/progress-dialog
-          target_branch: gh-pages
-          target_dir: kotlin//${{ github.event.release.tag_name }}/images/
-          source_files: assets/images/logo-icon.svg
-      - name: Copy Logo File to JavaDoc Action
-        uses: GuillaumeFalourd/copy-push-files@v1
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: progressdialoglibrary/build/dokka/javadoc
+          target-folder: java/latest/      
+      - name: Copy Logo File to KDoc Folder with Version
+        uses: andstor/copycat-action@v3.2.4
         with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-          remote_repository: https://github.com/techinessoverloaded/progress-dialog
-          target_branch: gh-pages
-          target_dir: java//${{ github.event.release.tag_name }}/images/
-          source_files: assets/images/logo-icon.svg    
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          dst_repo_name: progress-dialog
+          dst_owner: techinessoverloaded
+          dst_branch: gh-pages
+          dst_path: kotlin//${{ github.event.release.tag_name }}/images/
+          src_path: assets/images/logo-icon.svg
+      - name: Copy Logo File to KDoc Folder as Latest
+        uses: andstor/copycat-action@v3.2.4
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          dst_repo_name: progress-dialog
+          dst_owner: techinessoverloaded
+          dst_branch: gh-pages
+          dst_path: kotlin/latest/images/
+          src_path: assets/images/logo-icon.svg   
