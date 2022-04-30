@@ -30,11 +30,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
-          target-folder: kotlin/${{ github.ref }}/
+          target-folder: kotlin/${{ github.event.release.tag_name }}/
       - name: Deploy JavaDoc to GH Pages
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/javadoc
-          target-folder: java/${{ github.ref }}/  
+          target-folder: java/${{ github.event.release.tag_name }}/  
