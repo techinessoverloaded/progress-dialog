@@ -1,0 +1,7 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:com.techiness.progressdialoglibrary/ProgressDialog.Companion///PointingToDeclaration/com/techiness/progressdialoglibrary/ProgressDialog.Companion.html
+$dokka.location:com.techiness.progressdialoglibrary/ProgressDialog.ModeConstant///PointingToDeclaration/com/techiness/progressdialoglibrary/ProgressDialog.ModeConstant.html
+$dokka.location:com.techiness.progressdialoglibrary/ProgressDialog.ThemeConstant///PointingToDeclaration/com/techiness/progressdialoglibrary/ProgressDialog.ThemeConstant.html
+com.techiness.progressdialoglibrary
+
