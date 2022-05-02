@@ -1,4 +1,4 @@
-name: Check Android Library Build Status
+name: ProgressDialog Library Build Status
 
 on:
   release:
