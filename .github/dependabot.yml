@@ -1,16 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: "gradle"
-    directory: "/progressdialoglibrary/"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "gradle"
-    directory: "/app/"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "weekly"
