@@ -25,13 +25,22 @@ jobs:
       - name: Generate JavaDoc
         if: ${{github.event_name == 'release'}}
         run: ./gradlew dokkaJavadoc
+      - name: Format Version Tag Name
+        uses: actions/github-script@v6.0.0
+        id: format_version_tag
+        with:
+          script: |
+            const tag = context.ref.substring(10)
+            const no_v = tag.replace('v', '')
+            core.setOutput('tag', tag)
+            core.setOutput('no-v', no_v)
       - name: Deploy KDoc to GH Pages with Version
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
-          target-folder: kotlin/${{ github.event.release.tag_name }}/
+          target-folder: kotlin/${{ steps.format_version_tag.outputs.no-v }}/
       - name: Deploy KDoc to GH Pages as Latest
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
@@ -45,7 +54,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/javadoc
-          target-folder: java/${{ github.event.release.tag_name }}/
+          target-folder: java/${{ steps.format_version_tag.outputs.no-v }}/
       - name: Deploy JavaDoc to GH Pages as Latest
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
