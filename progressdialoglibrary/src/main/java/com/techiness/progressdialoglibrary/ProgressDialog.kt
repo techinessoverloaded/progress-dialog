@@ -7,6 +7,7 @@
  */
 package com.techiness.progressdialoglibrary
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnShowListener
@@ -41,6 +42,7 @@ class ProgressDialog @JvmOverloads constructor(
     private val context: Context,
     @ThemeConstant themeConstant: Int = THEME_LIGHT)
 {
+    @SuppressLint("InlinedApi")
     @IntDef(THEME_LIGHT, THEME_DARK, THEME_FOLLOW_SYSTEM)
     @Retention(AnnotationRetention.SOURCE)
     annotation class ThemeConstant
@@ -140,7 +142,11 @@ class ProgressDialog @JvmOverloads constructor(
      * @throws [IllegalArgumentException] If any other value other than [THEME_LIGHT], [THEME_DARK] or [THEME_FOLLOW_SYSTEM] is passed to the Setter or if [THEME_FOLLOW_SYSTEM] is used in Android Versions BELOW Android 11 (API Level 30).
      */
     var theme = THEME_LIGHT
-    @ThemeConstant get() { return if(autoThemeEnabled) THEME_FOLLOW_SYSTEM else field}
+    @SuppressLint("InlinedApi")
+    @ThemeConstant get()
+    {
+        return if(autoThemeEnabled) THEME_FOLLOW_SYSTEM else field
+    }
     @Throws(IllegalArgumentException::class)
     set(@ThemeConstant themeConstant)
     {
@@ -312,7 +318,7 @@ class ProgressDialog @JvmOverloads constructor(
      * Gets the Increment Value only if the ProgressDialog is in [MODE_DETERMINATE] Mode, else -1 is returned.
      * Sets the Increment Value only if the ProgressDialog is in [MODE_DETERMINATE] Mode. If the passed parameter is greater than maxValue, it will not be set.
      */
-    var incrementValue: Int = 0
+    var incrementValue: Int = 1
     get()
     {
         return if (isDeterminate) field else -1
@@ -326,7 +332,7 @@ class ProgressDialog @JvmOverloads constructor(
     }
 
     /**
-     * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using [setIncrementValue].
+     * Increments the Progress Value of Determinate ProgressBar using the Offset Value set using [incrementValue].
      * Can be used only in [MODE_DETERMINATE] Mode.
      * @throws UnsupportedOperationException If called in [MODE_INDETERMINATE] Mode.
      */
@@ -434,6 +440,7 @@ class ProgressDialog @JvmOverloads constructor(
     /**
      * Starts the ProgressDialog and shows it on the Screen.
      */
+    @SuppressLint("NewApi")
     fun show()
     {
         if (autoThemeEnabled)
@@ -466,7 +473,7 @@ class ProgressDialog @JvmOverloads constructor(
 
     /**
      * Sets the [DialogInterface.OnCancelListener] for ProgressDialog.
-     * Should be used only if [setCancelable] was passed with true earlier since cancel() cannot be called explicitly
+     * Should be used only if [isCancelable] was set true earlier since cancel() cannot be called explicitly
      * and ProgressDialog is NOT cancelable by Default.
      * @param onCancelListener [DialogInterface.OnCancelListener] listener object.
      * @return true if ProgressDialog is Cancelable. false otherwise.
@@ -696,10 +703,8 @@ class ProgressDialog @JvmOverloads constructor(
      * [setNegativeButton] before.
      * Note : This method will not hide the Title. You have to explicitly call [hideTitle] to do the same.
      */
-    fun hideNegativeButton()
-    {
-        if (!isGone(binding.negativeButton))
-        {
+    fun hideNegativeButton() {
+        if (!isGone(binding.negativeButton)) {
             binding.negativeButton.visibility = View.GONE
         }
     }

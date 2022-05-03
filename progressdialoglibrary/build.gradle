@@ -32,11 +32,18 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier "sources"
 }
+
 afterEvaluate {
     publishing {
         publications {
@@ -44,7 +51,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.techinessoverloaded'
                 artifactId = 'progress-dialog'
-                version = '1.4.1a0'
+                version = '1.4.2'
                 artifact androidSourcesJar
             }
         }

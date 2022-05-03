@@ -4,8 +4,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black_light">#2C2C2C</color>
     <color name="white_dark">#CCCCCC</color>
-    <color name="text_light">@color/black</color>
-    <color name="text_dark">@color/white</color>
     <color name="bg_light">@color/white</color>
     <color name="bg_dark">@color/black_light</color>
 </resources>
