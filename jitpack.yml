@@ -1,6 +1,5 @@
 jdk:
   - openjdk11
-before_install:
-  - ./scripts/prepareJitpackEnvironment
+
 install:
-  - ./gradlew :progressdialoglibrary:install
+  - ./gradlew progressdialoglibrary:install
