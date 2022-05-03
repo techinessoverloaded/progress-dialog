@@ -199,7 +199,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                         
                                         <tr class="altColor">
                                             <td class="colFirst"><code>private  <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a></code></td>
-                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#isCancelable>isCancelable</a></code></th>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#isCancelable()>isCancelable</a></code></th>
                                             <td class="colLast"></td>
                                         </tr>
                                         
@@ -371,7 +371,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                         <tr id="i4" class="altColor">
                                             <td class="colFirst"><code>final <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#getIsCancelable()>getIsCancelable</a>() </code>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#isCancelable()>isCancelable</a>() </code>
                                             </th>
                                             <td class="colLast">Toggles the Cancelable property of ProgressDialog which is false by Default.</td>
                                         </tr>
@@ -379,7 +379,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                         <tr id="i5" class="rowColor">
                                             <td class="colFirst"><code>final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#setIsCancelable(Boolean)>setIsCancelable</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> isCancelable) </code>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#setCancelable(Boolean)>setCancelable</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> isCancelable) </code>
                                             </th>
                                             <td class="colLast"></td>
                                         </tr>
@@ -541,7 +541,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#incrementProgress()>incrementProgress</a>() </code>
                                             </th>
-                                            <td class="colLast">Increments the Progress Value of Determinate ProgressBar using the Offset Value set using setIncrementValue.</td>
+                                            <td class="colLast">Increments the Progress Value of Determinate ProgressBar using the Offset Value set using <a href=ProgressDialog.html#incrementValue>incrementValue</a>.</td>
                                         </tr>
                                         
                                         <tr id="i26" class="altColor">
@@ -549,7 +549,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=ProgressDialog.html#showProgressTextAsFraction(Boolean)>showProgressTextAsFraction</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> progressTextAsFraction) </code>
                                             </th>
-                                            <td class="colLast">Toggles the Progress TextView's format as Fraction if "true" is passed.</td>
+                                            <td class="colLast">Toggles the Progress TextView's format as Fraction if &quot;true&quot; is passed.</td>
                                         </tr>
                                         
                                         <tr id="i27" class="rowColor">
@@ -887,30 +887,30 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     </li>
                                 </ul>
                                 
-                                <a id="getIsCancelable()">
+                                <a id="isCancelable()">
                                     <!--   -->
                                 </a>
                                 <ul class=
                                               "blockList"
                                           >
                                     <li class="blockList">
-                                        <h4>getIsCancelable</h4>
-                                        <pre class="methodSignature"> final <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> <a href=ProgressDialog.html#getIsCancelable()>getIsCancelable</a>()</pre>
+                                        <h4>isCancelable</h4>
+                                        <pre class="methodSignature"> final <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> <a href=ProgressDialog.html#isCancelable()>isCancelable</a>()</pre>
                                         <div class="block"><p>Toggles the Cancelable property of ProgressDialog which is false by Default. If it is set to true, the User can cancel the ProgressDialog by pressing Back Button or by touching any other part of the screen. It is NOT RECOMMENDED to set Cancelable to true.</p></div>
                                         
                                         <!-- TODO missing return annotation -->
                                     </li>
                                 </ul>
                                 
-                                <a id="setIsCancelable(Boolean)">
+                                <a id="setCancelable(Boolean)">
                                     <!--   -->
                                 </a>
                                 <ul class=
                                               "blockList"
                                           >
                                     <li class="blockList">
-                                        <h4>setIsCancelable</h4>
-                                        <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setIsCancelable(Boolean)>setIsCancelable</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> isCancelable)</pre>
+                                        <h4>setCancelable</h4>
+                                        <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setCancelable(Boolean)>setCancelable</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> isCancelable)</pre>
                                         <div class="block"></div>
                                         
                                         <!-- TODO missing return annotation -->
@@ -1121,7 +1121,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>setMessage</h4>
                                         <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setMessage(CharSequence)>setMessage</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/CharSequence.html>CharSequence</a> message)</pre>
-                                        <div class="block"><p>Sets the Text to be displayed alongside ProgressBar. Message is "Loading" by Default.</p></div>
+                                        <div class="block"><p>Sets the Text to be displayed alongside ProgressBar. Message is &quot;Loading&quot; by Default.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1145,7 +1145,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>setMessage</h4>
                                         <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setMessage(Integer)>setMessage</a>(@<a href=https://developer.android.com/reference/kotlin/androidx/annotation/StringRes.html>StringRes</a>() <a href=https://developer.android.com/reference/kotlin/java/lang/Integer.html>Integer</a> messageResID)</pre>
-                                        <div class="block"><p>Sets the Text from the resID provided, to be displayed alongside ProgressBar. Message is "Loading" by Default.</p></div>
+                                        <div class="block"><p>Sets the Text from the resID provided, to be displayed alongside ProgressBar. Message is &quot;Loading&quot; by Default.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1184,7 +1184,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>setTitle</h4>
                                         <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setTitle(CharSequence)>setTitle</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/CharSequence.html>CharSequence</a> title)</pre>
-                                        <div class="block"><p>Sets the Title of ProgressDialog. This is "ProgressDialog" by Default. Title is Hidden by Default. This Method makes the Title Visible. Title will be made visible automatically if <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> or <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> was used before.</p></div>
+                                        <div class="block"><p>Sets the Title of ProgressDialog. This is &quot;ProgressDialog&quot; by Default. Title is Hidden by Default. This Method makes the Title Visible. Title will be made visible automatically if <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> or <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> was used before.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1208,7 +1208,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>setTitle</h4>
                                         <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#setTitle(Integer)>setTitle</a>(@<a href=https://developer.android.com/reference/kotlin/androidx/annotation/StringRes.html>StringRes</a>() <a href=https://developer.android.com/reference/kotlin/java/lang/Integer.html>Integer</a> titleResID)</pre>
-                                        <div class="block"><p>Sets the Title of ProgressDialog using the String resource given. Title is "ProgressDialog" by Default. Title is Hidden by Default. This Method makes the Title Visible. Title will be made visible automatically if <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> or <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> was used before.</p></div>
+                                        <div class="block"><p>Sets the Title of ProgressDialog using the String resource given. Title is &quot;ProgressDialog&quot; by Default. Title is Hidden by Default. This Method makes the Title Visible. Title will be made visible automatically if <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> or <a href=ProgressDialog.html#setNegativeButton(CharSequence,CharSequence,View.OnClickListener)>setNegativeButton</a> was used before.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1247,7 +1247,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>incrementProgress</h4>
                                         <pre class="methodSignature"> final <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=ProgressDialog.html#incrementProgress()>incrementProgress</a>()</pre>
-                                        <div class="block"><p>Increments the Progress Value of Determinate ProgressBar using the Offset Value set using setIncrementValue. Can be used only in <a href=ProgressDialog.Companion.html#MODE_DETERMINATE>MODE_DETERMINATE</a> Mode.</p></div>
+                                        <div class="block"><p>Increments the Progress Value of Determinate ProgressBar using the Offset Value set using <a href=ProgressDialog.html#incrementValue>incrementValue</a>. Can be used only in <a href=ProgressDialog.Companion.html#MODE_DETERMINATE>MODE_DETERMINATE</a> Mode.</p></div>
                                         
                                         <!-- TODO missing return annotation -->
                                     </li>
@@ -1262,7 +1262,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>showProgressTextAsFraction</h4>
                                         <pre class="methodSignature"> final <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> <a href=ProgressDialog.html#showProgressTextAsFraction(Boolean)>showProgressTextAsFraction</a>(<a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> progressTextAsFraction)</pre>
-                                        <div class="block"><p>Toggles the Progress TextView's format as Fraction if "true" is passed. Progress TextView's Default format is Percentage format. Can be used only in <a href=ProgressDialog.Companion.html#MODE_DETERMINATE>MODE_DETERMINATE</a>. If <a href=ProgressDialog.html#hideProgressText()>hideProgressText</a> was used before, this method will again make Progress TextView visible.</p></div>
+                                        <div class="block"><p>Toggles the Progress TextView's format as Fraction if &quot;true&quot; is passed. Progress TextView's Default format is Percentage format. Can be used only in <a href=ProgressDialog.Companion.html#MODE_DETERMINATE>MODE_DETERMINATE</a>. If <a href=ProgressDialog.html#hideProgressText()>hideProgressText</a> was used before, this method will again make Progress TextView visible.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1331,7 +1331,7 @@ public final class <span class="typeNameLabel"><a href=ProgressDialog.html>Progr
                                     <li class="blockList">
                                         <h4>setOnCancelListener</h4>
                                         <pre class="methodSignature"> final <a href=https://developer.android.com/reference/kotlin/java/lang/Boolean.html>Boolean</a> <a href=ProgressDialog.html#setOnCancelListener(DialogInterface.OnCancelListener)>setOnCancelListener</a>(<a href=https://developer.android.com/reference/kotlin/android/content/DialogInterface.OnCancelListener.html>DialogInterface.OnCancelListener</a> onCancelListener)</pre>
-                                        <div class="block"><p>Sets the <a href=https://developer.android.com/reference/kotlin/android/content/DialogInterface.OnCancelListener.html>DialogInterface.OnCancelListener</a> for ProgressDialog. Should be used only if setCancelable was passed with true earlier since cancel() cannot be called explicitly and ProgressDialog is NOT cancelable by Default.</p></div>
+                                        <div class="block"><p>Sets the <a href=https://developer.android.com/reference/kotlin/android/content/DialogInterface.OnCancelListener.html>DialogInterface.OnCancelListener</a> for ProgressDialog. Should be used only if <a href=ProgressDialog.html#isCancelable()>isCancelable</a> was set true earlier since cancel() cannot be called explicitly and ProgressDialog is NOT cancelable by Default.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
