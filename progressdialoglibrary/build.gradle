@@ -45,7 +45,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.techinessoverloaded'
                 artifactId = 'progress-dialog'
-                version = '1.4.3a9'
+                version = '1.4.3'
                 artifact androidSourcesJar
             }
         }
