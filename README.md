@@ -22,7 +22,7 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 ## What's New in Version 1.4.3 ?
 - Resolved an issue where incrementValue didn't work as expected.
 - Updated KDoc Documentation for some properties and functions.
-- HTML Documentation of both Javadoc and KDoc available now for reference.
+- API Documentation available in both Java and Kotlin flavor for reference.
 
 ### The following changes were made in the previous version (1.4.1)
 - Changed Target Android Version to Android 12.1 (API Level 32).
