@@ -1,6 +1,7 @@
 jdk:
   - openjdk11
-before_install:
-  - ./prepareJitpackEnv.sh
+# before_install:
+#   - ./prepareJitpackEnv.sh
 install:
+  - chmod +x gradlew
   - ./gradlew progressdialoglibrary:install
