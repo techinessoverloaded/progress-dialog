@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: progressdialoglibrary-release
-        path: /progressdialoglibrary/build/outputs/aar/progressdialoglibrary-release.aar
+        path: build/outputs/aar/progressdialoglibrary-release.aar
