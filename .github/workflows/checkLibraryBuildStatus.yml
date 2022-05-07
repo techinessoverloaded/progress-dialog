@@ -23,4 +23,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:build :progressdialoglibrary:publishReleasePublicationToMavenLocal
+      run: ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
+    - name: Upload Output AAR file
+      uses: actions/upload-artifact@v3
+      with:
+        name: progressdialoglibrary-release
+        path: /progressdialoglibrary/build/outputs/aar/progressdialoglibrary-release.aar
