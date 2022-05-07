@@ -3,4 +3,4 @@ jdk:
 before_install:
   - chmod +x gradlew
 install:
-  - ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:build :progressdialoglibrary:publishReleasePublicationToMavenLocal
+  - ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
