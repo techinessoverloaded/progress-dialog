@@ -19,10 +19,9 @@ jobs:
       with:
         java-version: 11
         distribution: adopt
-        cache: gradle
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2.1.5
+    - name: Build Library with Gradle
       run: ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
     - name: Upload Output AAR file
       uses: actions/upload-artifact@v3
