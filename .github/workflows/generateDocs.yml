@@ -16,15 +16,13 @@ jobs:
         with:
           java-version: 11
           distribution: adopt
-          cache: gradle
-      - name: Grant execute permission for gradlew
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.1.5
+      - name: Grant Executable Permission for gradlew
         run: chmod +x gradlew
-      - name: Generate KDoc
+      - name: Generate KDoc and JavaDoc
         if: ${{github.event_name == 'release'}}
-        run: ./gradlew dokkaHtml
-      - name: Generate JavaDoc
-        if: ${{github.event_name == 'release'}}
-        run: ./gradlew dokkaJavadoc
+        run: ./gradlew :progressdialoglibrary:dokkaHtml :progressdialoglibrary:dokkaJavadoc
       - name: Format Version Tag Name
         uses: actions/github-script@v6.0.0
         id: format_version_tag
