@@ -40,7 +40,9 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
 **Make Sure that you are using Gradle version 7.0 and above and JDK Version 11**</br></br>
-Include the following code in your Project-level **build.gradle** file at the end of repositories:
+Include the following code in your Project-level Gradle Build file at the end of repositories:
+
+**Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 allprojects {
 		repositories {
@@ -49,20 +51,48 @@ allprojects {
 	    }
 ```
 
-Now, include the following dependency in your App-level **build.gradle** file:
+**Gradle Kotlin DSL (If you have build.gradle.kts file):**
+```kotlin
+allprojects {
+		repositories {
+			maven { url = uri("https://jitpack.io") }
+		             }
+	    }
+```
+
+Now, include the following dependency in your App-level Gradle Build file:
 #### Note: Current latest version is **1.4.3**.
+**Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
 	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.3'
 	     }
 ```
+
+**Gradle Kotlin DSL (If you have build.gradle.kts file):**
+```kotlin
+dependencies {
+	        implementation("com.github.techinessoverloaded:progress-dialog:1.4.3")
+	     }
+```
+
 #### Or you can also define the version as a String like this(You can copy either this code or the above one):
+**Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
                 def latest-version = "1.4.3"
 	        implementation "com.github.techinessoverloaded:progress-dialog:$latest-version"
 	     }
 ```
+
+**Gradle Kotlin DSL (If you have build.gradle.kts file):**
+```kotlin
+dependencies {
+                val latest-version = "1.4.3"
+	        implementation("com.github.techinessoverloaded:progress-dialog:$latest-version")
+	     }
+```
+
 Now import ProgressDialog class in your Activity/Fragment:
 ```java
 import com.techiness.progressdialoglibrary.ProgressDialog;
