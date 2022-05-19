@@ -23,10 +23,8 @@ jobs:
       uses: gradle/gradle-build-action@v2.1.6
       with:
         gradle-version: 7.2
-    - name: Grant Executable Permission to gradlew
-      run: chmod +x gradlew
     - name: Build Library with Gradle
-      run: ./gradlew :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
+      run: gradle :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
     - name: Upload Output AAR file
       uses: actions/upload-artifact@v3
       with:
