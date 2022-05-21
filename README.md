@@ -3,7 +3,7 @@
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
-**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" in their version code (Example: Version 1.4.0a4). It is strictly recommended not to use version 1.4.2 as the build artifact was not properly published. You can instead prefer the latest version (1.4.3).
+**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" or "rc" in their version code (Example: Version 1.4.0a4 or 1.4.4-rc1). It is strictly recommended not to use version 1.4.2 as the build artifact was not properly published. You can instead prefer the latest version (1.4.4).
 
 **Usage examples available at** [Usage Examples](#steps-to-add-progressdialog-library-to-your-android-studio-project) 
 </br>**Java Documentation of Class and Methods available at** [Java Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/java/latest/com/techiness/progressdialoglibrary/ProgressDialog.html)
@@ -20,11 +20,11 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Clear Documentation is available.
 
 ## What's New in Version 1.4.3 ?
-- Resolved an issue where incrementValue didn't work as expected.
+- Resolved an issue where `incrementValue` didn't work as expected.
 - Updated KDoc Documentation for some properties and functions.
 - API Documentation available in both Java and Kotlin flavor for reference.
 
-### The following changes were made in the previous version (1.4.1)
+### The following changes were made in the previous Major Release Version (1.4.1)
 - Changed Target Android Version to Android 12.1 (API Level 32).
 - Migrated to Gradle version 7.2 and JDK 11.
 - Migrated from `findViewById()` to **Android ViewBinding**.
@@ -61,18 +61,18 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level Gradle Build file:
-#### Note: Current latest version is **1.4.3**.
+#### Note: Current latest version is **1.4.4**.
 **Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.3'
+	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.4'
 	     }
 ```
 
 **Gradle Kotlin DSL (If you have build.gradle.kts file):**
 ```kotlin
 dependencies {
-	        implementation("com.github.techinessoverloaded:progress-dialog:1.4.3")
+	        implementation("com.github.techinessoverloaded:progress-dialog:1.4.4")
 	     }
 ```
 
@@ -80,7 +80,7 @@ dependencies {
 **Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
-                def latest-version = "1.4.3"
+                def latest-version = "1.4.4"
 	        implementation "com.github.techinessoverloaded:progress-dialog:$latest-version"
 	     }
 ```
@@ -88,7 +88,7 @@ dependencies {
 **Gradle Kotlin DSL (If you have build.gradle.kts file):**
 ```kotlin
 dependencies {
-                val latest-version = "1.4.3"
+                val latest-version = "1.4.4"
 	        implementation("com.github.techinessoverloaded:progress-dialog:$latest-version")
 	     }
 ```
