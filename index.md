@@ -1,7 +1,5 @@
-
-### ProgressDialog Library Documentation
 For Change Log, visit [ProgressDialog Library Change Log](https://techinessoverloaded.github.io/progress-dialog/changelog.html)
-
+### ProgressDialog Library Documentation
 | Version | Java Documentation of ProgressDialog Library | Kotlin Documentation of ProgressDialog Library |
 | --- | --- | --- |
 | **1.4.4 (Latest Version)** | [Version 1.4.4](https://techinessoverloaded.github.io/progress-dialog/java/latest/com/techiness/progressdialoglibrary/ProgressDialog.html) | [Version 1.4.4](https://techinessoverloaded.github.io/progress-dialog/kotlin/latest/progressdialoglibrary/com.techiness.progressdialoglibrary/-progress-dialog/index.html) |
