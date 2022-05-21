@@ -1,3 +1,4 @@
+
 ### ProgressDialog Library Documentation
 For Change Log, visit [ProgressDialog Library Change Log](https://techinessoverloaded.github.io/progress-dialog/changelog.html)
 
