@@ -1,3 +1,5 @@
+title: ProgressDialog Library
+author: Arunprasadh C
 remote_theme: "lewismiddleton/cayman-dark"
 plugins:
 - jekyll-remote-theme
