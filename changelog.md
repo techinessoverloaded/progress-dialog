@@ -31,3 +31,8 @@ For Documentation, visit [ProgressDialog Library Documentation](https://techines
 - Added Support for AutoTheming.
 - Added IntDef Annotation to Constants. 
 - Changed TextView to MaterialButton for NegativeButton.
+
+#### Version 1.2.2 (Feature Update)
+- Added Negative Button: This can be used in cases where the User has to be given an option to stop a task through ProgressDialog interface.
+
+#### Version 1.2.1 ()
