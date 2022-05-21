@@ -1,0 +1,1 @@
+# ProgressDialog Library Change Log
