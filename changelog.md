@@ -23,3 +23,11 @@ For Documentation, visit [ProgressDialog Library Documentation](https://techines
 - Added Getters for Title and Message of `ProgressDialog`.
 - Added Getters and Setters for Secondary Progress Tint List.
 - Removed Boolean Return Types for some Setters and made some Setters to throw `UnsupportedOperationException` when called on undesirable scenarios.
+
+#### Version 1.3.1 (Bug Fix Update)
+- Resolved an issue [#3](https://github.com/techinessoverloaded/progress-dialog/issues/3) where NegativeButton showed up even when not set.
+
+#### Version 1.3.0 (Major Update)
+- Added Support for AutoTheming.
+- Added IntDef Annotation to Constants. 
+- Changed TextView to MaterialButton for NegativeButton.
