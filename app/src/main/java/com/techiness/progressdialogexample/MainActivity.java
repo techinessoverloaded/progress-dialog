@@ -4,7 +4,6 @@ import androidx.annotation.RestrictTo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindViews();
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this,ProgressDialog.THEME_FOLLOW_SYSTEM);

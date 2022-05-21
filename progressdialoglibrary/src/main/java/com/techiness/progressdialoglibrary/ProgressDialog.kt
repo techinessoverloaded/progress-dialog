@@ -35,7 +35,7 @@ import java.util.Locale
  * @param themeConstant The [Int] constant, which is an optional parameter that accepts either [THEME_DARK], [THEME_LIGHT], or [THEME_FOLLOW_SYSTEM]
  * If it is not passed, [THEME_LIGHT] will be set by default, which can be changed later by setting [theme].
  *
- * **NOTE** : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 31 (Android 11) only. Attempting to use it in lower versions will throw [IllegalArgumentException].
+ * **NOTE** : [THEME_FOLLOW_SYSTEM] can be used starting from Android API Level 30 (Android 11) only. Attempting to use it in lower versions will throw [IllegalArgumentException].
  */
 class ProgressDialog @JvmOverloads constructor(
     @ModeConstant modeConstant: Int = MODE_INDETERMINATE,
@@ -69,7 +69,7 @@ class ProgressDialog @JvmOverloads constructor(
 
         /**
          * When this ThemeConstant is used, ProgressDialog's theme is automatically changed to match the System's theme each time before [show] is called.
-         * This Constant can be used starting from Android API Level 31 (Android 11) ONLY.
+         * This Constant can be used starting from Android API Level 30 (Android 11) ONLY.
          * Setting [theme] will throw [IllegalArgumentException] if this Constant is passed in method call in Android versions lower than Android 11.
          */
         @RequiresApi(api = Build.VERSION_CODES.R)
@@ -103,8 +103,7 @@ class ProgressDialog @JvmOverloads constructor(
      * Only [MODE_DETERMINATE] or [MODE_INDETERMINATE] should be passed as parameter for the Setter.
      * @throws [IllegalArgumentException] If any other value other than [MODE_DETERMINATE] or [MODE_INDETERMINATE] is passed to the Setter.
      */
-    var mode: Int = MODE_INDETERMINATE
-    @ModeConstant get() = field
+    @ModeConstant var mode: Int = MODE_INDETERMINATE
     @Throws(IllegalArgumentException::class)
     set(@ModeConstant modeConstant)
     {
@@ -114,21 +113,21 @@ class ProgressDialog @JvmOverloads constructor(
         {
             MODE_DETERMINATE ->
             {
-                binding.textViewIndeterminate.visibility = View.GONE
-                binding.progressbarIndeterminate.visibility = View.GONE
-                binding.textViewDeterminate.visibility = View.VISIBLE
-                binding.progressbarDeterminate.visibility = View.VISIBLE
+                binding.textViewIndeterminate.hide()
+                binding.progressbarIndeterminate.hide()
+                binding.textViewDeterminate.unhide()
+                binding.progressbarDeterminate.unhide()
                 progressViewMode = SHOW_AS_PERCENT
-                binding.progressTextView.visibility = View.VISIBLE
+                binding.progressTextView.unhide()
                 incrementValue = if (incrementValue == 0) 1 else incrementValue
                 field = modeConstant
             }
             MODE_INDETERMINATE -> {
-                binding.textViewDeterminate.visibility = View.GONE
-                binding.progressbarDeterminate.visibility = View.GONE
-                binding.progressTextView.visibility = View.GONE
-                binding.textViewIndeterminate.visibility = View.VISIBLE
-                binding.progressbarIndeterminate.visibility = View.VISIBLE
+                binding.textViewDeterminate.hide()
+                binding.progressbarDeterminate.hide()
+                binding.progressTextView.hide()
+                binding.textViewIndeterminate.unhide()
+                binding.progressbarIndeterminate.unhide()
                 field = modeConstant
             }
             else -> throw IllegalArgumentException("Invalid Values passed to function ! Make sure to pass MODE_INDETERMINATE or MODE_DETERMINATE only !")
@@ -268,7 +267,7 @@ class ProgressDialog @JvmOverloads constructor(
      */
     fun getTitle() : CharSequence
     {
-        return if(isVisible(binding.titleView)) binding.titleView.text else ""
+        return if(binding.titleView.isVisible()) binding.titleView.text else ""
     }
 
     /**
@@ -282,8 +281,8 @@ class ProgressDialog @JvmOverloads constructor(
     fun setTitle(title: CharSequence)
     {
         binding.titleView.text = title
-        if (isGone(binding.titleView))
-            binding.titleView.visibility = View.VISIBLE
+        if (binding.titleView.isGone())
+            binding.titleView.unhide()
     }
 
     /**
@@ -308,13 +307,16 @@ class ProgressDialog @JvmOverloads constructor(
      */
     fun hideTitle(): Boolean
     {
-        if (!isGone(binding.negativeButton)) return false
-        if (isVisible(binding.titleView)) binding.titleView.visibility = View.GONE
+        if (binding.negativeButton.isVisible())
+            return false
+        if (binding.titleView.isVisible())
+            binding.titleView.hide()
         return true
     }
 
     /**
      * Gets/Sets the Increment Value of the [MODE_DETERMINATE] ProgressDialog.
+     * The default value is 1.
      * Gets the Increment Value only if the ProgressDialog is in [MODE_DETERMINATE] Mode, else -1 is returned.
      * Sets the Increment Value only if the ProgressDialog is in [MODE_DETERMINATE] Mode. If the passed parameter is greater than maxValue, it will not be set.
      */
@@ -425,9 +427,9 @@ class ProgressDialog @JvmOverloads constructor(
         return if (isDeterminate)
         {
             progressViewMode = HIDE_PROGRESS_TEXT
-            if (!isGone(binding.progressTextView))
+            if (binding.progressTextView.isVisible())
             {
-                binding.progressTextView.visibility = View.GONE
+                binding.progressTextView.hide()
             }
             true
         }
@@ -495,7 +497,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Sets the [DialogInterface.OnDismissListener] for ProgressDialog.
      * @param onDismissListener [DialogInterface.OnDismissListener] listener object.
      */
-    fun setOnDismissListener(onDismissListener: DialogInterface.OnDismissListener) {
+    fun setOnDismissListener(onDismissListener: DialogInterface.OnDismissListener)
+    {
         progressDialog.setOnDismissListener(onDismissListener)
     }
 
@@ -677,7 +680,7 @@ class ProgressDialog @JvmOverloads constructor(
     {
         binding.negativeButton.text = text
         binding.negativeButton.setOnClickListener(listener ?: View.OnClickListener { dismiss() })
-        if (isGone(binding.negativeButton))
+        if (binding.negativeButton.isGone())
         {
             enableNegativeButton(title)
         }
@@ -704,8 +707,8 @@ class ProgressDialog @JvmOverloads constructor(
      * Note : This method will not hide the Title. You have to explicitly call [hideTitle] to do the same.
      */
     fun hideNegativeButton() {
-        if (!isGone(binding.negativeButton)) {
-            binding.negativeButton.visibility = View.GONE
+        if (binding.negativeButton.isVisible()) {
+            binding.negativeButton.hide()
         }
     }
 
@@ -731,14 +734,24 @@ class ProgressDialog @JvmOverloads constructor(
         }
     }
 
-    private fun isVisible(view: View): Boolean
+    private fun View.isVisible(): Boolean
     {
-        return view.visibility == View.VISIBLE
+        return this.visibility == View.VISIBLE
     }
 
-    private fun isGone(view: View): Boolean
+    private fun View.isGone(): Boolean
     {
-        return view.visibility == View.GONE
+        return this.visibility == View.GONE
+    }
+
+    private fun View.unhide()
+    {
+        this.visibility = View.VISIBLE
+    }
+
+    private fun View.hide()
+    {
+        this.visibility = View.GONE
     }
 
     private val isDeterminate: Boolean
@@ -753,8 +766,9 @@ class ProgressDialog @JvmOverloads constructor(
 
     private fun enableNegativeButton(title: CharSequence)
     {
-        binding.negativeButton.visibility = View.VISIBLE
-        if (isGone(binding.titleView)) setTitle(title)
+        binding.negativeButton.unhide()
+        if (binding.titleView.isGone())
+            setTitle(title)
     }
 
     private fun setThemeInternal(@ThemeConstant themeConstant: Int): Boolean
