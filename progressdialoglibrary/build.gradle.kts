@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -46,7 +46,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.github.techinessoverloaded"
                 artifactId = "progress-dialog"
-                version = "1.4.4-rc1"
+                version = "1.4.4-rc2"
             }
         }
     }
