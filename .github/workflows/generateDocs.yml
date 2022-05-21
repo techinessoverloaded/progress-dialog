@@ -18,11 +18,11 @@ jobs:
           distribution: adopt
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.1.6
-      - name: Grant Executable Permission for gradlew
-        run: chmod +x gradlew
+        with:
+          gradle-version: 7.2
       - name: Generate KDoc and JavaDoc
         if: ${{github.event_name == 'release'}}
-        run: ./gradlew :progressdialoglibrary:dokkaHtml :progressdialoglibrary:dokkaJavadoc
+        run: gradle :progressdialoglibrary:dokkaHtml :progressdialoglibrary:dokkaJavadoc
       - name: Format Version Tag Name
         uses: actions/github-script@v6.1.0
         id: format_version_tag
