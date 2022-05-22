@@ -36,4 +36,22 @@ For Documentation, visit [ProgressDialog Library Documentation](https://techines
 #### Version 1.2.2 (Feature Update)
 - Added Negative Button: This can be used in cases where the User has to be given an option to stop a task through ProgressDialog interface.
 
-#### Version 1.2.1 ()
+#### Version 1.2.1 (Minor Patch)
+- Minor Patch to Version 1.2.0
+
+#### Version 1.2.0 (Feature Update)
+- Added Setter and Getter for `theme` in order to prevent unnecessary creation of separate objects for each theme.
+- Removed some boilerplate code.
+
+#### Version 1.1.1 (Major Update)
+- Have added new Constructors and new useful Methods. 
+- Have added Javadoc Documentation to each public Method, public Attribute and public Constructor.
+
+Switched to a more semantic Versioning Scheme.
+
+#### Version 1.0.4 (Feature Update)
+- Added Dark Theme Support.
+- Minor Bug Fixes.
+
+#### Version 1.0.3 (First Release)
+- First Release of ProgressDialog Library.
