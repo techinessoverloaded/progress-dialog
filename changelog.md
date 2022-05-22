@@ -4,6 +4,7 @@ For Documentation, visit [ProgressDialog Library Documentation](https://techines
 - Rectified an error in Documentation regarding Android API Level.
 - Removed some Boilerplate code by using Kotlin Extension Functions.
 - Upgraded to Android Gradle Plugin 7.2 and Gradle version 7.4.2.
+- Migrated from Groovy DSL to Kotlin DSL for Gradle Scripts.
 - Updated dependencies to the latest version.
 
 #### Version 1.4.3 (Bug Fix Update)
