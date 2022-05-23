@@ -33,7 +33,7 @@ android {
 dependencies {
     //implementation(project(":progressdialoglibrary"))
     val progressVersion = "1.4.4"
-    implementation("androidx.appcompat:appcompat:1.6.0-alpha03")
+    implementation("androidx.appcompat:appcompat:1.6.0-alpha04")
     implementation("com.google.android.material:material:1.6.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     testImplementation("junit:junit:4.13.2")
