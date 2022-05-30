@@ -27,6 +27,8 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Migrated from Groovy DSL to Kotlin DSL for Gradle Scripts.
 - Updated dependencies to the latest version.
 
+You can find the Entire **Change Log at** [ProgressDialog Library Change Log](https://techinessoverloaded.github.io/progress-dialog/changelog.html)
+
 ## Steps to add ProgressDialog Library to your Android Studio Project
 
 **Make Sure that you are using JDK Version 11**</br></br>
