@@ -1,9 +1,9 @@
-# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=JitPack)](https://jitpack.io/#techinessoverloaded/progress-dialog/1.4.3) [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://github.com/techinessoverloaded/progress-dialog/releases/latest) [![](https://jitpack.io/v/techinessoverloaded/progress-dialog/month.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog) [![ProgressDialog Library Build Status](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/checkLibraryBuildStatus.yml/badge.svg)](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/checkLibraryBuildStatus.yml) [![Generate Docs and Deploy to GH Pages](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/generateDocs.yml/badge.svg)](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/generateDocs.yml) [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://github.com/dependabot)
+# ProgressDialog Library [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=JitPack)](https://jitpack.io/#techinessoverloaded/progress-dialog/1.5.1) [![](https://img.shields.io/github/v/release/techinessoverloaded/progress-dialog?color=green&label=Latest%20Release)](https://github.com/techinessoverloaded/progress-dialog/releases/latest) [![](https://jitpack.io/v/techinessoverloaded/progress-dialog/month.svg)](https://jitpack.io/#techinessoverloaded/progress-dialog) [![ProgressDialog Library Build Status](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/checkLibraryBuildStatus.yml/badge.svg)](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/checkLibraryBuildStatus.yml) [![Generate Docs and Deploy to GH Pages](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/generateDocs.yml/badge.svg)](https://github.com/techinessoverloaded/progress-dialog/actions/workflows/generateDocs.yml) [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://github.com/dependabot)
 
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
-**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" or "rc" in their version code (Example: Version 1.4.0a4 or 1.4.4-rc1). It is strictly recommended not to use version 1.4.2 as the build artifact was not properly published. You can instead prefer the latest version (1.4.4).
+**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" or "rc" in their version code (Example: Version 1.4.0a4 or 1.4.4-rc1). It is strictly recommended not to use version 1.4.2 or 1.5.0 as the build artifacts are not properly published. You can instead prefer the latest version (1.5.1).
 
 **Usage examples available at** [Usage Examples](#steps-to-add-progressdialog-library-to-your-android-studio-project) 
 </br>**Java Documentation of Class and Methods available at** [Java Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/java/latest/com/techiness/progressdialoglibrary/ProgressDialog.html)
@@ -20,12 +20,13 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 - Desgined for usage in both Java and Kotlin Android Projects.
 - Clear Documentation is available.
 
-## What's New in Version 1.4.4 (Maintenance Update) ?
-- Rectified an error in Documentation regarding Android API Level.
-- Removed some Boilerplate code by using Kotlin Extension Functions.
-- Upgraded to Android Gradle Plugin 7.2 and Gradle version 7.4.2.
-- Migrated from Groovy DSL to Kotlin DSL for Gradle Scripts.
-- Updated dependencies to the latest version.
+## What's New in Version 1.5.1 (Feature Update) ?
+### Features
+- Added Time Tracking feature for Determinate Mode ProgressDialog as suggested by @vzool in Issue #13. Time tracking can be enabled by passing `true` to the first parameter of `setOnShowListener` method. The time elapsed will be updated until the `progress` reaches `maxValue`.
+### Bug Fixes
+- Fixed an Issue where unwanted views got displayed on the ProgressDialog, as pointed out by @soenkegissel and @mg2000 in Issue #16.
+### Maintenance
+- Merged Pull Requests #11, #12, #14, #15, #17 given by @dependabot to update Material Version, Gradle Version, Gradle Build Action Version, ConstraintLayout Version and AppCompat Version. 
 
 You can find the Entire **Change Log at** [ProgressDialog Library Change Log](https://techinessoverloaded.github.io/progress-dialog/changelog.html)
 
@@ -53,18 +54,18 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level Gradle Build file:
-#### Note: Current latest version is **1.4.4**.
+#### Note: Current latest version is **1.5.1**.
 **Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
-	        implementation 'com.github.techinessoverloaded:progress-dialog:1.4.4'
+	        implementation 'com.github.techinessoverloaded:progress-dialog:1.5.1'
 	     }
 ```
 
 **Gradle Kotlin DSL (If you have build.gradle.kts file):**
 ```kotlin
 dependencies {
-	        implementation("com.github.techinessoverloaded:progress-dialog:1.4.4")
+	        implementation("com.github.techinessoverloaded:progress-dialog:1.5.1")
 	     }
 ```
 
@@ -72,7 +73,7 @@ dependencies {
 **Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
-                def latest-version = "1.4.4"
+                def latest-version = "1.5.1"
 	        implementation "com.github.techinessoverloaded:progress-dialog:$latest-version"
 	     }
 ```
@@ -80,7 +81,7 @@ dependencies {
 **Gradle Kotlin DSL (If you have build.gradle.kts file):**
 ```kotlin
 dependencies {
-                val latest-version = "1.4.4"
+                val latest-version = "1.5.1"
 	        implementation("com.github.techinessoverloaded:progress-dialog:$latest-version")
 	     }
 ```
