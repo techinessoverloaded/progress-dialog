@@ -22,11 +22,11 @@ An easily customisable ProgressDialog Library for Android API 24 and above provi
 
 ## What's New in Version 1.5.1 (Feature Update) ?
 ### Features
-- Added Time Tracking feature for Determinate Mode ProgressDialog as suggested by @vzool in Issue #13. Time tracking can be enabled by passing `true` to the first parameter of `setOnShowListener` method. The time elapsed will be updated until the `progress` reaches `maxValue`.
+- Added Time Tracking feature for Determinate Mode ProgressDialog as suggested by [@vzool](https://github.com/vzool) in Issue [#13](https://github.com/techinessoverloaded/progress-dialog/issues/13). Time tracking can be enabled by passing `true` to the first parameter of `setOnShowListener` method. The time elapsed will be updated until the `progress` reaches `maxValue`.
 ### Bug Fixes
-- Fixed an Issue where unwanted views got displayed on the ProgressDialog, as pointed out by @soenkegissel and @mg2000 in Issue #16.
+- Fixed an Issue where unwanted views got displayed on the ProgressDialog, as pointed out by [@soenkegissel](https://github.com/soenkegissel) and [@mg2000](https://github.com/mg2000) in Issue [#16](https://github.com/techinessoverloaded/progress-dialog/issues/16).
 ### Maintenance
-- Merged Pull Requests #11, #12, #14, #15, #17 given by @dependabot to update Material Version, Gradle Version, Gradle Build Action Version, ConstraintLayout Version and AppCompat Version. 
+- Merged Pull Requests [#11](https://github.com/techinessoverloaded/progress-dialog/pull/11), [#12](https://github.com/techinessoverloaded/progress-dialog/pull/12), [#14](https://github.com/techinessoverloaded/progress-dialog/pull/14), [#15](https://github.com/techinessoverloaded/progress-dialog/pull/15), [#17](https://github.com/techinessoverloaded/progress-dialog/pull/17) given by [@dependabot](https://github.com/dependabot) to update Material Version, Gradle Version, Gradle Build Action Version, ConstraintLayout Version and AppCompat Version. 
 
 You can find the Entire **Change Log at** [ProgressDialog Library Change Log](https://techinessoverloaded.github.io/progress-dialog/changelog.html)
 
