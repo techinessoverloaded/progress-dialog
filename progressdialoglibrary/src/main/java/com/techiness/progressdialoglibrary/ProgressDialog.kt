@@ -578,6 +578,7 @@ class ProgressDialog @JvmOverloads constructor(
         else
         {
             progressDialog.setOnShowListener(onShowListener)
+            binding.timeElapsedTextView.hide()
             isTimeBeingTracked = false
         }
         if(!isCancelable)
@@ -812,7 +813,7 @@ class ProgressDialog @JvmOverloads constructor(
                     secondsDifference = TimeUnit.MILLISECONDS.toSeconds(difference) % 60
                     minutesDifference = TimeUnit.MILLISECONDS.toMinutes(difference) % 60
                     hoursDifference = TimeUnit.MILLISECONDS.toHours(difference) % 60
-                    message = "Time Elapsed: ${hoursDifference.toString().padStart(2,'0')}h: ${minutesDifference.toString().padStart(2,'0')}s: ${secondsDifference.toString().padStart(2,'0')}s"
+                    message = "Time Elapsed: ${hoursDifference.toString().padStart(2,'0')}h: ${minutesDifference.toString().padStart(2,'0')}m: ${secondsDifference.toString().padStart(2,'0')}s"
                     binding.timeElapsedTextView.text = message
                     handler.postDelayed(this,1000)
                 }
