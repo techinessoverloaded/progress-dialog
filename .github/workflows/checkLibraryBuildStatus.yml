@@ -30,8 +30,3 @@ jobs:
       with:
         name: progressdialoglibrary-release
         path: progressdialoglibrary/build/outputs/aar/progressdialoglibrary-release.aar
-    - name: Upload ARR to Release
-      uses: softprops/action-gh-release@v1
-      if: ${{startsWith(github.ref, 'refs/tags/') }}
-      with:
-        files: progressdialoglibrary/build/outputs/aar/progressdialoglibrary-release.aar
