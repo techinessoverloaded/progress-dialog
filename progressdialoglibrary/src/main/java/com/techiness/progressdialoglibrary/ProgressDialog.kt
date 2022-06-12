@@ -812,7 +812,7 @@ class ProgressDialog @JvmOverloads constructor(
                     secondsDifference = TimeUnit.MILLISECONDS.toSeconds(difference) % 60
                     minutesDifference = TimeUnit.MILLISECONDS.toMinutes(difference) % 60
                     hoursDifference = TimeUnit.MILLISECONDS.toHours(difference) % 60
-                    message = "Time Elapsed: ${hoursDifference}H: ${minutesDifference}M: ${secondsDifference}S"
+                    message = "Time Elapsed: ${hoursDifference.toString().padStart(2,'0')}h: ${minutesDifference.toString().padStart(2,'0')}s: ${secondsDifference.toString().padStart(2,'0')}s"
                     binding.timeElapsedTextView.text = message
                     handler.postDelayed(this,1000)
                 }
