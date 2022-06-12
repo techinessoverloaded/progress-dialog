@@ -10,22 +10,25 @@ package com.techiness.progressdialoglibrary
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.content.DialogInterface.OnShowListener
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.os.HandlerCompat
 import com.techiness.progressdialoglibrary.ProgressDialog.Companion.MODE_DETERMINATE
 import com.techiness.progressdialoglibrary.ProgressDialog.Companion.MODE_INDETERMINATE
 import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_DARK
 import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_LIGHT
 import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding
-import java.util.Locale
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * An easy to use ProgressDialog library for Android API level 24 and above.
@@ -96,6 +99,9 @@ class ProgressDialog @JvmOverloads constructor(
     private var progressViewMode = 0
     private var autoThemeEnabled = false
     private var binding: LayoutProgressdialogBinding = LayoutProgressdialogBinding.inflate(LayoutInflater.from(context))
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
+    private var isTimeBeingTracked = false
 
     /**
      * Gets/Sets the mode of the ProgressDialog which is [MODE_INDETERMINATE] by Default.
@@ -107,8 +113,6 @@ class ProgressDialog @JvmOverloads constructor(
     @Throws(IllegalArgumentException::class)
     set(@ModeConstant modeConstant)
     {
-        if(modeConstant == field)
-            return
         when(modeConstant)
         {
             MODE_DETERMINATE ->
@@ -119,6 +123,7 @@ class ProgressDialog @JvmOverloads constructor(
                 binding.progressbarDeterminate.unhide()
                 progressViewMode = SHOW_AS_PERCENT
                 binding.progressTextView.unhide()
+                binding.timeElapsedTextView.hide()
                 incrementValue = if (incrementValue == 0) 1 else incrementValue
                 field = modeConstant
             }
@@ -128,6 +133,9 @@ class ProgressDialog @JvmOverloads constructor(
                 binding.progressTextView.hide()
                 binding.textViewIndeterminate.unhide()
                 binding.progressbarIndeterminate.unhide()
+                binding.timeElapsedTextView.hide()
+                if(isTimeBeingTracked)
+                    isTimeBeingTracked = false
                 field = modeConstant
             }
             else -> throw IllegalArgumentException("Invalid Values passed to function ! Make sure to pass MODE_INDETERMINATE or MODE_DETERMINATE only !")
@@ -149,8 +157,6 @@ class ProgressDialog @JvmOverloads constructor(
     @Throws(IllegalArgumentException::class)
     set(@ThemeConstant themeConstant)
     {
-        if(themeConstant == field)
-            return
         when(themeConstant)
         {
             THEME_DARK, THEME_LIGHT ->
@@ -170,15 +176,28 @@ class ProgressDialog @JvmOverloads constructor(
     }
 
     /**
-     * Toggles the Cancelable property of ProgressDialog which is false by Default.
-     * If it is set to true, the User can cancel the ProgressDialog by pressing Back Button or by touching any other part of the screen.
-     * It is NOT RECOMMENDED to set Cancelable to true.
+     * Toggles the Cancelable property of ProgressDialog which is `false` by Default.
+     * If it is set to `true`, the User can cancel the ProgressDialog by pressing Back Button or by touching any other part of the screen.
+     * It is NOT RECOMMENDED to set Cancelable to `true` unless Time Tracking is enabled.
      */
     var isCancelable = false
     set(cancelable)
     {
-        field = cancelable
-        progressDialog.setCancelable(field)
+        if(!cancelable)
+        {
+            if(!isTimeBeingTracked)
+            {
+                progressDialog.setCancelable(false)
+                progressDialog.setCanceledOnTouchOutside(false)
+                field = false
+            }
+        }
+        else
+        {
+            progressDialog.setCancelable(true)
+            progressDialog.setCanceledOnTouchOutside(true)
+            field = true
+        }
     }
 
     constructor(context: Context,@ThemeConstant themeConstant: Int = THEME_LIGHT):
@@ -484,7 +503,16 @@ class ProgressDialog @JvmOverloads constructor(
     {
         return if (isCancelable)
         {
-            progressDialog.setOnCancelListener(onCancelListener)
+            if(isTimeBeingTracked)
+            {
+                progressDialog.setOnCancelListener { dialog ->
+                    if(HandlerCompat.hasCallbacks(handler, runnable))
+                    {
+                        handler.removeCallbacks(runnable)
+                        onCancelListener.onCancel(dialog)
+                    }
+                }
+            }
             true
         }
         else
@@ -499,16 +527,65 @@ class ProgressDialog @JvmOverloads constructor(
      */
     fun setOnDismissListener(onDismissListener: DialogInterface.OnDismissListener)
     {
-        progressDialog.setOnDismissListener(onDismissListener)
+        if(isTimeBeingTracked)
+        {
+            progressDialog.setOnDismissListener { dialog ->
+                if(HandlerCompat.hasCallbacks(handler, runnable))
+                {
+                    handler.removeCallbacks(runnable)
+                    onDismissListener.onDismiss(dialog)
+                }
+            }
+        }
     }
 
     /**
      * Sets the [DialogInterface.OnShowListener] for ProgressDialog.
+     * Time Tracking is disabled by Default. It can be enabled by passing `true` to the `isTimeTrackingEnabled` parameter of the function.
+     * The `onshowListener` parameter can be `null` when `isTimeTrackingEnabled` parameter is passed. If `null` is passed for `onShowListener` when `isTimeTrackingEnabled` is not passed, no listener will be set.
+     * Enabling Time Tracking will make [isCancelable] to `true` automatically, since Time Tracking is an indefinite operation.
+     * It is recommended to set NEGATIVE BUTTON using [setNegativeButton] Method or set [DialogInterface.OnDismissListener] using [setOnDismissListener] after enabling Time Tracking feature.
+     * Time Tracking will stop when [progress] reaches [maxValue] or when the Dialog is dismissed or cancelled.
      * @param onShowListener [DialogInterface.OnShowListener] listener object.
+     * @throws IllegalArgumentException when attempting to enable Time Tracking in [MODE_INDETERMINATE] Mode.
      */
-    fun setOnShowListener(onShowListener: OnShowListener)
+    @JvmOverloads
+    @Throws(IllegalArgumentException::class)
+    fun setOnShowListener(isTimeTrackingEnabled: Boolean = false, onShowListener: DialogInterface.OnShowListener?)
     {
-        progressDialog.setOnShowListener(onShowListener)
+        if(isTimeTrackingEnabled)
+        {
+            require(isDeterminate)
+            {
+                "Time Tracking can be enabled in MODE_DETERMINATE Only!"
+            }
+            binding.timeElapsedTextView.unhide()
+            if(onShowListener == null)
+            {
+                progressDialog.setOnShowListener {
+                    startTimeTrackingLoop()
+                }
+            }
+            else
+            {
+                progressDialog.setOnShowListener { dialog ->
+                    startTimeTrackingLoop()
+                    onShowListener.onShow(dialog)
+                }
+            }
+            isTimeBeingTracked = true
+        }
+        else
+        {
+            progressDialog.setOnShowListener(onShowListener)
+            isTimeBeingTracked = false
+        }
+        if(!isCancelable)
+        {
+            isCancelable = true
+            setOnCancelListenerInternal()
+        }
+        setOnDismissListenerInternal()
     }
 
     /**
@@ -706,10 +783,46 @@ class ProgressDialog @JvmOverloads constructor(
      * [setNegativeButton] before.
      * Note : This method will not hide the Title. You have to explicitly call [hideTitle] to do the same.
      */
-    fun hideNegativeButton() {
-        if (binding.negativeButton.isVisible()) {
+    fun hideNegativeButton()
+    {
+        if (binding.negativeButton.isVisible())
+        {
             binding.negativeButton.hide()
         }
+    }
+
+    private fun startTimeTrackingLoop()
+    {
+        val startTime = Date()
+        var currentTime: Date
+        var difference: Long
+        var secondsDifference: Long
+        var minutesDifference: Long
+        var hoursDifference: Long
+        var message: String
+        handler = Handler(Looper.getMainLooper())
+        runnable = object: Runnable
+        {
+            override fun run()
+            {
+                if (!hasProgressReachedMaxValue())
+                {
+                    currentTime = Date()
+                    difference = currentTime.time - startTime.time
+                    secondsDifference = TimeUnit.MILLISECONDS.toSeconds(difference) % 60
+                    minutesDifference = TimeUnit.MILLISECONDS.toMinutes(difference) % 60
+                    hoursDifference = TimeUnit.MILLISECONDS.toHours(difference) % 60
+                    message = "Time Elapsed: ${hoursDifference}H: ${minutesDifference}M: ${secondsDifference}S"
+                    binding.timeElapsedTextView.text = message
+                    handler.postDelayed(this,1000)
+                }
+                else
+                {
+                    handler.removeCallbacks(this)
+                }
+            }
+        }
+        handler.post(runnable)
     }
 
     private val progressAsFraction: String
@@ -771,6 +884,40 @@ class ProgressDialog @JvmOverloads constructor(
             setTitle(title)
     }
 
+    private fun setOnDismissListenerInternal()
+    {
+        if(isTimeBeingTracked)
+        {
+            progressDialog.setOnDismissListener {
+                if (HandlerCompat.hasCallbacks(handler, runnable))
+                {
+                    handler.removeCallbacks(runnable)
+                }
+            }
+        }
+        else
+        {
+            progressDialog.setOnDismissListener(null)
+        }
+    }
+
+    private fun setOnCancelListenerInternal()
+    {
+        if(isTimeBeingTracked)
+        {
+            progressDialog.setOnCancelListener {
+                if(HandlerCompat.hasCallbacks(handler, runnable))
+                {
+                    handler.removeCallbacks(runnable)
+                }
+            }
+        }
+        else
+        {
+            progressDialog.setOnCancelListener(null)
+        }
+    }
+
     private fun setThemeInternal(@ThemeConstant themeConstant: Int): Boolean
     {
         return when (themeConstant)
@@ -781,6 +928,7 @@ class ProgressDialog @JvmOverloads constructor(
                 binding.textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.white))
                 binding.textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.white))
                 binding.progressTextView.setTextColor(ContextCompat.getColor(context, R.color.white_dark))
+                binding.timeElapsedTextView.setTextColor(ContextCompat.getColor(context, R.color.white_dark))
                 binding.negativeButton.setTextColor(ContextCompat.getColor(context, R.color.white))
                 true
             }
@@ -791,6 +939,7 @@ class ProgressDialog @JvmOverloads constructor(
                 binding.textViewIndeterminate.setTextColor(ContextCompat.getColor(context, R.color.black))
                 binding.textViewDeterminate.setTextColor(ContextCompat.getColor(context, R.color.black))
                 binding.progressTextView.setTextColor(ContextCompat.getColor(context, R.color.black_light))
+                binding.timeElapsedTextView.setTextColor(ContextCompat.getColor(context, R.color.black_light))
                 binding.negativeButton.setTextColor(ContextCompat.getColor(context, R.color.black))
                 true
             }

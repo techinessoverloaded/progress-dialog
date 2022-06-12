@@ -4,9 +4,12 @@ import androidx.annotation.RestrictTo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.Toast;
 import com.techiness.progressdialoglibrary.ProgressDialog;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            progressDialog = new ProgressDialog(this);
+            progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setMode(ProgressDialog.MODE_DETERMINATE);
         }
         showDeterBut.setText(String.valueOf(progressDialog.getTheme()));
@@ -95,10 +98,25 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.setTitle("Determinate");
                 progressDialog.showProgressTextAsFraction(true);
                 progressDialog.hideNegativeButton();
-                progressDialog.hideTitle();
                 progressDialog.setProgress(65);
                 progressDialog.setSecondaryProgress(80);
-                progressDialog.show();
+                progressDialog.setCancelable(false);
+                progressDialog.setOnShowListener(true, new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialog)
+                            {
+                                Toast.makeText(MainActivity.this,progressDialog.isCancelable()? "true": "false",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        progressDialog.show();
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        progressDialog.setProgress(100);
+                        progressDialog.dismiss();
+                    }
+                }, 50000);
                 break;
             case 4:
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
@@ -119,17 +137,30 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.setSecondaryProgress(0);
                 progressDialog.showProgressTextAsFraction(true);
                 progressDialog.setNegativeButton("Cancel","Determinate",null);
+                progressDialog.setOnShowListener(true, new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog)
+                    {
+                        Toast.makeText(MainActivity.this,"On Show",Toast.LENGTH_LONG).show();
+                    }
+                });
+                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Toast.makeText(MainActivity.this, "On Dismiss",Toast.LENGTH_LONG).show();
+                    }
+                });
                 progressDialog.show();
                 break;
             case 7:
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
-                progressDialog.setNegativeButton("Dismiss","Indeterminate",v -> {
+                progressDialog.setNegativeButton("Go to next activity","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
+                    Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
+                    startActivity(intent);
                 });
                 progressDialog.show();
-                Intent intent = new Intent(MainActivity.this,KotlinActivity.class);
-                startActivity(intent);
                 break;
             default:
                 break;

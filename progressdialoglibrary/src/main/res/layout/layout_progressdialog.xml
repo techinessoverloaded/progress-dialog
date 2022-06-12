@@ -120,12 +120,23 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
                 />
+            <TextView
+                android:id="@+id/timeElapsedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_light"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"
+                android:text="@string/time_elapsed_0h_0m_0s"
+                app:layout_constraintEnd_toEndOf="@id/progressbar_determinate"
+                app:layout_constraintTop_toBottomOf="@id/progressbar_determinate"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/negativeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="2dp"
             app:layout_constraintTop_toBottomOf="@id/layoutContent"
