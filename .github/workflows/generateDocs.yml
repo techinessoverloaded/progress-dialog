@@ -24,7 +24,7 @@ jobs:
         if: ${{github.event_name == 'release'}}
         run: gradle :progressdialoglibrary:dokkaHtml :progressdialoglibrary:dokkaJavadoc
       - name: Format Version Tag Name
-        uses: actions/github-script@v6.1.1
+        uses: actions/github-script@v6.2.0
         id: format_version_tag
         with:
           script: |
