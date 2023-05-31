@@ -33,28 +33,28 @@ jobs:
             core.setOutput('tag', tag)
             core.setOutput('no-v', no_v)
       - name: Deploy KDoc to GH Pages with Version
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
           target-folder: kotlin/${{ steps.format_version_tag.outputs.no-v }}/
       - name: Deploy KDoc to GH Pages as Latest
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/html
           target-folder: kotlin/latest/    
       - name: Deploy JavaDoc to GH Pages with Version
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: progressdialoglibrary/build/dokka/javadoc
           target-folder: java/${{ steps.format_version_tag.outputs.no-v }}/
       - name: Deploy JavaDoc to GH Pages as Latest
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
