@@ -53,7 +53,7 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.7.0-alpha02")
+    implementation("androidx.appcompat:appcompat:1.7.0-alpha03")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
