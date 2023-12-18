@@ -26,7 +26,7 @@ jobs:
     - name: Build Library with Gradle
       run: gradle :progressdialoglibrary:clean :progressdialoglibrary:publishReleasePublicationToMavenLocal
     - name: Upload Output AAR file
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: progressdialoglibrary-release
         path: progressdialoglibrary/build/outputs/aar/progressdialoglibrary-release.aar
