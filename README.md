@@ -3,7 +3,8 @@
 
 An easily customisable ProgressDialog Library for Android API 24 and above provided by Techiness Overloaded (Developer name: Arunprasadh C). Quite Useful for showing progress during any operation. Has support for both Determinate and Indeterminate ProgressBar. Also supports Dark Theme. Has javadoc Documentation for all public Constructors, Attributes and Methods, making it easy to learn about the Library from Android Studio IDE.
 
-**NOTE:** It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" or "rc" in their version code (Example: Version 1.4.0a4 or 1.4.4-rc1). It is strictly recommended not to use version 1.4.2 or 1.5.0 as the build artifacts are not properly published. You can instead prefer the latest version (1.5.1).
+> [!NOTE]
+> It is highly recommended to use the Latest Release Version of the Library and it is strongly recommended NOT to use any Pre-release versions of the library as they are used for testing out changes and are not production-ready. It is readily observable that Pre-release versions have "a" or "rc" in their version code (Example: Version 1.4.0a4 or 1.4.4-rc1). It is strictly recommended not to use version 1.4.2 or 1.5.0 as the build artifacts are not properly published. You can instead prefer the latest version (1.5.1).
 
 **Usage examples available at** [Usage Examples](#steps-to-add-progressdialog-library-to-your-android-studio-project) 
 </br>**Java Documentation of Class and Methods available at** [Java Documentation of Library](https://techinessoverloaded.github.io/progress-dialog/java/latest/com/techiness/progressdialoglibrary/ProgressDialog.html)
