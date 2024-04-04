@@ -100,7 +100,7 @@ import com.techiness.progressdialoglibrary.ProgressDialog;
 ### Simple Constructor 
 #### Uses Light Theme by Default. 
 > [!NOTE]
-> Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
+> Theme can be changed after Instantiation using ```setTheme(int themeConstant)``` method. 
 
 > [!IMPORTANT]
 > If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in **Inner Classes**, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
