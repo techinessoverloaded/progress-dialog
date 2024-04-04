@@ -56,7 +56,9 @@ allprojects {
 ```
 
 Now, include the following dependency in your App-level Gradle Build file:
-#### Note: Current latest version is **1.5.1**.
+> [!NOTE]
+> Current latest version is **1.5.1**
+
 **Gradle Groovy DSL (If you have build.gradle file):**
 ```groovy
 dependencies {
@@ -96,8 +98,13 @@ import com.techiness.progressdialoglibrary.ProgressDialog;
 ## Various Constructors available
 
 ### Simple Constructor 
-#### Uses Light Theme by Default. Note: Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
-**IMPORTANT** : If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in **Inner Classes**, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
+#### Uses Light Theme by Default. 
+> [!NOTE]
+> Theme can be changed after Instantiation using setTheme(int themeConstant) method. 
+
+> [!IMPORTANT]
+> If you want to Instantiate ```ProgressDialog``` Class in a **Fragment**, use ```requireContext()``` method instead of ```this``` keyword for passing ```Context``` object. Similarly, for Instantiating ```ProgressDialog``` Class in **Inner Classes**, use ```YourActivity.this``` in **Java** or ```this@YourActivity``` in **Kotlin** instead of simple ```this``` keyword for passing ```Context``` object.
+
 #### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(this); //same as new ProgressDialog(this, ProgressDialog.THEME_LIGHT);
@@ -119,7 +126,9 @@ val progressDialog = ProgressDialog(this, ProgressDialog.THEME_DARK)
 ```
 
 ### Constructor for Alternate Mode 
-#### Default mode is Indeterminate mode. Note: Mode can be changed as and when necessary using in-built methods.
+#### Default mode is Indeterminate mode. 
+> [!NOTE]
+> Mode can be changed as and when necessary using in-built methods.
 #### Java Code:
 ```java
 ProgressDialog progressDialog = new ProgressDialog(ProgressDialog.MODE_DETERMINATE,this); // for instantiating with Determinate mode
@@ -415,7 +424,9 @@ with(progressDialog)
 <img src="./output/deter_title_dark.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Light Theme)
-##### Note: Enabling NegativeButton will automatically enable TitleView.
+> [!NOTE]
+>  Enabling NegativeButton will automatically enable TitleView.
+
 #### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
@@ -443,7 +454,9 @@ with(progressDialog)
 <img src="./output/indeter_with_negativebtn.jpg" width=26% height=26%>
 
 ### Indeterminate ProgressDialog with NegativeButton and Custom OnClickListener for NegativeButton (Dark Theme)
-##### Note: Enabling NegativeButton will automatically enable TitleView.
+> [!NOTE]
+> Enabling NegativeButton will automatically enable TitleView.
+
 #### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_DARK);
@@ -471,7 +484,9 @@ with(progressDialog)
 <img src="./output/indeter_with_negativebtn_dark.jpg" width=26% height=26%>
 
 ### Determinate ProgressDialog with NegativeButton and Default OnClickListener for NegativeButton (Light Theme)
-##### Note: Enabling NegativeButton will automatically enable TitleView.
+> [!NOTE]
+> Enabling NegativeButton will automatically enable TitleView.
+
 #### Java Code:
 ```java
 progressDialog.setTheme(ProgressDialog.THEME_LIGHT);
