@@ -29,6 +29,7 @@ import com.techiness.progressdialoglibrary.ProgressDialog.Companion.THEME_LIGHT
 import com.techiness.progressdialoglibrary.databinding.LayoutProgressdialogBinding
 import java.util.*
 import java.util.concurrent.TimeUnit
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * An easy to use ProgressDialog library for Android API level 24 and above.
@@ -208,10 +209,7 @@ class ProgressDialog @JvmOverloads constructor(
         val builder = AlertDialog.Builder(context)
         builder.setView(binding.root)
         progressDialog = builder.create()
-        if (progressDialog.window != null)
-        {
-            progressDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-        }
+        progressDialog.window?.setBackgroundDrawable(0.toDrawable())
         mode = modeConstant
         theme = themeConstant
         isCancelable = false
