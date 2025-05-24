@@ -5,12 +5,15 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
+val javaVersion = JavaVersion.VERSION_17
+
 android {
-    compileSdk = 32
+    namespace = "com.techiness.progressdialoglibrary"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
+        targetSdk = 35
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -26,11 +29,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = javaVersion.toString()
     }
     publishing {
         singleVariant("release") {
@@ -53,9 +56,9 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.7.0-alpha03")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
