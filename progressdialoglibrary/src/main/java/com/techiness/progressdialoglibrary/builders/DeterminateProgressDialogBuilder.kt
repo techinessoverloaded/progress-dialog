@@ -7,7 +7,16 @@ import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
 class DeterminateProgressDialogBuilder internal constructor(
     override val context: Context,
     override val theme: ProgressDialogTheme
-): ProgressDialogBuilder<DeterminateProgressDialog>() {
-    override val progressDialog: DeterminateProgressDialog
-        get() = TODO("Not yet implemented")
+): ProgressDialogBuilder<DeterminateProgressDialog>(), DeterminateProgressDialogDslContract {
+
+    override val progressDialog: DeterminateProgressDialog = DeterminateProgressDialog(
+        context = context,
+        theme = theme
+    )
+
+    override var progress: Int
+        get() = progressDialog.progress
+        set(value) {
+            progressDialog.progress = value
+        }
 }
