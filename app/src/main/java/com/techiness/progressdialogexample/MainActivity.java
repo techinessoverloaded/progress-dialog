@@ -12,7 +12,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.techiness.progressdialoglibrary.DeterminateProgressDialog;
 import com.techiness.progressdialoglibrary.ProgressDialog;
+import com.techiness.progressdialoglibrary.builders.ProgressDialogBuilder;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class MainActivity extends AppCompatActivity
@@ -153,6 +156,10 @@ public class MainActivity extends AppCompatActivity
                 progressDialog.show();
                 break;
             case 7:
+                DeterminateProgressDialog dialog = ProgressDialogBuilder
+                        .determinate(this)
+                        .setInitialProgress(4)
+                        .create();
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.setNegativeButton("Go to next activity","Indeterminate",v -> {
                     Toast.makeText(MainActivity.this,"Custom OnClickListener for Indeterminate",Toast.LENGTH_LONG).show();

@@ -5,6 +5,10 @@ import com.techiness.progressdialoglibrary.DeterminateProgressDialog
 import com.techiness.progressdialoglibrary.IndeterminateProgressDialog
 import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
 import com.techiness.progressdialoglibrary.helpers.getDefaultTheme
+import com.techiness.progressdialoglibrary.helpers.ioDispatcher
+import com.techiness.progressdialoglibrary.helpers.mainDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 fun buildDeterminateProgressDialog(
     context: Context,
@@ -54,4 +58,20 @@ fun showIndeterminateProgressDialog(
     ).also {
         it.show()
     }
+}
+
+suspend fun showIndeterminateProgressDialogUntil(
+    context: Context,
+    theme: ProgressDialogTheme = getDefaultTheme(),
+    coroutineDispatcher: CoroutineDispatcher = ioDispatcher,
+    builder: IndeterminateProgressDialogDslContract.() -> Unit,
+    suspendBlock: suspend () -> Unit
+) {
+    withContext(mainDispatcher) {
+        buildIndeterminateProgressDialog(
+            context = context,
+            theme = theme,
+            builder = builder
+        )
+    }.showDialogUntil(coroutineDispatcher, suspendBlock)
 }

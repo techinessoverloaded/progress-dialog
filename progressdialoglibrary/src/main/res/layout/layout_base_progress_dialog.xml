@@ -32,7 +32,8 @@
             />
 
         <ViewStub
-            android:id="@+id/layoutContent"
+            android:id="@+id/viewStub"
+            android:inflatedId="@+id/layoutContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/titleView"

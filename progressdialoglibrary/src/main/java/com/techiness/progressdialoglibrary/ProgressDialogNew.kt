@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import com.techiness.progressdialoglibrary.builders.ProgressDialogDslContract
 import com.techiness.progressdialoglibrary.databinding.LayoutBaseProgressDialogBinding
 import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
 
-sealed class ProgressDialogNew {
+sealed class ProgressDialogNew(
+    protected val context: Context,
+    protected val theme: ProgressDialogTheme
+): ProgressDialogDslContract {
 
     protected lateinit var alertDialog: AlertDialog
-    protected abstract val theme: ProgressDialogTheme
-    protected abstract val context: Context
 
     var isCancelable = false
         set(cancelable) {
@@ -34,7 +36,7 @@ sealed class ProgressDialogNew {
     }
 
     protected fun getProgressDialogView(@LayoutRes layoutId: Int): View {
-        return baseProgressDialogBinding.layoutContent.let { stub ->
+        return baseProgressDialogBinding.viewStub.let { stub ->
             stub.layoutResource = layoutId
             return@let stub.inflate()
         }
@@ -47,5 +49,7 @@ sealed class ProgressDialogNew {
     }
 
     fun show() = alertDialog.show()
+
+    fun dismiss() = alertDialog.dismiss()
 
 }

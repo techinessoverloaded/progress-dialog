@@ -1,17 +1,17 @@
 package com.techiness.progressdialoglibrary.builders
 
 import android.content.Context
+import com.techiness.progressdialoglibrary.DeterminateProgressDialog
+import com.techiness.progressdialoglibrary.IndeterminateProgressDialog
 import com.techiness.progressdialoglibrary.ProgressDialogNew
 import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
 import com.techiness.progressdialoglibrary.helpers.getDefaultTheme
 
-sealed class ProgressDialogBuilder<T: ProgressDialogNew>: ProgressDialogDslContract {
+sealed class ProgressDialogBuilder<T: ProgressDialogNew>(
+    protected val progressDialog: T
+):  ProgressDialogJavaContract<T>, ProgressDialogDslContract by progressDialog {
 
-    protected abstract val context: Context
-    protected abstract val theme: ProgressDialogTheme
-    protected abstract val progressDialog: T
-
-    fun create(): T = progressDialog
+    override fun create(): T = progressDialog
 
     companion object {
 
@@ -21,8 +21,10 @@ sealed class ProgressDialogBuilder<T: ProgressDialogNew>: ProgressDialogDslContr
             context: Context,
             theme: ProgressDialogTheme = getDefaultTheme()
         ) = IndeterminateProgressDialogBuilder(
-            context = context,
-            theme = theme
+            IndeterminateProgressDialog(
+                context = context,
+                theme = theme
+            )
         )
 
         @JvmStatic
@@ -31,8 +33,10 @@ sealed class ProgressDialogBuilder<T: ProgressDialogNew>: ProgressDialogDslContr
             context: Context,
             theme: ProgressDialogTheme = getDefaultTheme()
         ) = DeterminateProgressDialogBuilder(
-            context = context,
-            theme = theme
+            DeterminateProgressDialog(
+                context = context,
+                theme = theme
+            )
         )
     }
 }
