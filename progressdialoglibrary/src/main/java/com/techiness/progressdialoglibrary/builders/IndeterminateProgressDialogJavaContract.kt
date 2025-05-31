@@ -1,6 +1,0 @@
-package com.techiness.progressdialoglibrary.builders
-
-import com.techiness.progressdialoglibrary.IndeterminateProgressDialog
-
-internal interface IndeterminateProgressDialogJavaContract: ProgressDialogJavaContract<IndeterminateProgressDialog> {
-}

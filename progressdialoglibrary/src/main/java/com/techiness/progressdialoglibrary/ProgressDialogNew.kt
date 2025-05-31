@@ -4,10 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import com.techiness.progressdialoglibrary.builders.ProgressDialogDslContract
 import com.techiness.progressdialoglibrary.databinding.LayoutBaseProgressDialogBinding
-import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
+import com.techiness.progressdialoglibrary.helpers.makeVisible
+import com.techiness.progressdialoglibrary.theme.ProgressDialogTheme
 
 sealed class ProgressDialogNew(
     protected val context: Context,
@@ -51,5 +52,16 @@ sealed class ProgressDialogNew(
     fun show() = alertDialog.show()
 
     fun dismiss() = alertDialog.dismiss()
+
+    fun getTitle() = baseProgressDialogBinding.titleView.text
+
+    override fun setTitle(title: CharSequence) {
+        baseProgressDialogBinding.titleView.text = title
+        baseProgressDialogBinding.titleView.makeVisible()
+    }
+
+    override fun setTitle(@StringRes titleResId: Int) {
+        setTitle(context.getString(titleResId))
+    }
 
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ProgressDialog.LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="titleColor">@color/black</item>
+    </style>
+
+    <style name="ProgressDialog.AutoTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="titleColor">@color/titleColor</item>
+    </style>
+</resources>

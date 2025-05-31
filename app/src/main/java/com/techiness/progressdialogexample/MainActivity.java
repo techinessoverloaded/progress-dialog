@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.techiness.progressdialoglibrary.DeterminateProgressDialog;
 import com.techiness.progressdialoglibrary.ProgressDialog;
-import com.techiness.progressdialoglibrary.builders.ProgressDialogBuilder;
+import com.techiness.progressdialoglibrary.ProgressDialogBuilder;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 public class MainActivity extends AppCompatActivity
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
             case 7:
                 DeterminateProgressDialog dialog = ProgressDialogBuilder
                         .determinate(this)
-                        .setInitialProgress(4)
+                        .setProgress(4)
                         .create();
                 progressDialog.setMode(ProgressDialog.MODE_INDETERMINATE);
                 progressDialog.setNegativeButton("Go to next activity","Indeterminate",v -> {

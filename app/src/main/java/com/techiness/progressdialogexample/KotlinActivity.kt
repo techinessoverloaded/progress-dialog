@@ -17,13 +17,13 @@ class KotlinActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kotlin)
         CoroutineScope(Dispatchers.Main).launch {
             buildDeterminateProgressDialog(this@KotlinActivity) {
-                maxValue = 100
+                setMaxValue(100)
             }.let {
                 withContext(Dispatchers.IO) {
                   it.showDialogUntil(
                       flow {
                           for (i in 0..<100) {
-                              emit(i)
+                              emit(i to null)
                               kotlinx.coroutines.delay(1000) // Simulate some work
                           }
                       }

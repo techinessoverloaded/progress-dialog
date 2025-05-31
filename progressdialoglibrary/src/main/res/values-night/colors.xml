@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Element Colors -->
+    <color name="titleColor">@color/white</color>
+    <color name="bg_light">@color/white</color>
+    <color name="bg_dark">@color/black_light</color>
+</resources>

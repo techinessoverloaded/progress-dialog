@@ -1,10 +1,7 @@
-package com.techiness.progressdialoglibrary.builders
-
-import com.techiness.progressdialoglibrary.IndeterminateProgressDialog
+package com.techiness.progressdialoglibrary
 
 class IndeterminateProgressDialogBuilder internal constructor(
     progressDialog: IndeterminateProgressDialog
 ): ProgressDialogBuilder<IndeterminateProgressDialog>(progressDialog),
-    IndeterminateProgressDialogJavaContract,
     IndeterminateProgressDialogDslContract by progressDialog {
 }

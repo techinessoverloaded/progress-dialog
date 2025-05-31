@@ -1,17 +1,17 @@
-package com.techiness.progressdialoglibrary.builders
+package com.techiness.progressdialoglibrary
 
 import android.content.Context
-import com.techiness.progressdialoglibrary.DeterminateProgressDialog
-import com.techiness.progressdialoglibrary.IndeterminateProgressDialog
-import com.techiness.progressdialoglibrary.ProgressDialogNew
-import com.techiness.progressdialoglibrary.helpers.ProgressDialogTheme
-import com.techiness.progressdialoglibrary.helpers.getDefaultTheme
+import com.techiness.progressdialoglibrary.theme.DeterminateProgressDialogTheme
+import com.techiness.progressdialoglibrary.theme.IndeterminateProgressDialogTheme
+import com.techiness.progressdialoglibrary.theme.ProgressDialogTheme
+import com.techiness.progressdialoglibrary.theme.getDefaultDeterminateTheme
+import com.techiness.progressdialoglibrary.theme.getDefaultIndeterminateTheme
 
 sealed class ProgressDialogBuilder<T: ProgressDialogNew>(
     protected val progressDialog: T
-):  ProgressDialogJavaContract<T>, ProgressDialogDslContract by progressDialog {
+): ProgressDialogDslContract by progressDialog {
 
-    override fun create(): T = progressDialog
+    internal fun create(): T = progressDialog
 
     companion object {
 
@@ -19,7 +19,7 @@ sealed class ProgressDialogBuilder<T: ProgressDialogNew>(
         @JvmOverloads
         fun indeterminate(
             context: Context,
-            theme: ProgressDialogTheme = getDefaultTheme()
+            theme: IndeterminateProgressDialogTheme = getDefaultIndeterminateTheme()
         ) = IndeterminateProgressDialogBuilder(
             IndeterminateProgressDialog(
                 context = context,
@@ -31,7 +31,7 @@ sealed class ProgressDialogBuilder<T: ProgressDialogNew>(
         @JvmOverloads
         fun determinate(
             context: Context,
-            theme: ProgressDialogTheme = getDefaultTheme()
+            theme: DeterminateProgressDialogTheme = getDefaultDeterminateTheme()
         ) = DeterminateProgressDialogBuilder(
             DeterminateProgressDialog(
                 context = context,
