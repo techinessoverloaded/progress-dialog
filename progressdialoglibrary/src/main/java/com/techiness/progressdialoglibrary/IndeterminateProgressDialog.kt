@@ -6,6 +6,9 @@ import com.techiness.progressdialoglibrary.helpers.ioDispatcher
 import com.techiness.progressdialoglibrary.helpers.mainDispatcher
 import com.techiness.progressdialoglibrary.theme.ProgressDialogTheme
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class IndeterminateProgressDialog internal constructor(
@@ -21,19 +24,29 @@ class IndeterminateProgressDialog internal constructor(
         initAlertDialog()
     }
 
+    override fun getMessage(): CharSequence = progressDialogBinding.textViewIndeterminate.text
+
+    override fun setMessage(message: CharSequence) {
+        progressDialogBinding.textViewIndeterminate.text = message
+    }
+
     suspend fun showDialogUntil(
         coroutineDispatcher: CoroutineDispatcher = ioDispatcher,
         block: suspend () -> Unit
     ) {
-        withContext(mainDispatcher) {
-            try {
-                show()
-                withContext(coroutineDispatcher) {
-                    block()
+        cancelPendingJobs("showDialogUntil called again")
+        job = CoroutineScope(mainDispatcher).launch {
+            if (isActive) {
+                try {
+                    show()
+                    withContext(coroutineDispatcher) {
+                        block()
+                    }
+                } finally {
+                    dismiss()
                 }
-            } finally {
-                dismiss()
             }
         }
+        job?.join()
     }
 }

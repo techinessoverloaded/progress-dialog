@@ -9,9 +9,9 @@ import com.techiness.progressdialoglibrary.theme.getDefaultIndeterminateTheme
 
 sealed class ProgressDialogBuilder<T: ProgressDialogNew>(
     protected val progressDialog: T
-): ProgressDialogDslContract by progressDialog {
+) {
 
-    internal fun create(): T = progressDialog
+    fun create(): T = progressDialog
 
     companion object {
 

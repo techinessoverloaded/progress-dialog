@@ -13,3 +13,10 @@ internal fun View.makeVisible() {
 internal fun View.makeInvisible() {
     visibility = View.INVISIBLE
 }
+
+internal fun View.setVisibility(isVisible: Boolean) {
+    if (isVisible)
+        makeVisible()
+    else
+        makeGone()
+}

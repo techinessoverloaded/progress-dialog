@@ -1,7 +1,5 @@
 package com.techiness.progressdialoglibrary
 
-import com.techiness.progressdialoglibrary.ProgressDialogDslContract
-
 sealed interface IndeterminateProgressDialogDslContract: ProgressDialogDslContract {
 
 }
